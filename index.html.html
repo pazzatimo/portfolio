@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lutimo Pazza — Data, Technology & Inclusive Development</title>
+<meta name="description" content="Lutimo Pazza — Data, M&E and ICT Practitioner empowering communities across Tanzania through evidence-based programmes and technology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink:#0d0c0a;
+  --paper:#faf8f4;
+  --paper2:#f1ede4;
+  --paper3:#e8e3d8;
+  --gold:#b8870c;
+  --gold-pale:#f5e7c0;
+  --teal:#136b57;
+  --teal-mid:#1c8f72;
+  --teal-pale:#d4ede7;
+  --muted:#6b6256;
+  --border:rgba(13,12,10,0.1);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+  --radius:3px;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* ── CURSOR DOT ── */
+.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.15s,opacity 0.3s;transform:translate(-50%,-50%)}
+
+/* ── NAVBAR ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 3.5rem;
+  background:rgba(250,248,244,0.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+nav.scrolled{border-color:var(--border);box-shadow:0 1px 24px rgba(0,0,0,0.06)}
+.nav-logo{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:0.01em}
+.nav-logo sup{font-size:0.5rem;color:var(--gold);vertical-align:super;letter-spacing:0.15em;font-family:var(--sans);font-weight:500;text-transform:uppercase}
+.nav-center{display:flex;gap:2.2rem;list-style:none}
+.nav-center a{font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s}
+.nav-center a:hover{color:var(--gold)}
+.nav-hire{font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 1.3rem;background:var(--teal);color:#fff;text-decoration:none;border-radius:var(--radius);transition:background 0.2s}
+.nav-hire:hover{background:var(--teal-mid)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:1fr 480px;
+  padding-top:78px;
+}
+.hero-left{
+  padding:6rem 4rem 5rem;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;
+}
+.hero-left::after{
+  content:'';position:absolute;right:0;top:15%;bottom:15%;
+  width:1px;background:linear-gradient(to bottom,transparent,var(--border) 30%,var(--border) 70%,transparent);
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  font-size:0.7rem;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.8rem;
+}
+.eyebrow::before{content:'';width:28px;height:1.5px;background:var(--gold);display:block}
+.hero-name{
+  font-family:var(--serif);font-size:clamp(3.8rem,7vw,6.5rem);
+  font-weight:700;line-height:0.95;letter-spacing:-0.02em;margin-bottom:0.6rem;
+}
+.hero-name .first{display:block;color:var(--ink)}
+.hero-name .last{display:block;color:var(--teal);font-style:italic;font-weight:400}
+.hero-role{
+  font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.3rem);
+  font-weight:400;font-style:italic;color:var(--muted);
+  margin-bottom:2.2rem;letter-spacing:0.02em;
+}
+.hero-mission{
+  max-width:520px;font-size:1rem;color:#4a4540;line-height:1.85;
+  margin-bottom:2.8rem;
+  border-left:2.5px solid var(--gold-pale);padding-left:1.2rem;
+}
+.hero-btns{display:flex;gap:0.9rem;flex-wrap:wrap}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.8rem 1.8rem;background:var(--gold);color:#fff;
+  font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;border-radius:var(--radius);transition:all 0.22s;
+}
+.btn-gold:hover{background:#9a700a;transform:translateY(-1px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.8rem 1.8rem;border:1px solid var(--border);color:var(--ink);
+  font-size:0.78rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  text-decoration:none;border-radius:var(--radius);transition:all 0.22s;
+}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.hero-right{
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 3rem;
+}
+.hero-right-label{
+  font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;
+  color:rgba(250,248,244,0.3);margin-bottom:2.5rem;
+}
+.big-stats{display:flex;flex-direction:column;gap:0}
+.big-stat{
+  padding:2rem 0;border-bottom:1px solid rgba(250,248,244,0.07);
+  display:flex;align-items:baseline;justify-content:space-between;
+}
+.big-stat:first-child{padding-top:0}
+.big-stat:last-child{border-bottom:none}
+.big-stat-num{
+  font-family:var(--serif);font-size:3.4rem;font-weight:400;color:var(--paper);
+  line-height:1;
+}
+.big-stat-num em{font-style:normal;font-size:1.8rem;color:var(--gold)}
+.big-stat-label{
+  font-size:0.75rem;color:rgba(250,248,244,0.38);
+  letter-spacing:0.06em;text-align:right;max-width:140px;line-height:1.5;
+}
+.hero-contact-strip{
+  margin-top:3rem;padding-top:2rem;
+  border-top:1px solid rgba(250,248,244,0.07);
+  display:flex;flex-direction:column;gap:0.6rem;
+}
+.hero-contact-item{
+  font-size:0.78rem;color:rgba(250,248,244,0.28);
+  display:flex;align-items:center;gap:0.6rem;
+}
+.hero-contact-item a{color:rgba(250,248,244,0.5);text-decoration:none;transition:color 0.2s}
+.hero-contact-item a:hover{color:var(--gold)}
+.dot-sep{width:3px;height:3px;background:rgba(250,248,244,0.2);border-radius:50%;display:inline-block}
+
+/* ── COMMON SECTION ── */
+.section{padding:7rem 3.5rem}
+.s-inner{max-width:1120px;margin:0 auto}
+.s-label{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  font-size:0.68rem;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:0.8rem;
+}
+.s-label::before{content:'';width:28px;height:1.5px;background:var(--gold);display:block}
+.s-heading{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;line-height:1.1;letter-spacing:-0.01em;
+}
+.s-heading em{font-weight:400;font-style:italic;color:var(--teal)}
+.s-sub{font-size:1rem;color:var(--muted);max-width:580px;margin-top:0.8rem;line-height:1.8}
+
+/* ── MISSION / VISION ── */
+.mv-section{background:var(--paper2)}
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:3.5rem}
+.mv-card{
+  background:var(--paper);padding:3rem;
+  border:1px solid var(--border);border-radius:var(--radius);
+}
+.mv-icon{font-size:1.8rem;margin-bottom:1.2rem}
+.mv-card h3{
+  font-family:var(--serif);font-size:1.6rem;font-weight:700;
+  color:var(--ink);margin-bottom:0.8rem;
+}
+.mv-card p{font-size:0.95rem;color:#4a4540;line-height:1.85}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;grid-template-columns:1.4fr 1fr;
+  gap:6rem;align-items:start;margin-top:4rem;
+}
+.about-text p{font-size:1rem;color:#3e3a36;line-height:1.88;margin-bottom:1.1rem}
+.about-text p:first-child{
+  font-family:var(--serif);font-size:1.25rem;font-weight:400;
+  font-style:italic;color:var(--ink);line-height:1.65;
+}
+.info-block{display:flex;flex-direction:column;gap:0}
+.info-row{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:1rem 0;border-bottom:1px solid var(--border);font-size:0.88rem;
+}
+.info-row:last-child{border-bottom:none}
+.info-k{color:var(--muted);font-weight:400}
+.info-v{color:var(--ink);font-weight:500;text-align:right;max-width:58%}
+.info-v a{color:var(--teal);text-decoration:none}
+.info-v a:hover{text-decoration:underline}
+.badge-row{display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:flex-end}
+.badge{
+  font-size:0.7rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;
+  padding:0.2rem 0.65rem;background:var(--teal-pale);color:var(--teal);
+  border-radius:var(--radius);
+}
+.badge.gold{background:var(--gold-pale);color:#7a5800}
+.avail-dot{
+  display:inline-block;width:7px;height:7px;background:#2bb57d;
+  border-radius:50%;margin-right:0.4rem;animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* ── SERVICES ── */
+.services-section{background:var(--ink)}
+.services-section .s-heading{color:var(--paper)}
+.services-section .s-label{color:#e8c37a}
+.services-section .s-label::before{background:#e8c37a}
+.services-section .s-sub{color:rgba(250,248,244,0.45)}
+.svc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.5px;margin-top:4rem;
+  background:rgba(250,248,244,0.04);
+  border:1px solid rgba(250,248,244,0.06);
+}
+.svc-card{
+  background:rgba(250,248,244,0.02);
+  padding:2.4rem 2rem;
+  border:1px solid rgba(250,248,244,0.05);
+  transition:background 0.25s;
+  position:relative;overflow:hidden;
+}
+.svc-card:hover{background:rgba(184,135,12,0.07)}
+.svc-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon{font-size:1.5rem;display:block;margin-bottom:1rem}
+.svc-card h3{font-size:0.95rem;font-weight:500;color:var(--paper);margin-bottom:0.5rem}
+.svc-card p{font-size:0.8rem;color:rgba(250,248,244,0.38);line-height:1.7}
+.svc-tools{
+  margin-top:0.8rem;display:flex;flex-wrap:wrap;gap:0.3rem;
+}
+.svc-tool{
+  font-size:0.67rem;padding:0.15rem 0.55rem;
+  border:1px solid rgba(250,248,244,0.1);color:rgba(250,248,244,0.35);
+  border-radius:var(--radius);
+}
+
+/* ── IMPACT BANNER ── */
+.impact-banner{background:var(--teal);padding:5rem 3.5rem}
+.impact-inner{max-width:1120px;margin:0 auto}
+.impact-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:3rem;background:rgba(255,255,255,0.1)}
+.impact-cell{
+  background:rgba(0,0,0,0.12);padding:2.5rem 1.5rem;text-align:center;
+}
+.impact-num{
+  font-family:var(--serif);font-size:2.8rem;font-weight:700;
+  color:#fff;line-height:1;margin-bottom:0.5rem;
+}
+.impact-num small{font-size:1.5rem;font-weight:400}
+.impact-desc{font-size:0.75rem;color:rgba(255,255,255,0.55);line-height:1.6;letter-spacing:0.03em}
+.impact-banner .s-label{color:rgba(255,255,255,0.4)}
+.impact-banner .s-label::before{background:rgba(255,255,255,0.4)}
+.impact-banner .s-heading{color:#fff}
+
+/* ── EXPERIENCE ── */
+.exp-section{background:var(--paper)}
+.timeline{margin-top:4rem;position:relative}
+.timeline::before{
+  content:'';position:absolute;
+  left:200px;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent 0%,var(--border) 5%,var(--border) 95%,transparent 100%);
+}
+.tl-item{display:grid;grid-template-columns:200px 1fr;position:relative;margin-bottom:0}
+.tl-meta{padding:2.5rem 2.5rem 2.5rem 0;text-align:right}
+.tl-range{
+  font-size:0.72rem;font-weight:500;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.3rem;
+}
+.tl-org{font-size:0.72rem;color:var(--gold);letter-spacing:0.04em}
+.tl-dot{
+  position:absolute;left:200px;top:2.95rem;
+  width:10px;height:10px;border-radius:50%;background:var(--gold);
+  transform:translateX(-5px);border:2.5px solid var(--paper);z-index:2;
+  transition:transform 0.2s;
+}
+.tl-item:hover .tl-dot{transform:translateX(-5px) scale(1.6)}
+.tl-body{
+  padding:2.2rem 0 2.2rem 3.5rem;
+  border-bottom:1px solid var(--border);
+}
+.tl-item:last-child .tl-body{border-bottom:none}
+.tl-role{font-size:1.05rem;font-weight:500;color:var(--ink);margin-bottom:0.3rem}
+.tl-type{
+  display:inline-block;font-size:0.66rem;font-weight:500;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.18rem 0.6rem;margin-bottom:0.9rem;
+  background:var(--teal-pale);color:var(--teal);border-radius:var(--radius);
+}
+.tl-type.contract{background:var(--gold-pale);color:#7a5800}
+.tl-body ul{list-style:none}
+.tl-body ul li{
+  font-size:0.88rem;color:#4a4540;padding:0.28rem 0 0.28rem 1.2rem;
+  position:relative;line-height:1.6;
+}
+.tl-body ul li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:0.8rem}
+.partners-strip{
+  margin-top:1rem;padding:0.8rem 1rem;
+  background:var(--paper2);border-radius:var(--radius);
+  border-left:2.5px solid var(--teal);
+}
+.partners-strip p{font-size:0.78rem;color:var(--muted);line-height:1.7}
+.partners-strip strong{color:var(--teal);font-weight:500}
+
+/* ── PROJECTS ── */
+.projects-section{background:var(--paper2)}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:4rem}
+.proj-card{
+  background:var(--paper);border:1px solid var(--border);
+  border-radius:var(--radius);padding:2.2rem;
+  transition:transform 0.22s,box-shadow 0.22s;
+  position:relative;overflow:hidden;
+}
+.proj-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,0.08)}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
+  background:linear-gradient(90deg,var(--gold),var(--teal));
+}
+.proj-year{
+  font-size:0.68rem;font-weight:500;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;
+}
+.proj-card h3{font-size:1rem;font-weight:500;color:var(--ink);margin-bottom:0.4rem;line-height:1.4}
+.proj-org{font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic}
+.proj-card p{font-size:0.85rem;color:#4a4540;line-height:1.75}
+
+/* ── WEB PORTFOLIO ── */
+.web-section{background:var(--ink)}
+.web-section .s-heading{color:var(--paper)}
+.web-section .s-label{color:#e8c37a}
+.web-section .s-label::before{background:#e8c37a}
+.web-section .s-sub{color:rgba(250,248,244,0.45)}
+.web-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px;margin-top:3.5rem;background:rgba(250,248,244,0.05)}
+.web-card{
+  background:rgba(250,248,244,0.02);
+  padding:2.5rem 2.2rem;
+  border:1px solid rgba(250,248,244,0.05);
+  transition:background 0.25s;
+  display:flex;flex-direction:column;gap:0.7rem;
+}
+.web-card:hover{background:rgba(250,248,244,0.05)}
+.web-tag{
+  font-size:0.65rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--gold);
+}
+.web-card h3{font-size:1rem;font-weight:500;color:var(--paper)}
+.web-card a{
+  font-size:0.82rem;color:rgba(250,248,244,0.4);text-decoration:none;
+  display:inline-flex;align-items:center;gap:0.4rem;transition:color 0.2s;
+}
+.web-card a:hover{color:var(--gold)}
+.web-card a::after{content:'↗';font-size:0.7rem}
+.web-card p{font-size:0.82rem;color:rgba(250,248,244,0.35);line-height:1.7}
+
+/* ── EDUCATION ── */
+.edu-section{background:var(--paper)}
+.edu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-top:4rem}
+.edu-card{
+  background:var(--paper2);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.8rem;
+  position:relative;transition:transform 0.2s,box-shadow 0.2s;
+}
+.edu-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,0.07)}
+.edu-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+}
+.edu-card:hover::after{transform:scaleX(1)}
+.edu-yr{
+  font-size:0.68rem;font-weight:500;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;
+}
+.edu-title{font-size:0.88rem;font-weight:500;color:var(--ink);line-height:1.4;margin-bottom:0.3rem}
+.edu-org{font-size:0.75rem;color:var(--muted);font-style:italic}
+.edu-badge-icon{
+  position:absolute;top:1.2rem;right:1.2rem;
+  width:30px;height:30px;background:var(--teal-pale);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;
+}
+
+/* ── SECTORS ── */
+.sectors-section{background:var(--paper2)}
+.sectors-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.5px;margin-top:4rem;
+  background:var(--border);border:1px solid var(--border);
+}
+.sector-cell{
+  background:var(--paper2);padding:2.8rem 2rem;
+  text-align:center;transition:background 0.22s;
+}
+.sector-cell:hover{background:var(--paper)}
+.sector-ico{font-size:2.2rem;display:block;margin-bottom:0.9rem}
+.sector-nm{font-size:0.9rem;font-weight:500;color:var(--ink);margin-bottom:0.25rem}
+.sector-sub{font-size:0.75rem;color:var(--muted)}
+
+/* ── CONTACT ── */
+.contact-section{background:var(--ink);padding:7rem 3.5rem}
+.contact-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center}
+.contact-left .s-label{color:#e8c37a}
+.contact-left .s-label::before{background:#e8c37a}
+.contact-heading{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--paper);line-height:1.1}
+.contact-heading em{font-style:italic;font-weight:400;color:#e8c37a}
+.contact-blurb{font-size:0.95rem;color:rgba(250,248,244,0.42);margin-top:1.2rem;line-height:1.82}
+.contact-items{display:flex;flex-direction:column;gap:0}
+.c-item{
+  display:flex;align-items:flex-start;gap:1.2rem;
+  padding:1.5rem 0;border-bottom:1px solid rgba(250,248,244,0.06);
+}
+.c-item:last-child{border-bottom:none}
+.c-ico{
+  width:36px;height:36px;flex-shrink:0;
+  background:rgba(184,135,12,0.1);border:1px solid rgba(184,135,12,0.2);
+  border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:0.95rem;
+}
+.c-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,248,244,0.28);margin-bottom:0.18rem}
+.c-val{font-size:0.9rem;color:var(--paper)}
+.c-val a{color:#e8c37a;text-decoration:none}
+.c-val a:hover{text-decoration:underline}
+.social-row{display:flex;gap:0.7rem;margin-top:2rem}
+.social-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.5rem 1.1rem;border:1px solid rgba(250,248,244,0.12);
+  color:rgba(250,248,244,0.45);text-decoration:none;border-radius:var(--radius);
+  transition:all 0.2s;
+}
+.social-btn:hover{border-color:var(--gold);color:#e8c37a}
+
+/* ── FOOTER ── */
+footer{background:#07060404;padding:1.8rem 3.5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(250,248,244,0.05)}
+.ft-copy{font-size:0.72rem;color:rgba(250,248,244,0.18);letter-spacing:0.04em}
+.ft-links{display:flex;gap:1.8rem}
+.ft-links a{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,248,244,0.2);text-decoration:none;transition:color 0.2s}
+.ft-links a:hover{color:var(--gold)}
+
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal:nth-child(2){transition-delay:0.08s}
+.reveal:nth-child(3){transition-delay:0.16s}
+.reveal:nth-child(4){transition-delay:0.24s}
+.reveal:nth-child(5){transition-delay:0.32s}
+.reveal:nth-child(6){transition-delay:0.4s}
+.reveal:nth-child(7){transition-delay:0.48s}
+.reveal:nth-child(8){transition-delay:0.56s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem}
+  .nav-center{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left::after{display:none}
+  .hero-left{padding:5.5rem 1.5rem 3rem}
+  .hero-right{padding:2.5rem 1.5rem 4rem}
+  .impact-grid{grid-template-columns:1fr 1fr}
+  .section{padding:5rem 1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .edu-grid{grid-template-columns:1fr 1fr}
+  .sectors-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .web-grid{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr;gap:3rem}
+  .mv-grid{grid-template-columns:1fr}
+  .timeline::before{left:0}
+  .tl-item{grid-template-columns:1fr}
+  .tl-meta{display:none}
+  .tl-dot{left:0;top:2.4rem;transform:translateX(-5px)}
+  .tl-body{padding:2rem 0 2rem 1.8rem}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Lutimo Pazza<sup>&#9679;</sup></a>
+  <ul class="nav-center">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:t.pazza@protonmail.ch" class="nav-hire">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">Data · Technology · Inclusive Development</p>
+    <h1 class="hero-name">
+      <span class="first">Lutimo</span>
+      <span class="last">Pazza</span>
+    </h1>
+    <p class="hero-role">Data & M&E Practitioner &nbsp;·&nbsp; ICT Solutions &nbsp;·&nbsp; Community Development</p>
+    <p class="hero-mission">
+      Empowering communities through data, technology and inclusive development. With extensive experience across Tanzania, I bridge evidence-based strategy with on the ground implementation, turning complex field data into decisions that change lives.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-gold">View Projects</a>
+      <a href="#contact" class="btn-ghost">Get In Touch</a>
+      <a href="#services" class="btn-ghost">My Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-right-label">Key Impact Figures</p>
+    <div class="big-stats">
+      <div class="big-stat reveal">
+        <div class="big-stat-num">179</div>
+        <div class="big-stat-label">Communities monitored across 3 regions</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-num">10<em>k+</em></div>
+        <div class="big-stat-label">Community members reached through awareness events</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-num">1<em>k+</em></div>
+        <div class="big-stat-label">Students trained on WASH & social accountability</div>
+      </div>
+      <div class="big-stat reveal">
+        <div class="big-stat-num">6<em>+</em></div>
+        <div class="big-stat-label">Years of professional field experience</div>
+      </div>
+    </div>
+    <div class="hero-contact-strip">
+      <div class="hero-contact-item">
+        <span>📧</span>
+        <a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a>
+        <span class="dot-sep"></span>
+        <a href="mailto:lutimosteven@gmail.com">lutimosteven@gmail.com</a>
+      </div>
+      <div class="hero-contact-item">
+        <span>📞</span>
+        <span>+255 763 779 991</span>
+        <span class="dot-sep"></span>
+        <span>Morogoro, Tanzania</span>
+      </div>
+      <div class="hero-contact-item">
+        <span>🌐</span>
+        <a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a>
+       
+       
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION & VISION -->
+<section class="section mv-section" id="mission">
+  <div class="s-inner">
+    <p class="s-label reveal">Purpose & Direction</p>
+    <h2 class="s-heading reveal">Guided by mission.<br><em>Driven by vision.</em></h2>
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <div class="mv-icon">🎯</div>
+        <h3>Mission</h3>
+        <p>To leverage data, technology and participatory development approaches to design, manage and deliver impactful projects that improve lives, strengthen communities and promote equity across Tanzania and beyond.</p>
+      </div>
+      <div class="mv-card reveal">
+        <div class="mv-icon">🌍</div>
+        <h3>Vision</h3>
+        <p>A future where technology, data and inclusive collaboration transform communities, drive accountability and foster sustainable development across Africa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="s-inner">
+    <p class="s-label reveal">Who I Am</p>
+    <h2 class="s-heading reveal">Practitioner. Innovator.<br><em>Community builder.</em></h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>"The real power of data lies not in the numbers themselves, but in what happens when they reach the right hands at the right time."</p>
+        <p>Based in Morogoro, Tanzania, I am a versatile Data, M&E and ICT practitioner with over six years of hands-on experience across health, governance, WASH and community development. I hold a Bachelor of Education in Information Communication Technology and carry multiple professional certifications in MEAL, Research Ethics, Project Management and Environmental Management.</p>
+        <p>My approach fuses technical rigor with genuine community understanding. I have designed and deployed MEAL systems for multi-partner programmes spanning 179 communities in three regions, trained over 1,000 students and 500+ youth on accountability and WASH, and mobilised awareness events reaching more than 10,000 community members. At the same time, I design and build responsive websites, produce professional reports and develop ICT solutions for organisations operating in the development space.</p>
+        <p>I coordinate easily with local government authorities, international NGOs and grassroots communities and I bring that same fluency to managing data, dashboards, toolkits and campaigns.</p>
+      </div>
+      <div class="info-block reveal">
+        <div class="info-row">
+          <span class="info-k">Full Name</span>
+          <span class="info-v">Lutimo Steven Pazza</span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Location</span>
+          <span class="info-v">Morogoro, Tanzania</span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Primary Email</span>
+          <span class="info-v"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Phone / WhatsApp</span>
+          <span class="info-v">+255 763 779 991</span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Website</span>
+          <span class="info-v"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></span>
+        </div>
+        
+        <div class="info-row">
+          <span class="info-k">Languages</span>
+          <span class="info-v">
+            <div class="badge-row">
+              <span class="badge">English</span>
+              <span class="badge">Kiswahili</span>
+			  <span class="badge">Portuguese</span>
+            </div>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Driver's Licence</span>
+          <span class="info-v">Yes</span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Nationality</span>
+          <span class="info-v">Tanzanian</span>
+        </div>
+        <div class="info-row">
+          <span class="info-k">Availability</span>
+          <span class="info-v" style="color:var(--teal);font-weight:600">
+            <span class="avail-dot"></span>Open to Opportunities
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section services-section" id="services">
+  <div class="s-inner">
+    <p class="s-label reveal">What I Offer</p>
+    <h2 class="s-heading reveal">A full suite of services<br><em>for development actors.</em></h2>
+    <p class="s-sub reveal">From research design to web development. I provide end to end solutions for NGOs, government agencies, research institutions and private sector clients.</p>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <span class="svc-icon">📊</span>
+        <h3>Research & Data Services</h3>
+        <p>Design and implementation of research studies with comprehensive data collection, cleaning, analysis and visualisation.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">Kobo Collect</span>
+          <span class="svc-tool">ODK</span>
+          <span class="svc-tool">SPSS</span>
+          <span class="svc-tool">Excel</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">📋</span>
+        <h3>Project Management & M&E</h3>
+        <p>End to end project planning, implementation and development of robust MEAL frameworks including LogFrames and Theory of Change.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">LogFrames</span>
+          <span class="svc-tool">ToC</span>
+          <span class="svc-tool">KPIs</span>
+          <span class="svc-tool">Impact Evaluation</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">🤝</span>
+        <h3>Social Development & Engagement</h3>
+        <p>Gender inclusion initiatives, community capacity building, WASH training and facilitation of participatory dialogue and civic events.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">FGDs</span>
+          <span class="svc-tool">Training</span>
+          <span class="svc-tool">Facilitation</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">💻</span>
+        <h3>Web Design & Development</h3>
+        <p>Creation of responsive, modern websites and platforms with strong focus on user experience, functionality and SEO.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">HTML/CSS</span>
+          <span class="svc-tool">JavaScript</span>
+          <span class="svc-tool">WordPress</span>
+          <span class="svc-tool">UI/UX</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">🎨</span>
+        <h3>Graphic Design</h3>
+        <p>Design of visual materials for campaigns, reports and organisational branding from social media assets to publication layouts.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">Adobe Suite</span>
+          <span class="svc-tool">Canva</span>
+          <span class="svc-tool">Brand Dev</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">📝</span>
+        <h3>Proposal & Report Writing</h3>
+        <p>Development of compelling funding proposals, concept notes, technical reports, case studies and executive summaries.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">Funding Apps</span>
+          <span class="svc-tool">Budgeting</span>
+          <span class="svc-tool">Tech Writing</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">🔧</span>
+        <h3>Technical IT Support</h3>
+        <p>Comprehensive IT support for organisations: system configuration, hardware troubleshooting, software support and user training.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">Hardware</span>
+          <span class="svc-tool">Software</span>
+          <span class="svc-tool">User Training</span>
+        </div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-icon">🛠️</span>
+        <h3>ICT Solutions Development</h3>
+        <p>Development of proprietary ICT solutions addressing diverse sector challenges reflecting a commitment to practical innovation in data and technology.</p>
+        <div class="svc-tools">
+          <span class="svc-tool">Custom Tools</span>
+          <span class="svc-tool">Digital Systems</span>
+          <span class="svc-tool">Platforms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT BANNER -->
+<section class="impact-banner">
+  <div class="impact-inner">
+    <p class="s-label reveal">Measured Impact</p>
+    <h2 class="s-heading reveal">Numbers that speak<br><em>louder than words.</em></h2>
+    <div class="impact-grid">
+      <div class="impact-cell reveal">
+        <div class="impact-num">179</div>
+        <div class="impact-desc">Communities with MEAL systems deployed across 3 regions</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">10<small>k+</small></div>
+        <div class="impact-desc">Community members reached through awareness campaigns</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">1<small>k+</small></div>
+        <div class="impact-desc">Students trained on WASH and social accountability</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">500<small>+</small></div>
+        <div class="impact-desc">Youth trained on community integrity-building (50% female)</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">10<small>+</small></div>
+        <div class="impact-desc">Community events mobilised across programme regions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section exp-section" id="experience">
+  <div class="s-inner">
+    <p class="s-label reveal">Work History</p>
+    <h2 class="s-heading reveal">A track record built<br><em>in the field.</em></h2>
+    <div class="timeline">
+
+      <!-- HEMAP -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Mar 2024 – Present</span>
+          <span class="tl-org">HEMAP</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Data Personnel</div>
+          <span class="tl-type contract">Part-Time Contract</span>
+          <ul>
+            <li>Retrieving and processing pharmaceutical company project reports on non cash benefits from official websites and internal databases</li>
+            <li>Converting multi-format source data (PDF and others) into structured Excel for analysis</li>
+            <li>Data cleaning: removing duplicates, fixing errors, standardising formats</li>
+            <li>Organising and transferring cleaned data into reporting templates using macros and Excel tools</li>
+            <li>Conducting analysis across large datasets to extract insights that guide decision-making</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Formative Research Consultant -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Oct 2021 – Feb 2022</span>
+          <span class="tl-org">Raleigh International Tanzania</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Formative Research Consultant</div>
+          <span class="tl-type">Consultancy</span>
+          <ul>
+            <li>Designed comprehensive tools and methodologies for field data collection</li>
+            <li>Supervised field teams during data collection activities</li>
+            <li>Performed data cleaning, analysis and visualisation</li>
+            <li>Produced research reports and findings for programme decision-making</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Program and MEAL Officer -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">May 2019 – Jul 2021</span>
+          <span class="tl-org">Raleigh Tanzania</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Program and MEAL Officer</div>
+          <span class="tl-type">Full-Time</span>
+          <ul>
+            <li>Led programme inception, budgeting and activity management across multi-region projects</li>
+            <li>Designed, implemented and reviewed MEAL plans; maintained master M&amp;E database</li>
+            <li>Analysed monitoring data from 4 project partners across 179 communities in Morogoro, Iringa &amp; Dodoma</li>
+            <li>Recruited and trained 500+ youth on community integrity-building (50% female participation)</li>
+            <li>Managed backend of integrity action dashboard and oversaw all data uploaded by 179 community monitors</li>
+            <li>Facilitated bi-annual joint working groups between monitors, citizens, contractors and government officials</li>
+            <li>Developed toolkits for community-led project monitoring and tools for School WASH (SWASH)</li>
+            <li>Designed and implemented the <strong>#nawajibika</strong> social accountability campaign</li>
+            <li>Mobilised 10+ community events; raised awareness to 10,000+ community members on WASH, social accountability and community monitoring</li>
+            <li>Trained over 1,000 primary and secondary school students, 20+ teachers and 4 school management committees on WASH</li>
+            <li>Supported 35 Youth Cluster Coordinators and 15 SAY Campaign Coordinators throughout the project</li>
+          </ul>
+          <div class="partners-strip">
+            <p><strong>Partner organisations coordinated:</strong> Dodoma City Council · Morogoro Municipality · Iringa Municipality · <strong>SHAHIDI WA MAJI</strong> (Uhakika wa Maji project) · <strong>TFCG</strong> (Mkaa Endelevu project) · <strong>CARE International Tanzania</strong> (Tajirika na Kilimo project) · <strong>SIMAVI</strong> (MKAJI project)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Program Officer -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Aug 2018 – Feb 2019</span>
+          <span class="tl-org">Mimi Na Mazingira / TEG</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Program Officer</div>
+          <span class="tl-type">Full-Time</span>
+          <ul>
+            <li>Monitored, regulated and evaluated ongoing health and environmental projects</li>
+            <li>Designed impact measurement tools and conducted field assessments</li>
+            <li>Handled fundraising support and contributed to proposal writing and donor events</li>
+            <li>Wrote activity, quarterly and annual reports; supervised weekly/monthly project submissions</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- National ID Authority -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Mar – Aug 2018</span>
+          <span class="tl-org">National ID Authority</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Field Data Entry Supervisor</div>
+          <span class="tl-type contract">Contract</span>
+          <ul>
+            <li>Supervised digital data operations during national citizen registration drives</li>
+            <li>Ensured real time data validation, entry accuracy and comprehensive reporting across field teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FHI360 -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Dec 2017 – Feb 2018</span>
+          <span class="tl-org">FHI360 / USAID</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Research Supervisor — Tulonge Afya Project</div>
+          <span class="tl-type contract">Contract</span>
+          <ul>
+            <li>Supervised research activities for the USAID-funded Tulonge Afya health communication project</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- WASH -->
+      <div class="tl-item">
+        <div class="tl-meta">
+          <span class="tl-range">Sep 2016 – Sep 2017</span>
+          <span class="tl-org">Raleigh Tanzania</span>
+        </div>
+        <div class="tl-dot"></div>
+        <div class="tl-body reveal">
+          <div class="tl-role">Team Leader — WASH Programme</div>
+          <span class="tl-type">Full-Time</span>
+          <ul>
+            <li>Led field team delivering water, sanitation and hygiene programme activities across communities</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section class="section sectors-section">
+  <div class="s-inner">
+    <p class="s-label reveal">Sector Experience</p>
+    <h2 class="s-heading reveal">Proven across<br><em>critical development sectors.</em></h2>
+    <div class="sectors-grid reveal">
+      <div class="sector-cell">
+        <span class="sector-ico">🏥</span>
+        <div class="sector-nm">Health</div>
+        <div class="sector-sub">HEMAP · FHI360 · USAID · Tulonge Afya</div>
+      </div>
+      <div class="sector-cell">
+        <span class="sector-ico">🏛️</span>
+        <div class="sector-nm">Governance & Accountability</div>
+        <div class="sector-sub">Social accountability · #nawajibika campaign</div>
+      </div>
+      <div class="sector-cell">
+        <span class="sector-ico">💧</span>
+        <div class="sector-nm">WASH</div>
+        <div class="sector-sub">SWASH toolkits · SHAHIDI WA MAJI · SIMAVI</div>
+      </div>
+      <div class="sector-cell">
+        <span class="sector-ico">🌱</span>
+        <div class="sector-nm">Environment & Agriculture</div>
+        <div class="sector-sub">TEG · TFCG · CARE International Tanzania</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY PROJECTS -->
+<section class="section projects-section" id="projects">
+  <div class="s-inner">
+    <p class="s-label reveal">Key Projects</p>
+    <h2 class="s-heading reveal">Delivering impact<br><em>at every scale.</em></h2>
+    <div class="proj-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2024 – Present</div>
+        <h3>Pharmaceutical Data Management — HEMAP</h3>
+        <div class="proj-org">Health Economics Market Access Pricing</div>
+        <p>Managing extensive pharmaceutical data workflows across company reports. Responsible for retrieving, cleaning, organising and analysing large datasets — delivering structured outputs that guide critical decision-making processes.</p>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2019 – 2021</div>
+        <h3>Social Accountability Through Youth — SAY Campaign</h3>
+        <div class="proj-org">Raleigh Tanzania · #nawajibika</div>
+        <p>Led recruitment and capacity building of 500+ youth across Dodoma, Iringa and Morogoro to champion integrity and social accountability at the grassroots level. Prioritised gender inclusion (50% female), facilitated public dialogues and designed the <strong>#nawajibika</strong> social campaign.</p>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2019 – 2021</div>
+        <h3>Multi-Region M&E System — 179 Communities</h3>
+        <div class="proj-org">Raleigh Tanzania · 4 Partner Organisations · 3 Regions</div>
+        <p>Developed and deployed MEAL systems covering 179 communities in Morogoro, Iringa and Dodoma. Partnered with Dodoma City Council, Morogoro Municipality, Iringa Municipality, CARE International Tanzania, TFCG, SIMAVI and SHAHIDI WA MAJI. Transformed complex multi-partner data into actionable insights.</p>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2019 – 2021</div>
+        <h3>School WASH Programme — SWASH Toolkits</h3>
+        <div class="proj-org">Raleigh Tanzania · Primary & Secondary Schools</div>
+        <p>Developed toolkits for community-led project monitoring and School WASH (SWASH). Trained over 1,000 primary and secondary students, 20+ teachers and 4 school management committees on water, sanitation and hygiene across 3 regions.</p>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2018 – 2019</div>
+        <h3>Health & Environmental Programme Evaluation</h3>
+        <div class="proj-org">Mimi Na Mazingira — TEG</div>
+        <p>Oversaw evaluation of health and environmental initiatives for TEG. Designed impact measurement tools, conducted field assessments and produced strategic reports. Supported proposal writing and fundraising activities for donor engagement.</p>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-year">2018</div>
+        <h3>National Digital Registration Drive</h3>
+        <div class="proj-org">National Identification Authority of Tanzania</div>
+        <p>Supervised digital data operations during citizen registration drives. Ensured real time validation, entry accuracy and comprehensive reporting across multiple field teams. Contributed to Tanzania's national identity infrastructure.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WEB PORTFOLIO -->
+<section class="section web-section">
+  <div class="s-inner">
+    <p class="s-label reveal">Web & Design Portfolio</p>
+    <h2 class="s-heading reveal">Websites designed<br><em>and delivered.</em></h2>
+    <p class="s-sub reveal">Beyond data and M&E, I design and build responsive, professional websites for organisations across Tanzania from NGOs to businesses.</p>
+    <div class="web-grid">
+      <div class="web-card reveal">
+        <div class="web-tag">NGO / Non-profit</div>
+        <h3>Her Dream Initiative Tanzania</h3>
+        <a href="https://herdreaminitiativetz.org" target="_blank">herdreaminitiativetz.org</a>
+        <p>Full website design and deployment for a women's empowerment and development organisation.</p>
+      </div>
+      <div class="web-card reveal">
+        <div class="web-tag">Business</div>
+        <h3>Dolmat</h3>
+        <a href="https://dolmat.co.tz" target="_blank">dolmat.co.tz</a>
+        <p>Professional corporate website designed and deployed for a Tanzanian business entity.</p>
+      </div>
+      <div class="web-card reveal">
+        <div class="web-tag">Religious / Media</div>
+        <h3>Ukweli wa Biblia</h3>
+        <a href="https://ukweliwabiblia.com" target="_blank">ukweliwabiblia.com</a>
+        <p>Responsive content and media website serving a Kiswahili-speaking faith community audience.</p>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section edu-section" id="education">
+  <div class="s-inner">
+    <p class="s-label reveal">Education & Certifications</p>
+    <h2 class="s-heading reveal">Academic foundation.<br><em>Field ready credentials.</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">🎓</div>
+        <div class="edu-yr">2016</div>
+        <div class="edu-title">Bachelor of Education — Information Communication Technology</div>
+        <div class="edu-org">Mount Meru University</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2023</div>
+        <div class="edu-title">Certificate in Environmental Management Systems</div>
+        <div class="edu-org">Alison</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2021</div>
+        <div class="edu-title">Certificate in Project Management</div>
+        <div class="edu-org">ITM Tanzania Limited</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2020</div>
+        <div class="edu-title">Certificate in MEAL — Monitoring, Evaluation, Accountability & Learning</div>
+        <div class="edu-org">MS TCDC</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2019</div>
+        <div class="edu-title">Certificate in Community Integrity Building Model</div>
+        <div class="edu-org">Integrity Action</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2017</div>
+        <div class="edu-title">Certificate in Research Ethics</div>
+        <div class="edu-org">FHI360</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-badge-icon">📜</div>
+        <div class="edu-yr">2017</div>
+        <div class="edu-title">Certificate in International Citizen Services</div>
+        <div class="edu-org">Raleigh International</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <p class="s-label reveal">Get In Touch</p>
+      <h2 class="contact-heading reveal">Let's build<br>something <em>meaningful.</em></h2>
+      <p class="contact-blurb reveal">Available for full time roles, consultancy contracts and short term assignments in Data Management, M&E, Research, Community Development, Web Design and ICT Solutions — in Tanzania and internationally.</p>
+    </div>
+    <div class="contact-items reveal">
+      <div class="c-item">
+        <div class="c-ico">✉️</div>
+        <div>
+          <div class="c-label">Primary Email</div>
+          <div class="c-val"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">✉️</div>
+        <div>
+          <div class="c-label">Alternative Email</div>
+          <div class="c-val"><a href="mailto:lutimosteven@gmail.com">lutimosteven@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">📞</div>
+        <div>
+          <div class="c-label">Phone / WhatsApp</div>
+          <div class="c-val">+255 763 779 991</div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">📍</div>
+        <div>
+          <div class="c-label">Location</div>
+          <div class="c-val">Morogoro, Tanzania</div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-ico">🌐</div>
+        <div>
+          <div class="c-label">Portfolio Website</div>
+          <div class="c-val"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div>
+        </div>
+      </div>
+      <div class="social-row">
+        
+        <a href="https://instagram.com/pazzatimo" target="_blank" class="social-btn">Instagram ↗</a>
+        <a href="mailto:t.pazza@protonmail.ch" class="btn-gold" style="font-size:0.75rem;padding:0.5rem 1.3rem">Send Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="ft-copy">© 2026 Lutimo Pazza · Data, Technology & Inclusive Development · Morogoro, Tanzania</p>
+  <nav class="ft-links">
+    <a href="#mission">Mission</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
