@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Lutimo Pazza — Data, Technology & Inclusive Development</title>
 <meta name="description" content="Lutimo Pazza — Data, M&E and ICT Practitioner empowering communities across Tanzania through evidence-based programmes and technology.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -80,10 +81,7 @@ body{
 p,.hero-mission,.contact-blurb,.s-sub,.tl-body ul li,.impact-desc,
 .partners-strip p,.mv-card p,.svc-card p,.proj-card p,.about-text p,
 .web-card p,.sector-sub,.edu-card .edu-title,.c-val{
-  text-align: justify;
-  hyphens: none;
-  -webkit-hyphens: none;
-  word-break: normal;
+  text-align:justify; hyphens:auto; -webkit-hyphens:auto; word-break:break-word;
 }
 h1,h2,h3,h4,.eyebrow,.s-label,.hero-role,.nav-center a,.btn-gold,.btn-ghost,
 .big-stat-label,.hero-contact-item,.info-k,.info-v,.tl-range,.tl-org,.tl-role,
@@ -904,6 +902,559 @@ footer::before{
   .nav-logo{ padding-left:1.2rem; font-size:1.2rem; }
   .nav-actions{ padding-right:1.2rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION SWITCHER
+   ═══════════════════════════════════════════════════════════ */
+.section-toggle{
+  display:flex; background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:100px; padding:3px; gap:2px;
+}
+.section-btn{
+  font-family:var(--sans); font-size:0.72rem; font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.38rem 1.1rem; border:none; cursor:pointer;
+  border-radius:100px; background:transparent;
+  color:rgba(226,232,240,0.55); transition:all 0.25s;
+}
+.section-btn.active{
+  background:var(--gold); color:var(--night);
+  box-shadow:0 0 16px rgba(232,160,33,0.35);
+}
+.section-btn:hover:not(.active){ color:#fff; }
+
+/* Journal nav links */
+.nav-journal-links{ display:none; }
+.nav-journal-links.visible{ display:flex; }
+.nav-works-links.hidden{ display:none; }
+
+/* Section containers */
+#section-works{ display:block; }
+#section-journal{ display:none; }
+
+/* ═══════════════════════════════════════════════════════════
+   JOURNAL GLOBAL
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --amber-j:  #d97706;
+  --amber-j2: #f59e0b;
+  --amber-pale: #fef3c7;
+  --terra:    #92400e;
+  --warm:     #fffbeb;
+  --warm2:    #fef9ee;
+  --grad-journal: linear-gradient(135deg,#d97706 0%,#b45309 100%);
+}
+
+.j-section{ padding:6rem 3rem; }
+.j-section-dark{ padding:6rem 3rem; background:var(--night); }
+.j-section-warm{ padding:6rem 3rem; background:var(--warm); }
+.j-inner{ max-width:1200px; margin:0 auto; }
+
+.j-label{
+  display:inline-flex; align-items:center; gap:0.7rem;
+  font-size:0.68rem; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--amber-j); margin-bottom:0.9rem;
+}
+.j-label::before{
+  content:''; width:28px; height:2px;
+  background:var(--grad-journal); display:block;
+}
+.j-heading{
+  font-family:var(--serif); font-size:clamp(2rem,4.5vw,3rem);
+  font-weight:700; line-height:1.15; letter-spacing:-0.015em;
+  margin-bottom:0.6rem;
+}
+.j-heading em{ font-weight:400; font-style:italic; color:var(--amber-j); }
+.j-sub{
+  font-size:0.95rem; color:var(--muted);
+  max-width:620px; margin-top:0.6rem; line-height:1.8;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   JOURNAL HERO
+   ═══════════════════════════════════════════════════════════ */
+.j-hero{
+  min-height:50vh; display:flex; align-items:center;
+  background:var(--night); position:relative; overflow:hidden;
+  padding:7rem 3rem 5rem;
+}
+.j-hero::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 60% at 60% 50%,rgba(217,119,6,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.j-hero::after{
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.035) 1px,transparent 1px);
+  background-size:28px 28px; pointer-events:none;
+}
+.j-hero-inner{
+  max-width:1200px; margin:0 auto; position:relative; z-index:1;
+}
+.j-hero-eyebrow{
+  display:inline-flex; align-items:center; gap:0.8rem;
+  font-size:0.72rem; font-weight:700; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--amber-j); margin-bottom:1.4rem;
+}
+.j-hero-eyebrow::before{
+  content:''; width:32px; height:2px;
+  background:var(--grad-journal); display:block;
+}
+.j-hero-title{
+  font-family:var(--serif);
+  font-size:clamp(3rem,6vw,5.5rem);
+  font-weight:700; line-height:0.95; color:var(--white);
+  margin-bottom:1.4rem;
+}
+.j-hero-title span{
+  display:block; font-style:italic; font-weight:400;
+  background:var(--grad-journal);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.j-hero-desc{
+  font-size:1.05rem; color:rgba(226,232,240,0.65);
+  max-width:560px; line-height:1.82; margin-bottom:2.5rem;
+}
+.j-hero-nav{
+  display:flex; gap:0.7rem; flex-wrap:wrap;
+}
+.j-hero-link{
+  font-size:0.72rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; padding:0.6rem 1.4rem;
+  border:1px solid rgba(255,255,255,0.12);
+  color:rgba(226,232,240,0.7); text-decoration:none;
+  border-radius:100px; transition:all 0.22s; cursor:pointer;
+}
+.j-hero-link:hover,.j-hero-link.active{
+  background:var(--amber-j); border-color:var(--amber-j);
+  color:var(--night);
+  box-shadow:0 0 18px rgba(217,119,6,0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GALLERY
+   ═══════════════════════════════════════════════════════════ */
+#j-gallery{ background:var(--light); }
+.gallery-tabs{
+  display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2.5rem;
+}
+.gallery-tab{
+  font-size:0.7rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; padding:0.4rem 1rem;
+  border:1.5px solid var(--light3); color:var(--muted);
+  border-radius:100px; cursor:pointer; transition:all 0.2s;
+  background:transparent;
+  font-family:var(--sans);
+}
+.gallery-tab:hover,.gallery-tab.active{
+  border-color:var(--amber-j); color:var(--amber-j);
+  background:var(--amber-pale);
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:220px;
+  gap:1rem;
+}
+.gallery-grid .wide{ grid-column:span 2; }
+.gallery-grid .tall{ grid-row:span 2; }
+.photo-card{
+  border-radius:var(--radius-lg); overflow:hidden;
+  position:relative; cursor:pointer;
+  transition:transform 0.3s, box-shadow 0.3s;
+}
+.photo-card:hover{ transform:scale(1.015); box-shadow:var(--shadow-lg); }
+.photo-bg{ width:100%; height:100%; display:block; }
+.photo-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(8,14,28,0.85) 0%,transparent 55%);
+}
+.photo-tag{
+  position:absolute; top:1rem; left:1rem;
+  font-size:0.6rem; font-weight:700; letter-spacing:0.1em;
+  text-transform:uppercase; padding:0.22rem 0.7rem;
+  background:rgba(217,119,6,0.85); color:#fff;
+  border-radius:100px; backdrop-filter:blur(4px);
+}
+.photo-info{
+  position:absolute; bottom:0; left:0; right:0;
+  padding:1.2rem 1.2rem;
+}
+.photo-loc{
+  font-size:0.65rem; font-weight:600; letter-spacing:0.1em;
+  text-transform:uppercase; color:rgba(255,255,255,0.55);
+  margin-bottom:0.3rem;
+}
+.photo-caption{
+  font-size:0.9rem; font-weight:500; color:#fff;
+  line-height:1.35;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STORIES
+   ═══════════════════════════════════════════════════════════ */
+#j-stories{ background:var(--warm); }
+.stories-grid{
+  display:grid; grid-template-columns:1.6fr 1fr;
+  gap:1.5rem; margin-top:3rem;
+}
+.story-featured{
+  background:var(--white); border-radius:var(--radius-lg);
+  border:1px solid var(--light3); overflow:hidden;
+  transition:transform 0.25s, box-shadow 0.25s;
+}
+.story-featured:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+.story-img{
+  height:260px; position:relative; overflow:hidden;
+}
+.story-body{ padding:2rem 2rem 1.8rem; }
+.story-category{
+  font-size:0.62rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--amber-j);
+  margin-bottom:0.6rem; display:block;
+}
+.story-title{
+  font-family:var(--serif); font-size:1.5rem; font-weight:700;
+  color:var(--ink); line-height:1.25; margin-bottom:0.8rem;
+}
+.story-excerpt{
+  font-size:0.88rem; color:#475569; line-height:1.78;
+  margin-bottom:1.2rem;
+  text-align:justify; hyphens:auto;
+}
+.story-meta{
+  font-size:0.68rem; color:var(--muted); letter-spacing:0.04em;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.story-stack{
+  display:flex; flex-direction:column; gap:1rem;
+}
+.story-mini{
+  background:var(--white); border-radius:var(--radius-lg);
+  border:1px solid var(--light3); display:flex; gap:1.2rem;
+  padding:1.2rem; transition:transform 0.22s, box-shadow 0.22s;
+  overflow:hidden;
+}
+.story-mini:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+.story-mini-img{ width:90px; flex-shrink:0; border-radius:var(--radius); overflow:hidden; }
+.story-mini-body{ flex:1; }
+.story-mini-title{
+  font-family:var(--serif); font-size:1rem; font-weight:700;
+  color:var(--ink); line-height:1.3; margin-bottom:0.4rem;
+}
+.story-mini-exc{
+  font-size:0.8rem; color:var(--muted); line-height:1.6;
+}
+.story-mini-meta{
+  font-size:0.65rem; color:var(--dim); margin-top:0.6rem;
+}
+.read-btn{
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-size:0.7rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--amber-j);
+  text-decoration:none; border-bottom:1.5px solid transparent;
+  transition:border-color 0.2s; margin-top:0.8rem;
+}
+.read-btn:hover{ border-color:var(--amber-j); }
+
+/* ═══════════════════════════════════════════════════════════
+   BLOG
+   ═══════════════════════════════════════════════════════════ */
+#j-blog{ background:var(--night); }
+#j-blog .j-heading{ color:var(--white); }
+#j-blog .j-sub{ color:rgba(226,232,240,0.5); }
+.blog-grid{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.2rem; margin-top:2.5rem;
+}
+.blog-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius-lg); padding:1.8rem;
+  transition:background 0.25s, border-color 0.25s;
+  position:relative; overflow:hidden;
+}
+.blog-card:hover{
+  background:rgba(217,119,6,0.06);
+  border-color:rgba(217,119,6,0.25);
+}
+.blog-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--grad-journal); transform:scaleX(0);
+  transform-origin:left; transition:transform 0.35s;
+}
+.blog-card:hover::before{ transform:scaleX(1); }
+.blog-date{
+  font-size:0.62rem; font-weight:600; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--amber-j); margin-bottom:0.7rem;
+}
+.blog-title{
+  font-family:var(--serif); font-size:1.05rem; font-weight:700;
+  color:var(--white); line-height:1.3; margin-bottom:0.6rem;
+}
+.blog-excerpt{
+  font-size:0.8rem; color:rgba(226,232,240,0.45); line-height:1.72;
+  text-align:justify; hyphens:auto;
+}
+.blog-tags{ margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.4rem; }
+.blog-tag{
+  font-size:0.6rem; font-weight:600; letter-spacing:0.07em;
+  text-transform:uppercase; padding:0.18rem 0.6rem;
+  border:1px solid rgba(217,119,6,0.25);
+  color:rgba(217,119,6,0.8); border-radius:100px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ARTICLES
+   ═══════════════════════════════════════════════════════════ */
+#j-articles{ background:var(--light2); }
+.article-cats{
+  display:flex; gap:0.5rem; flex-wrap:wrap; margin:1.5rem 0 2.5rem;
+}
+.article-cat{
+  font-size:0.7rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; padding:0.4rem 1.1rem;
+  border:1.5px solid var(--light3); color:var(--muted);
+  border-radius:100px; cursor:pointer; transition:all 0.2s;
+  background:transparent; font-family:var(--sans);
+}
+.article-cat.active,.article-cat:hover{
+  border-color:var(--amber-j); color:var(--amber-j); background:var(--amber-pale);
+}
+.articles-grid{
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:1.2rem;
+}
+.article-card{
+  background:var(--white); border-radius:var(--radius-lg);
+  border:1px solid var(--light3); padding:2rem;
+  transition:transform 0.22s, box-shadow 0.22s;
+  position:relative; overflow:hidden;
+}
+.article-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--grad-journal);
+}
+.article-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+.article-cat-tag{
+  font-size:0.6rem; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--amber-j); margin-bottom:0.6rem; display:block;
+}
+.article-title{
+  font-family:var(--serif); font-size:1.15rem; font-weight:700;
+  color:var(--ink); line-height:1.3; margin-bottom:0.6rem;
+}
+.article-excerpt{
+  font-size:0.85rem; color:#475569; line-height:1.78;
+  text-align:justify; hyphens:auto; margin-bottom:1rem;
+}
+.article-meta{
+  font-size:0.65rem; color:var(--muted); letter-spacing:0.04em;
+  display:flex; align-items:center; gap:0.6rem;
+}
+.article-min{ color:var(--amber-j); font-weight:600; }
+
+/* ═══════════════════════════════════════════════════════════
+   LIBRARY
+   ═══════════════════════════════════════════════════════════ */
+#j-library{ background:var(--night2); position:relative; overflow:hidden; }
+#j-library::before{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 60% at 20% 80%,rgba(217,119,6,0.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+#j-library .j-heading{ color:var(--white); }
+#j-library .j-sub{ color:rgba(226,232,240,0.5); }
+.library-layout{
+  display:grid; grid-template-columns:1.2fr 1fr;
+  gap:3rem; margin-top:3rem; position:relative;
+}
+.lib-heading{
+  font-size:0.7rem; font-weight:700; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--amber-j); margin-bottom:1.5rem;
+  display:flex; align-items:center; gap:0.7rem;
+}
+.lib-heading::before{
+  content:''; width:24px; height:2px; background:var(--grad-journal); display:block;
+}
+.books-grid{ display:flex; flex-direction:column; gap:1rem; }
+.book-card{
+  display:flex; gap:1.2rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius-lg); padding:1.2rem;
+  transition:background 0.25s; cursor:pointer;
+}
+.book-card:hover{ background:rgba(217,119,6,0.07); border-color:rgba(217,119,6,0.2); }
+.book-cover{
+  width:56px; height:78px; flex-shrink:0;
+  border-radius:4px; display:flex; align-items:center;
+  justify-content:center; font-size:1.4rem;
+  position:relative; overflow:hidden;
+}
+.book-cover::after{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:rgba(0,0,0,0.2);
+}
+.book-info{ flex:1; }
+.book-title{
+  font-family:var(--serif); font-size:0.95rem; font-weight:700;
+  color:var(--white); margin-bottom:0.25rem; line-height:1.3;
+}
+.book-author{
+  font-size:0.72rem; color:var(--amber-j); margin-bottom:0.4rem; font-weight:500;
+}
+.book-summary{
+  font-size:0.75rem; color:rgba(226,232,240,0.45);
+  line-height:1.6; text-align:justify; hyphens:auto;
+}
+.book-badge{
+  font-size:0.58rem; font-weight:700; letter-spacing:0.08em;
+  text-transform:uppercase; padding:0.18rem 0.55rem;
+  background:rgba(217,119,6,0.15); color:rgba(217,119,6,0.9);
+  border-radius:100px; display:inline-block; margin-top:0.4rem;
+}
+
+/* Quotes */
+.quotes-wall{ display:flex; flex-direction:column; gap:1rem; }
+.quote-card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:var(--radius-lg); padding:1.4rem;
+  border-left:3px solid var(--amber-j);
+  transition:background 0.25s;
+}
+.quote-card:hover{ background:rgba(217,119,6,0.05); }
+.quote-text{
+  font-family:var(--serif); font-size:1rem; font-weight:400;
+  font-style:italic; color:rgba(226,232,240,0.85);
+  line-height:1.65; margin-bottom:0.7rem;
+}
+.quote-text::before{ content:'"'; color:var(--amber-j); font-size:1.4rem; line-height:0; }
+.quote-text::after{ content:'"'; color:var(--amber-j); font-size:1.4rem; line-height:0; }
+.quote-attr{
+  font-size:0.7rem; color:rgba(226,232,240,0.35);
+  letter-spacing:0.06em; text-transform:uppercase;
+}
+
+/* Journal footer */
+.j-footer{
+  background:var(--night);
+  padding:1.4rem 3rem;
+  display:flex; justify-content:space-between; align-items:center;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.j-ft-links{ display:flex; gap:1.8rem; }
+.j-ft-links a{
+  font-size:0.65rem; letter-spacing:0.09em; text-transform:uppercase;
+  color:rgba(226,232,240,0.3); text-decoration:none; transition:color 0.2s;
+  cursor:pointer;
+}
+.j-ft-links a:hover{ color:var(--amber-j); }
+.j-ft-copy{ font-size:0.68rem; color:rgba(226,232,240,0.3); letter-spacing:0.05em; }
+
+/* Responsive journal */
+@media(max-width:960px){
+  .stories-grid{ grid-template-columns:1fr; }
+  .blog-grid{ grid-template-columns:1fr 1fr; }
+  .articles-grid{ grid-template-columns:1fr; }
+  .library-layout{ grid-template-columns:1fr; gap:2rem; }
+  .gallery-grid{ grid-template-columns:1fr 1fr; }
+  .gallery-grid .wide{ grid-column:span 1; }
+  .j-section,.j-section-dark,.j-section-warm{ padding:4.5rem 1.5rem; }
+  .j-hero{ padding:6rem 1.5rem 4rem; }
+  .j-footer{ flex-direction:column; gap:0.8rem; text-align:center; padding:1.2rem; }
+  .j-ft-links{ flex-wrap:wrap; justify-content:center; }
+}
+@media(max-width:680px){
+  .blog-grid{ grid-template-columns:1fr; }
+  .gallery-grid{ grid-template-columns:1fr; }
+  .gallery-grid .wide,.gallery-grid .tall{ grid-column:span 1; grid-row:span 1; }
+  .section-toggle{ display:none; }
+}
+
+
+/* ADMIN – injected */
+#adminOverlay{position:fixed;inset:0;z-index:10000;background:rgba(8,14,28,0.97);backdrop-filter:blur(12px);display:none;flex-direction:column;overflow:hidden;}
+#adminOverlay.open{display:flex;}
+.adm-bar{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2rem;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
+.adm-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;background:var(--grad-journal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.adm-close{background:none;border:1px solid rgba(255,255,255,0.12);color:rgba(226,232,240,0.6);font-size:1rem;border-radius:8px;cursor:pointer;padding:0.3rem 0.8rem;transition:all 0.2s;font-family:var(--sans);}
+.adm-close:hover{border-color:var(--amber-j);color:var(--amber-j);}
+.adm-body{display:flex;flex:1;overflow:hidden;}
+.adm-sidebar{width:220px;flex-shrink:0;background:rgba(255,255,255,0.025);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;padding:1.5rem 0;overflow-y:auto;}
+.adm-tab{display:flex;align-items:center;gap:0.75rem;padding:0.8rem 1.5rem;cursor:pointer;font-size:0.82rem;font-weight:600;color:rgba(226,232,240,0.45);transition:all 0.2s;border:none;background:none;text-align:left;width:100%;font-family:var(--sans);border-left:3px solid transparent;letter-spacing:0.02em;}
+.adm-tab:hover{color:rgba(226,232,240,0.8);background:rgba(255,255,255,0.03);}
+.adm-tab.active{color:var(--amber-j);background:rgba(217,119,6,0.08);border-left-color:var(--amber-j);}
+.adm-tab-ico{font-size:1rem;width:20px;text-align:center;}
+.adm-sidebar-divider{height:1px;background:rgba(255,255,255,0.06);margin:1rem 1.5rem;}
+.adm-main{flex:1;overflow-y:auto;padding:2rem;display:flex;flex-direction:column;gap:2rem;}
+.adm-panel{display:none;}
+.adm-panel.active{display:block;}
+.adm-setup{background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.2);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem;font-size:0.82rem;color:rgba(226,232,240,0.7);line-height:1.7;}
+.adm-setup code{background:rgba(255,255,255,0.08);border-radius:4px;padding:0.1rem 0.45rem;font-size:0.78rem;color:var(--amber-j);}
+.adm-setup-title{font-weight:700;color:var(--amber-j);font-size:0.88rem;margin-bottom:0.6rem;}
+.adm-form-card{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:1.8rem;margin-bottom:2rem;}
+.adm-form-title{font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber-j);margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem;}
+.adm-form-title::before{content:'';width:20px;height:2px;background:var(--grad-journal);display:block;}
+.adm-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.adm-form-grid.single{grid-template-columns:1fr;}
+.adm-form-group{display:flex;flex-direction:column;gap:0.4rem;}
+.adm-form-group.full{grid-column:1/-1;}
+.adm-label{font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(226,232,240,0.45);}
+.adm-input,.adm-select,.adm-textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:0.6rem 0.85rem;color:rgba(226,232,240,0.9);font-size:0.85rem;font-family:var(--sans);transition:border-color 0.2s;outline:none;width:100%;}
+.adm-input:focus,.adm-select:focus,.adm-textarea:focus{border-color:rgba(217,119,6,0.5);}
+.adm-textarea{resize:vertical;min-height:100px;line-height:1.6;}
+.adm-textarea.tall{min-height:220px;}
+.adm-select option{background:var(--night);}
+.adm-file-wrap{position:relative;cursor:pointer;background:rgba(255,255,255,0.03);border:1.5px dashed rgba(255,255,255,0.12);border-radius:var(--radius);padding:1.2rem;text-align:center;transition:border-color 0.2s;}
+.adm-file-wrap:hover{border-color:rgba(217,119,6,0.4);}
+.adm-file-wrap input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+.adm-file-label{font-size:0.8rem;color:rgba(226,232,240,0.4);display:block;pointer-events:none;}
+.adm-file-label span{color:var(--amber-j);font-weight:600;}
+.adm-preview-img{max-width:100%;max-height:120px;border-radius:var(--radius);margin-top:0.6rem;display:none;}
+.adm-color-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.3rem;}
+.adm-color-swatch{width:32px;height:32px;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:transform 0.15s,border-color 0.15s;}
+.adm-color-swatch.selected{border-color:#fff;transform:scale(1.15);}
+.adm-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.6rem;background:var(--amber-j);color:var(--night);font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border:none;border-radius:100px;cursor:pointer;font-family:var(--sans);transition:all 0.22s;margin-top:0.8rem;}
+.adm-btn:hover{background:var(--amber-j2);transform:translateY(-1px);}
+.adm-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+.adm-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(226,232,240,0.6);}
+.adm-btn.secondary:hover{border-color:rgba(226,232,240,0.3);color:rgba(226,232,240,0.9);}
+.adm-btn.danger{background:transparent;border:1px solid rgba(220,38,38,0.3);color:rgba(220,38,38,0.7);padding:0.3rem 0.65rem;font-size:0.65rem;margin-top:0;}
+.adm-btn.danger:hover{background:rgba(220,38,38,0.1);color:#ef4444;}
+.adm-list-title{font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(226,232,240,0.5);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+.adm-list-title::before{content:'';width:20px;height:2px;background:rgba(255,255,255,0.15);display:block;}
+.adm-items{display:flex;flex-direction:column;gap:0.6rem;}
+.adm-item{display:flex;align-items:flex-start;gap:1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);padding:0.9rem 1rem;}
+.adm-item-thumb{width:48px;height:48px;border-radius:6px;flex-shrink:0;overflow:hidden;object-fit:cover;}
+.adm-item-info{flex:1;min-width:0;}
+.adm-item-title{font-size:0.88rem;font-weight:600;color:rgba(226,232,240,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:0.2rem;}
+.adm-item-meta{font-size:0.7rem;color:rgba(226,232,240,0.35);letter-spacing:0.03em;}
+.adm-item-actions{display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+.adm-empty{font-size:0.82rem;color:rgba(226,232,240,0.3);text-align:center;padding:2rem;font-style:italic;}
+.adm-loading{font-size:0.82rem;color:rgba(226,232,240,0.35);text-align:center;padding:2rem;}
+#toastContainer{position:fixed;bottom:2rem;right:2rem;z-index:99999;display:flex;flex-direction:column;gap:0.6rem;pointer-events:none;}
+.toast{display:flex;align-items:center;gap:0.75rem;padding:0.9rem 1.4rem;border-radius:var(--radius-lg);font-size:0.82rem;font-weight:500;font-family:var(--sans);box-shadow:0 8px 32px rgba(0,0,0,0.35);animation:toastIn 0.35s ease,toastOut 0.35s 2.8s ease forwards;pointer-events:all;max-width:360px;}
+.toast.success{background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#34d399;}
+.toast.error{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171;}
+.toast.info{background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.3);color:var(--amber-j2);}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(8px)}}
+#adminLoginScreen{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+#adminLogin{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:1.5rem;padding:2rem;}
+.adm-login-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center;}
+.adm-login-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:0.4rem;}
+.adm-login-sub{font-size:0.82rem;color:rgba(226,232,240,0.4);margin-bottom:2rem;}
+.adm-login-err{font-size:0.78rem;color:#f87171;margin-top:0.6rem;display:none;}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.15);border-top-color:var(--amber-j);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#adminTrigger{display:inline-block;cursor:pointer;padding:0.2rem;user-select:none;}
+body.admin-active .photo-card .adm-del-btn{display:flex;}
+.photo-card .adm-del-btn{position:absolute;top:0.6rem;right:0.6rem;width:28px;height:28px;border-radius:50%;background:rgba(220,38,38,0.85);border:none;color:#fff;font-size:0.75rem;cursor:pointer;display:none;align-items:center;justify-content:center;transition:background 0.2s;z-index:5;}
+@media(max-width:768px){.adm-form-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -912,8 +1463,13 @@ footer::before{
 
 <!-- NAVIGATION with hamburger placed after Hire Me (inside nav-actions) -->
 <nav id="nav">
-  <a href="#" class="nav-logo">Lutimo Pazza<sup>&#9679;</sup></a>
-  <ul class="nav-center" id="navMenu">
+  <a href="#" class="nav-logo" onclick="switchSection('works');return false;">Lutimo Pazza<sup>&#9679;</sup></a>
+  <div class="section-toggle">
+  <button class="section-btn active" id="worksBtn" onclick="switchSection('works')">Works</button>
+  <button class="section-btn" id="journalBtn" onclick="switchSection('journal')">Journal</button>
+
+  </div>
+  <ul class="nav-center nav-works-links" id="navMenu">
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -921,11 +1477,19 @@ footer::before{
     <li><a href="#education">Credentials</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <ul class="nav-center nav-journal-links" id="navMenuJournal">
+    <li><a href="javascript:void(0)" onclick="jScrollTo('j-gallery')">Gallery</a></li>
+    <li><a href="javascript:void(0)" onclick="jScrollTo('j-stories')">Stories</a></li>
+    <li><a href="javascript:void(0)" onclick="jScrollTo('j-blog')">Blog</a></li>
+    <li><a href="javascript:void(0)" onclick="jScrollTo('j-articles')">Articles</a></li>
+    <li><a href="javascript:void(0)" onclick="jScrollTo('j-library')">Library</a></li>
+  </ul>
   <div class="nav-actions">
-    <a href="mailto:t.pazza@protonmail.ch" class="nav-hire">Hire Me</a>
+    <a href="/cdn-cgi/l/email-protection#0c78227c6d76766d4c7c7e63786362616d6560226f64" class="nav-hire">Hire Me</a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
   </div>
 </nav>
+<div id="section-works">
 
 <!-- HERO (top aligned) -->
 <section class="hero">
@@ -953,12 +1517,7 @@ footer::before{
       <div class="big-stat reveal"><div class="big-stat-num">6<em>+</em></div><div class="big-stat-label">Years of professional field experience</div></div>
     </div>
     <div class="hero-contact-strip">
-      <div class="hero-contact-item">
-  <span>📧</span>
-  <a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a>
-  <span class="dot-sep"></span>
-  <a href="mailto:lutimosteven@gmail.com">lutimosteven@gmail.com</a>
-</div>
+      <div class="hero-contact-item"><span>📧</span><a href="/cdn-cgi/l/email-protection#1b6f356b7a61617a5b6b69746f7475767a7277357873"><span class="__cf_email__" data-cfemail="f185df81908b8b90b181839e859e9f9c90989ddf9299">[email&#160;protected]</span></a><span class="dot-sep"></span><a href="/cdn-cgi/l/email-protection#adc1d8d9c4c0c2ded9c8dbc8c3edcac0ccc4c183cec2c0"><span class="__cf_email__" data-cfemail="9ff3eaebf6f2f0ecebfae9faf1dff8f2fef6f3b1fcf0f2">[email&#160;protected]</span></a></div>
       <div class="hero-contact-item"><span>📞</span><span>+255 763 779 991</span><span class="dot-sep"></span><span>Morogoro, Tanzania</span></div>
       <div class="hero-contact-item"><span>🌐</span><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div>
     </div>
@@ -986,7 +1545,7 @@ At the same time, I create responsive websites, write professional reports, and 
 dashboards, toolkits and campaigns.</p></div>
 <div class="info-block reveal"><div class="info-row"><span class="info-k">Full Name</span><span class="info-v">Lutimo Steven Pazza</span></div>
 <div class="info-row"><span class="info-k">Location</span><span class="info-v">Morogoro, Tanzania</span></div>
-<div class="info-row"><span class="info-k">Primary Email</span><span class="info-v"><a href="<a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></span></div><div class="info-row">
+<div class="info-row"><span class="info-k">Primary Email</span><span class="info-v"><a href="/cdn-cgi/l/email-protection#4f3b613f2e35352e0f3f3d203b2021222e2623612c27"><span class="__cf_email__" data-cfemail="d6a2f8a6b7acacb796a6a4b9a2b9b8bbb7bfbaf8b5be">[email&#160;protected]</span></a></span></div><div class="info-row">
 <span class="info-k">Phone / WhatsApp</span><span class="info-v">+255 763 779 991</span></div><div class="info-row">
 <span class="info-k">Website</span><span class="info-v"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></span></div>
 <div class="info-row"><span class="info-k">Languages</span><span class="info-v"><div class="badge-row"><span class="badge">English</span><span class="badge">Kiswahili</span><span class="badge">Portuguese</span></div></span></div>
@@ -1167,57 +1726,1339 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
 
 <section class="contact-section" id="contact"><div class="contact-inner"><div class="contact-left">
 <p class="s-label reveal">Get In Touch</p><h2 class="contact-heading reveal">Let's build<br>something <em>meaningful.</em></h2>
-<p class="contact-blurb reveal">Available for full time roles, consultancy contracts and short term assignments in Data Management, M&E, Research, Community Development, Web Design and ICT Solutions in Tanzania and internationally.</p></div><div class="contact-items reveal"><div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Primary Email</div><div class="c-val"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></div></div></div>
-<div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Alternative Email</div><div class="c-val"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></div></div></div>
-<div class="c-item"><div class="c-ico">📞</div><div><div class="c-label">Phone / WhatsApp</div><div class="c-val">+255 763 779 991</div></div>
-</div><div class="c-item"><div class="c-ico">📍</div><div><div class="c-label">Location</div><div class="c-val">Morogoro, Tanzania</div></div></div>
-<div class="c-item"><div class="c-ico">🌐</div><div><div class="c-label">Portfolio Website</div>
-<div class="c-val"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div></div></div>
-<div class="social-row"><a href="https://x.com/timopazza" target="_blank" class="social-btn">Twitter</a><a href="https://youtube.com/@timopazza" target="_blank" class="social-btn">Youtube</a><a href="https://instagram.com/pazzatimo" target="_blank" class="social-btn">Instagram</a><a href="https://tiktok.com/pazzatimo" target="_blank" class="social-btn">TikTok</a><a href="mailto:t.pazza@protonmail.ch" class="btn-gold" style="font-size:0.65rem;padding:0.5rem 1.2rem">Send Email</a></div></div></div></section>
+<p class="contact-blurb reveal">Available for full time roles, consultancy contracts and short term assignments in Data Management, M&E, Research, Community Development, Web Design and ICT Solutions in Tanzania and internationally.</p></div><div class="contact-items reveal"><div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Primary Email</div><div class="c-val"><a href="/cdn-cgi/l/email-protection#77035907160d0d16370705180318191a161e1b59141f"><span class="__cf_email__" data-cfemail="33471d43524949527343415c475c5d5e525a5f1d505b">[email&#160;protected]</span></a></div></div></div><div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Alternative Email</div><div class="c-val"><a href="/cdn-cgi/l/email-protection#48243d3c2125273b3c2d3e2d26082f25292124662b2725"><span class="__cf_email__" data-cfemail="cda1b8b9a4a0a2beb9a8bba8a38daaa0aca4a1e3aea2a0">[email&#160;protected]</span></a></div></div></div><div class="c-item"><div class="c-ico">📞</div><div><div class="c-label">Phone / WhatsApp</div><div class="c-val">+255 763 779 991</div></div></div><div class="c-item"><div class="c-ico">📍</div><div><div class="c-label">Location</div><div class="c-val">Morogoro, Tanzania</div></div></div><div class="c-item"><div class="c-ico">🌐</div><div><div class="c-label">Portfolio Website</div><div class="c-val"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div></div></div><div class="social-row"><a href="https://instagram.com/pazzatimo" target="_blank" class="social-btn">Instagram ↗</a><a href="/cdn-cgi/l/email-protection#cdb9e3bdacb7b7ac8dbdbfa2b9a2a3a0aca4a1e3aea5" class="btn-gold" style="font-size:0.65rem;padding:0.5rem 1.2rem">Send Email</a></div></div></div></section>
 
 <footer><p class="ft-copy">© Copyright 2026. All Rights Reserved.</p><div class="ft-links"><a href="#mission">Mission</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></footer>
+</div>
+
+<div id="section-journal" style="display:none">
+
+<!-- JOURNAL HERO -->
+<section class="j-hero">
+  <div class="j-hero-inner">
+    <p class="j-hero-eyebrow">Personal · Reflective · Creative</p>
+    <h1 class="j-hero-title">
+      Pazza Journal
+      <span>Life beyond the résumé.</span>
+    </h1>
+    <p class="j-hero-desc">
+      This is my personal space — a living record of the places I have walked, the stories I carry, the ideas that keep me awake, and the faith that anchors it all.
+      Explore freely.
+    </p>
+    <div class="j-hero-nav">
+      <a class="j-hero-link active" onclick="jScrollTo('j-gallery')">Gallery</a>
+      <a class="j-hero-link" onclick="jScrollTo('j-stories')">Stories</a>
+      <a class="j-hero-link" onclick="jScrollTo('j-blog')">Blog</a>
+      <a class="j-hero-link" onclick="jScrollTo('j-articles')">Articles</a>
+      <a class="j-hero-link" onclick="jScrollTo('j-library')">Library</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="j-section" id="j-gallery">
+  <div class="j-inner">
+    <p class="j-label">Photos & Videos</p>
+    <h2 class="j-heading">Captured moments,<br><em>stories in frame.</em></h2>
+    <p class="j-sub">Photography from my travels across Tanzania and beyond — nature, culture, people and the quiet moments in between.</p>
+
+    <div class="gallery-tabs" style="margin-top:2rem;">
+      <button class="gallery-tab active" onclick="filterGallery('all',this)">All</button>
+      <button class="gallery-tab" onclick="filterGallery('travel',this)">Travel</button>
+      <button class="gallery-tab" onclick="filterGallery('nature',this)">Nature</button>
+      <button class="gallery-tab" onclick="filterGallery('culture',this)">Culture</button>
+      <button class="gallery-tab" onclick="filterGallery('people',this)">People</button>
+      <button class="gallery-tab" onclick="filterGallery('family',this)">Family</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="photo-card wide tall" data-cat="travel" style="grid-row:span 2;">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(135deg,#0f4c75 0%,#1b6ca8 40%,#0d7680 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Travel</span>
+        <div class="photo-info">
+          <div class="photo-loc">Zanzibar · Tanzania · 2023</div>
+          <div class="photo-caption">Stone Town at golden hour — the old port bathed in amber, fishermen bringing in the evening catch.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="nature">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(160deg,#1a5c2a 0%,#2d8a45 50%,#5ba35b 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Nature</span>
+        <div class="photo-info">
+          <div class="photo-loc">Mikumi National Park · 2022</div>
+          <div class="photo-caption">Sunrise over the savanna — zebras moving silently through the mist.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="culture">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(145deg,#7c4a1e 0%,#c27a3a 50%,#e8a561 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Culture</span>
+        <div class="photo-info">
+          <div class="photo-loc">Dodoma Market · 2021</div>
+          <div class="photo-caption">Colours of a Tuesday morning market — spices, fabric and the hum of a thousand conversations.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="nature">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(130deg,#1a4a6b 0%,#2a6f8f 50%,#3a8fb0 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Nature</span>
+        <div class="photo-info">
+          <div class="photo-loc">Morogoro Hills · 2023</div>
+          <div class="photo-caption">The Uluguru mountains after rain — impossibly green and still.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="people">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(150deg,#5c3a6b 0%,#8a5a9a 50%,#b07ab0 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">People</span>
+        <div class="photo-info">
+          <div class="photo-loc">Community Training · Iringa · 2020</div>
+          <div class="photo-caption">Youth accountability training — the moment a young woman found her voice.</div>
+        </div>
+      </div>
+
+      <div class="photo-card wide" data-cat="travel">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(120deg,#8b1a1a 0%,#c0392b 40%,#e86c5a 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Travel</span>
+        <div class="photo-info">
+          <div class="photo-loc">Dar es Salaam · Tanzania · 2022</div>
+          <div class="photo-caption">The harbour at dusk — cargo ships and fishing dhows sharing the same darkening water.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="family">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(140deg,#8b5e1a 0%,#c49a4a 50%,#e8c880 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Family</span>
+        <div class="photo-info">
+          <div class="photo-loc">Home · Morogoro · 2023</div>
+          <div class="photo-caption">Sunday afternoon — the unhurried kind that only family makes possible.</div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-cat="culture">
+        <div class="photo-bg" style="width:100%;height:100%;background:linear-gradient(160deg,#2a5a3a 0%,#4a8a5a 50%,#7ab07a 100%);"></div>
+        <div class="photo-overlay"></div>
+        <span class="photo-tag">Culture</span>
+        <div class="photo-info">
+          <div class="photo-loc">Traditional Ceremony · 2021</div>
+          <div class="photo-caption">Ngoma wa jadi — the drum speaks what words cannot.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STORIES -->
+<section class="j-section j-section-warm" id="j-stories">
+  <div class="j-inner">
+    <p class="j-label">Long-form Narratives</p>
+    <h2 class="j-heading">Stories worth<br><em>sitting with.</em></h2>
+    <p class="j-sub">Personal narratives that go deeper — field experiences, journeys, encounters that shaped how I see the world.</p>
+
+    <div class="stories-grid">
+      <div class="story-featured reveal">
+        <div class="story-img" style="background:linear-gradient(145deg,#1a4a2a 0%,#2d7a4a 50%,#4a9a6a 100%);">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,28,0.6) 0%,transparent 60%);"></div>
+          <div style="position:absolute;bottom:1.2rem;left:1.5rem;font-family:var(--serif);font-size:1.8rem;font-weight:700;color:#fff;line-height:1.1;">179 communities.<br>One data team.</div>
+        </div>
+        <div class="story-body">
+          <span class="story-category">Field Experience</span>
+          <h3 class="story-title">Three regions, four partners, and a spreadsheet that refused to lie</h3>
+          <p class="story-excerpt">
+            The project started in 2019 with a MEAL matrix and ended with something no framework can quantify — the look on a community monitor's face when the data she collected actually changed a decision made by her local government. This is that story.
+          </p>
+          <div class="story-meta">
+            <span>Lutimo Pazza</span>
+            <span>·</span>
+            <span>12 min read</span>
+            <span>·</span>
+            <span>March 2024</span>
+          </div>
+          <a class="read-btn">Read story →</a>
+        </div>
+      </div>
+
+      <div class="story-stack">
+        <div class="story-mini reveal">
+          <div class="story-mini-img" style="height:100%;background:linear-gradient(145deg,#1a3a6b,#3a6fa8);min-height:90px;"></div>
+          <div class="story-mini-body">
+            <span class="story-category" style="font-size:0.58rem;">Travel</span>
+            <h4 class="story-mini-title">The ferry to Zanzibar and what the Indian Ocean said</h4>
+            <p class="story-mini-exc">A two-hour crossing that felt like a conversation with time itself...</p>
+            <div class="story-mini-meta">8 min read · January 2024</div>
+          </div>
+        </div>
+        <div class="story-mini reveal">
+          <div class="story-mini-img" style="height:100%;background:linear-gradient(145deg,#6b3a1a,#a86a3a);min-height:90px;"></div>
+          <div class="story-mini-body">
+            <span class="story-category" style="font-size:0.58rem;">Faith</span>
+            <h4 class="story-mini-title">The prayer that would not wait until Sunday</h4>
+            <p class="story-mini-exc">Sometimes the most important conversations happen in the middle of the week, in the middle of a mess...</p>
+            <div class="story-mini-meta">6 min read · October 2023</div>
+          </div>
+        </div>
+        <div class="story-mini reveal">
+          <div class="story-mini-img" style="height:100%;background:linear-gradient(145deg,#3a1a6b,#6a4aa8);min-height:90px;"></div>
+          <div class="story-mini-body">
+            <span class="story-category" style="font-size:0.58rem;">Community</span>
+            <h4 class="story-mini-title">The youth who trained me while I trained them</h4>
+            <p class="story-mini-exc">On accountability campaigns and the unexpected direction learning can flow...</p>
+            <div class="story-mini-meta">10 min read · July 2023</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="j-section-dark" id="j-blog">
+  <div class="j-inner">
+    <p class="j-label" style="color:var(--amber-j);">From the desk</p>
+    <h2 class="j-heading" style="color:var(--white);">Recent posts &<br><em style="color:var(--amber-j2);">quick thoughts.</em></h2>
+    <p class="j-sub">Shorter, more frequent writing — observations, tools, moments worth sharing while they're still warm.</p>
+
+    <div class="blog-grid">
+
+      <div class="blog-card reveal">
+        <div class="blog-date">April 2 · 2026</div>
+        <h3 class="blog-title">Five things Kobo Collect taught me about listening</h3>
+        <p class="blog-excerpt">Data collection tools are not neutral. The form you design shapes what people can say — and what they cannot. Here's what a decade of field work taught me about the politics of the dropdown menu.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Digital Skills</span>
+          <span class="blog-tag">Data</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-date">March 18 · 2026</div>
+        <h3 class="blog-title">God First is not a hashtag. It is an operating system.</h3>
+        <p class="blog-excerpt">People ask why I put it on my portfolio website. Partly because it is true. Partly because the work of development — real development, community level, people-facing — only makes sense if you believe that human beings matter beyond what they produce.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Faith</span>
+          <span class="blog-tag">Life</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-date">February 28 · 2026</div>
+        <h3 class="blog-title">How I built a website for an NGO on a NGO budget</h3>
+        <p class="blog-excerpt">She came to me with a Word document and a dream. She left with a live website, a domain name, and an email newsletter. Here is what the process looked like — and what I charged, and why.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Business</span>
+          <span class="blog-tag">Web</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-date">February 5 · 2026</div>
+        <h3 class="blog-title">The Morogoro hills are still green. That is the whole post.</h3>
+        <p class="blog-excerpt">Some days the most important thing you can report is that beauty persists. The Uluguru range this morning, after two nights of rain, in a light I cannot describe because I do not have to — you already know that light.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Nature</span>
+          <span class="blog-tag">Life</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-date">January 14 · 2026</div>
+        <h3 class="blog-title">What the #nawajibika campaign taught me about social change</h3>
+        <p class="blog-excerpt">A hashtag is not a campaign. A campaign is not a movement. And a movement is nothing without people willing to show up on a Tuesday and keep showing up. Lessons from designing Tanzania's youth accountability drive.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Community</span>
+          <span class="blog-tag">Impact</span>
+        </div>
+      </div>
+
+      <div class="blog-card reveal">
+        <div class="blog-date">December 20 · 2025</div>
+        <h3 class="blog-title">A year in review: data, distance, and deciding what matters</h3>
+        <p class="blog-excerpt">2025 was the year I stopped confusing busyness with productivity, and started measuring impact the way I measure data — by what it actually changes, not by how much of it there is.</p>
+        <div class="blog-tags">
+          <span class="blog-tag">Reflection</span>
+          <span class="blog-tag">Life</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="j-section" id="j-articles">
+  <div class="j-inner">
+    <p class="j-label">Long-form Writing</p>
+    <h2 class="j-heading">Ideas explored,<br><em>arguments made.</em></h2>
+    <p class="j-sub">Deeper writing across the topics that occupy my mind — faith, business, digital skills, and the texture of a life lived with intention.</p>
+
+    <div class="article-cats">
+      <button class="article-cat active" onclick="filterArticles('all',this)">All</button>
+      <button class="article-cat" onclick="filterArticles('faith',this)">Faith & Religion</button>
+      <button class="article-cat" onclick="filterArticles('business',this)">Business</button>
+      <button class="article-cat" onclick="filterArticles('digital',this)">Digital Skills</button>
+      <button class="article-cat" onclick="filterArticles('life',this)">Life</button>
+    </div>
+
+    <div class="articles-grid" id="articlesGrid">
+
+      <div class="article-card reveal" data-cat="faith">
+        <span class="article-cat-tag">Faith & Religion</span>
+        <h3 class="article-title">Why development work without a moral foundation eventually collapses</h3>
+        <p class="article-excerpt">Aid and development are not neutral acts. They carry assumptions about human dignity, about who deserves what, and about what progress means. When those assumptions go unexamined, even well-funded programmes can hollow out the communities they meant to serve. A case for rooting development work in something deeper than metrics.</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">14 min read</span>
+          <span>·</span>
+          <span>March 2026</span>
+        </div>
+      </div>
+
+      <div class="article-card reveal" data-cat="business">
+        <span class="article-cat-tag">Business</span>
+        <h3 class="article-title">The freelance economy in East Africa: opportunity, trap, or both?</h3>
+        <p class="article-excerpt">More young Tanzanians are building their income outside formal employment — one project, one client at a time. But the promise of independence comes with invisible costs: no health cover, no pension, no institutional backing when things fall apart. Here is an honest accounting of what freelancing in this context actually looks like.</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">11 min read</span>
+          <span>·</span>
+          <span>February 2026</span>
+        </div>
+      </div>
+
+      <div class="article-card reveal" data-cat="digital">
+        <span class="article-cat-tag">Digital Skills</span>
+        <h3 class="article-title">A practical guide to M&E data systems for small NGOs in Tanzania</h3>
+        <p class="article-excerpt">Most small NGOs in Tanzania are still running their monitoring and evaluation on WhatsApp threads and shared Excel files — not because they do not care about data quality, but because nobody has shown them a better system that is also affordable and practical. This is that guide, built from six years of field experience.</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">18 min read</span>
+          <span>·</span>
+          <span>January 2026</span>
+        </div>
+      </div>
+
+      <div class="article-card reveal" data-cat="life">
+        <span class="article-cat-tag">Life</span>
+        <h3 class="article-title">On being from Morogoro: notes on place, identity and belonging</h3>
+        <p class="article-excerpt">There is a peculiar pride that comes from a city that most outsiders use only as a waypoint — the rest stop between Dar and Dodoma. But Morogoro has its own particular light, its own particular people, and its own particular way of making you feel that this is exactly where you should be. A meditation on home.</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">9 min read</span>
+          <span>·</span>
+          <span>December 2025</span>
+        </div>
+      </div>
+
+      <div class="article-card reveal" data-cat="faith">
+        <span class="article-cat-tag">Faith & Religion</span>
+        <h3 class="article-title">The theology of community development: what scripture says about data</h3>
+        <p class="article-excerpt">The first census in the Bible was not a management exercise — it was an act of counting people who mattered to God. That thread runs through the whole of scripture: a God who calls people by name, who numbers the hairs of heads, who notices the sparrow. What does that mean for how we design our monitoring frameworks?</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">16 min read</span>
+          <span>·</span>
+          <span>November 2025</span>
+        </div>
+      </div>
+
+      <div class="article-card reveal" data-cat="digital">
+        <span class="article-cat-tag">Digital Skills</span>
+        <h3 class="article-title">Building your first portfolio website without a computer science degree</h3>
+        <p class="article-excerpt">You do not need to know how to code to have a professional online presence. But you do need to understand what you are building and why. A step-by-step guide written for development professionals, teachers, NGO staff and anyone whose career deserves a better home on the internet than a LinkedIn profile.</p>
+        <div class="article-meta">
+          <span>Lutimo Pazza</span>
+          <span>·</span>
+          <span class="article-min">12 min read</span>
+          <span>·</span>
+          <span>October 2025</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section class="j-section-dark" id="j-library">
+  <div class="j-inner" style="position:relative;z-index:1;">
+    <p class="j-label">Reading & Reflection</p>
+    <h2 class="j-heading" style="color:var(--white);">Books that shaped me.<br><em>Words that stayed.</em></h2>
+    <p class="j-sub">A curated shelf of books I recommend — and a wall of the quotes that live rent-free in my mind.</p>
+
+    <div class="library-layout">
+
+      <!-- BOOKS -->
+      <div>
+        <div class="lib-heading">Recommended reading</div>
+        <div class="books-grid">
+
+          <div class="book-card reveal">
+            <div class="book-cover" style="background:linear-gradient(145deg,#1a4a6b,#3a7fa8);">📊</div>
+            <div class="book-info">
+              <div class="book-title">Thinking in Systems</div>
+              <div class="book-author">Donella H. Meadows</div>
+              <div class="book-summary">The single most useful framework I have found for understanding why communities behave the way they do, why interventions fail, and what leverage actually means.</div>
+              <span class="book-badge">Data & M&E</span>
+            </div>
+          </div>
+
+          <div class="book-card reveal">
+            <div class="book-cover" style="background:linear-gradient(145deg,#4a1a6b,#8a4aa8);">📖</div>
+            <div class="book-info">
+              <div class="book-title">The Purpose Driven Life</div>
+              <div class="book-author">Rick Warren</div>
+              <div class="book-summary">Read it first at twenty-two and it reoriented everything. Re-read it at thirty and it did the same thing, differently. The questions it asks do not expire.</div>
+              <span class="book-badge">Faith</span>
+            </div>
+          </div>
+
+          <div class="book-card reveal">
+            <div class="book-cover" style="background:linear-gradient(145deg,#1a6b2a,#4aa85a);">🌍</div>
+            <div class="book-info">
+              <div class="book-title">Dead Aid</div>
+              <div class="book-author">Dambisa Moyo</div>
+              <div class="book-summary">Controversial and necessary. Whether you agree with every argument or not, every person working in development in Africa should read this and feel uncomfortable — productively.</div>
+              <span class="book-badge">Development</span>
+            </div>
+          </div>
+
+          <div class="book-card reveal">
+            <div class="book-cover" style="background:linear-gradient(145deg,#6b3a1a,#a86a3a);">💼</div>
+            <div class="book-info">
+              <div class="book-title">The Lean Startup</div>
+              <div class="book-author">Eric Ries</div>
+              <div class="book-summary">The discipline of testing assumptions before building at scale applies to community programmes just as much as to tech products. A book that changed how I design M&E plans.</div>
+              <span class="book-badge">Business</span>
+            </div>
+          </div>
+
+          <div class="book-card reveal">
+            <div class="book-cover" style="background:linear-gradient(145deg,#1a1a6b,#3a3aa8);">🧠</div>
+            <div class="book-info">
+              <div class="book-title">Factfulness</div>
+              <div class="book-author">Hans Rosling</div>
+              <div class="book-summary">A data-driven case for measured optimism. Rosling shows how our instincts about the world are systematically wrong — and gives us tools to think better. Required reading before any field assignment.</div>
+              <span class="book-badge">Data & Life</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- QUOTES -->
+      <div>
+        <div class="lib-heading">Quotes I carry</div>
+        <div class="quotes-wall">
+
+          <div class="quote-card reveal">
+            <div class="quote-text">The real power of data lies not in the numbers themselves, but in what happens when they reach the right hands at the right time.</div>
+            <div class="quote-attr">Lutimo Pazza</div>
+          </div>
+
+          <div class="quote-card reveal">
+            <div class="quote-text">For I know the plans I have for you, plans to prosper you and not to harm you, plans to give you hope and a future.</div>
+            <div class="quote-attr">Jeremiah 29:11</div>
+          </div>
+
+          <div class="quote-card reveal">
+            <div class="quote-text">Not everything that counts can be counted, and not everything that can be counted counts.</div>
+            <div class="quote-attr">William Bruce Cameron</div>
+          </div>
+
+          <div class="quote-card reveal">
+            <div class="quote-text">Development is not about economics alone. It is about creating the conditions in which every human being can flourish.</div>
+            <div class="quote-attr">Amartya Sen</div>
+          </div>
+
+          <div class="quote-card reveal">
+            <div class="quote-text">You don't need to be great to start, but you have to start to be great.</div>
+            <div class="quote-attr">Zig Ziglar</div>
+          </div>
+
+          <div class="quote-card reveal">
+            <div class="quote-text">Ubuntu: I am because we are.</div>
+            <div class="quote-attr">African Proverb</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL FOOTER -->
+<footer class="j-footer">
+  <p class="j-ft-copy">© Pazza 2026 | <span id="adminTrigger" onclick="adminTriggerClick()" title="">God First</span></p>
+  <div class="j-ft-links">
+    <a onclick="jScrollTo('j-gallery')">Gallery</a>
+    <a onclick="jScrollTo('j-stories')">Stories</a>
+    <a onclick="jScrollTo('j-blog')">Blog</a>
+    <a onclick="jScrollTo('j-articles')">Articles</a>
+    <a onclick="jScrollTo('j-library')">Library</a>
+    <a onclick="switchSection('works')">Back to Works</a>
+  </div>
+</footer>
+
+</div>
 
 <script>
-// Cursor
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+/* ═══════════════════════════════════════════════════════════════
+   PAZZA COMPLETE — WORKS + JOURNAL CMS
+   Default admin password: PazzaJournal2026!
+   Access: click "God First" in footer 5 times quickly
+═══════════════════════════════════════════════════════════════ */
 
-// Nav scroll
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+// ── CONFIG ───────────────────────────────────────────────────
+let CFG = { url:'', key:'', pwd:'PazzaJournal2026!' };
+function loadCfg() {
+  try { const s=localStorage.getItem('pzj_cfg'); if(s) CFG={...CFG,...JSON.parse(s)}; } catch(e){}
+  const u=document.getElementById('cfgUrl'), k=document.getElementById('cfgKey');
+  if(u) u.value=CFG.url; if(k) k.value=CFG.key;
+}
+function saveConfig() {
+  const u=document.getElementById('cfgUrl').value.trim();
+  const k=document.getElementById('cfgKey').value.trim();
+  const p=document.getElementById('cfgPwd').value.trim();
+  if(u) CFG.url=u; if(k) CFG.key=k; if(p) CFG.pwd=p;
+  localStorage.setItem('pzj_cfg', JSON.stringify(CFG));
+  initSB(); showToast('Configuration saved!','success');
+}
+loadCfg();
 
-// Reveal on scroll
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }});
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+// ── SUPABASE ─────────────────────────────────────────────────
+let sb = null;
+function initSB() {
+  if(!CFG.url || !CFG.url.includes('supabase')) { sb=null; updSBStatus(false); return; }
+  try { sb=supabase.createClient(CFG.url, CFG.key); updSBStatus(true); }
+  catch(e) { sb=null; updSBStatus(false); }
+}
+function updSBStatus(ok) {
+  const el=document.getElementById('admSupabaseStatus');
+  if(el) el.textContent = ok ? '● Connected to Supabase' : '○ No database — browser only';
+}
+initSB();
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+// ── TOAST ────────────────────────────────────────────────────
+function showToast(msg, type='info') {
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg;
+  c.appendChild(t); setTimeout(()=>t.remove(), 3400);
+}
+
+// ── CURSOR ───────────────────────────────────────────────────
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove', e=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
+document.addEventListener('mouseleave', ()=>cursor.style.opacity='0');
+document.addEventListener('mouseenter', ()=>cursor.style.opacity='1');
+
+// ── NAV SCROLL ───────────────────────────────────────────────
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll', ()=>navEl.classList.toggle('scrolled', window.scrollY>60));
+
+// ── REVEAL ON SCROLL ─────────────────────────────────────────
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }});
+}, { threshold:0.08 });
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+// ── SMOOTH SCROLL (Works) ────────────────────────────────────
+document.querySelectorAll('#navMenu a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
   });
 });
 
-// Hamburger
-const btn = document.getElementById('hamburgerBtn');
-const menu = document.getElementById('navMenu');
-btn.addEventListener('click', () => {
-  const open = menu.classList.toggle('open');
-  btn.textContent = open ? '✕' : '☰';
-  document.body.style.overflow = open ? 'hidden' : '';
+// ── HAMBURGER ────────────────────────────────────────────────
+const hBtn=document.getElementById('hamburgerBtn');
+const hMenu=document.getElementById('navMenu');
+hBtn.addEventListener('click', ()=>{
+  const isW=document.getElementById('section-works').style.display!=='none';
+  const m=isW ? hMenu : document.getElementById('navMenuJournal');
+  const open=m.classList.toggle('open');
+  hBtn.textContent=open?'✕':'☰'; document.body.style.overflow=open?'hidden':'';
 });
-// close on link click
-document.querySelectorAll('#navMenu a').forEach(a => {
-  a.addEventListener('click', () => {
-    menu.classList.remove('open');
-    btn.textContent = '☰';
-    document.body.style.overflow = '';
+document.querySelectorAll('#navMenu a,#navMenuJournal a').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    [hMenu, document.getElementById('navMenuJournal')].forEach(m=>m.classList.remove('open'));
+    hBtn.textContent='☰'; document.body.style.overflow='';
   });
 });
+
+// ── SECTION SWITCHER ─────────────────────────────────────────
+let jLoaded=false;
+function switchSection(which) {
+  const W=document.getElementById('section-works');
+  const J=document.getElementById('section-journal');
+  const wB=document.getElementById('worksBtn');
+  const jB=document.getElementById('journalBtn');
+  const wL=document.querySelector('.nav-works-links');
+  const jL=document.querySelector('.nav-journal-links');
+  const hire=document.querySelector('.nav-hire');
+  if(which==='journal'){
+    W.style.display='none'; J.style.display='block';
+    wB.classList.remove('active'); jB.classList.add('active');
+    wL.classList.add('hidden'); jL.classList.add('visible');
+    if(hire) hire.style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+    if(!jLoaded){ loadAllJournal(); jLoaded=true; }
+    document.querySelectorAll('#section-journal .reveal').forEach(el=>revObs.observe(el));
+  } else {
+    J.style.display='none'; W.style.display='block';
+    jB.classList.remove('active'); wB.classList.add('active');
+    wL.classList.remove('hidden'); jL.classList.remove('visible');
+    if(hire) hire.style.display='';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+function jScrollTo(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+// ── GALLERY FILTER (static fallback) ─────────────────────────
+function filterGallery(cat,btn){
+  document.querySelectorAll('.gallery-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#galleryGrid .photo-card').forEach(card=>{
+    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+  });
+}
+
+// ── ARTICLE FILTER (static fallback) ─────────────────────────
+function filterArticles(cat,btn){
+  document.querySelectorAll('.article-cat').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#articlesGrid .article-card').forEach(card=>{
+    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// JOURNAL — DYNAMIC LOADING FROM SUPABASE
+// ═══════════════════════════════════════════════════════════
+const GRAD_COLORS=[
+  {f:'#0f4c75',t:'#0d7680'},{f:'#1a5c2a',t:'#5ba35b'},
+  {f:'#7c4a1e',t:'#e8a561'},{f:'#1a4a6b',t:'#3a8fb0'},
+  {f:'#5c3a6b',t:'#b07ab0'},{f:'#8b1a1a',t:'#e86c5a'},
+  {f:'#8b5e1a',t:'#e8c880'},{f:'#2a5a3a',t:'#7ab07a'},
+  {f:'#1a3a6b',t:'#3a6fa8'},{f:'#6b3a1a',t:'#a86a3a'},
+  {f:'#3a1a6b',t:'#6a4aa8'},{f:'#1a1a6b',t:'#3a3aa8'}
+];
+const ART_CAT={ faith:'Faith & Religion', business:'Business', digital:'Digital Skills', life:'Life' };
+
+function gradStyle(f,t){ return `background:linear-gradient(135deg,${f||'#1a4a6b'} 0%,${t||'#3a8fb0'} 100%)`; }
+function fmtDate(d){ return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}); }
+function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+async function loadAllJournal(){
+  await Promise.all([loadGallery(), loadStories(), loadBlogs(), loadArticles(), loadLibrary()]);
+}
+
+// ── GALLERY ──────────────────────────────────────────────────
+async function loadGallery(){
+  if(!sb) return;
+  const {data,error}=await sb.from('gallery').select('*').order('created_at',{ascending:false});
+  if(error||!data||!data.length) return;
+  const grid=document.getElementById('galleryGrid'); grid.innerHTML='';
+  data.forEach((item,i)=>{
+    const imgHtml=item.image_url
+      ? `<img src="${esc(item.image_url)}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+      : `<div style="${gradStyle(item.color_from,item.color_to)};width:100%;height:100%;"></div>`;
+    const card=document.createElement('div');
+    card.className='photo-card'+(i===0?' wide tall':'');
+    card.dataset.cat=item.category||'travel';
+    card.style.position='relative';
+    card.innerHTML=`${imgHtml}
+      <div class="photo-overlay"></div>
+      <span class="photo-tag">${esc(item.category||'')}</span>
+      <div class="photo-info">
+        <div class="photo-loc">${esc(item.location||'')}</div>
+        <div class="photo-caption">${esc(item.caption||item.title||'')}</div>
+      </div>
+      <button class="adm-del-btn" onclick="delItem('gallery','${item.id}',this.closest('.photo-card'))">×</button>`;
+    grid.appendChild(card);
+  });
+  document.querySelectorAll('#galleryGrid .photo-card').forEach(el=>revObs.observe(el));
+}
+
+// ── STORIES ──────────────────────────────────────────────────
+async function loadStories(){
+  if(!sb) return;
+  const {data,error}=await sb.from('stories').select('*').order('created_at',{ascending:false});
+  if(error||!data||!data.length) return;
+  const grid=document.querySelector('#j-stories .stories-grid'); if(!grid) return;
+  let h='';
+  data.forEach((s,i)=>{
+    if(i===0){
+      h+=`<div class="story-featured reveal" data-id="${s.id}">
+        <div class="story-img" style="${gradStyle(s.color_from,s.color_to)};">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,28,0.6) 0%,transparent 60%);"></div>
+          <div style="position:absolute;bottom:1.2rem;left:1.5rem;font-family:var(--serif);font-size:1.5rem;font-weight:700;color:#fff;line-height:1.1;">${esc(s.title)}</div>
+        </div>
+        <div class="story-body">
+          <span class="story-category">${esc(s.category||'Story')}</span>
+          <h3 class="story-title">${esc(s.title)}</h3>
+          <p class="story-excerpt">${esc(s.excerpt||'')}</p>
+          <div class="story-meta"><span>Lutimo Pazza</span><span>·</span><span>${s.read_time||8} min read</span><span>·</span><span>${fmtDate(s.created_at)}</span></div>
+          <a class="read-btn" onclick="openReader('${s.id}','stories')">Read story →</a>
+        </div></div>`;
+    } else {
+      if(i===1) h+='<div class="story-stack">';
+      h+=`<div class="story-mini reveal" data-id="${s.id}">
+        <div class="story-mini-img" style="${gradStyle(s.color_from,s.color_to)};min-height:90px;"></div>
+        <div class="story-mini-body">
+          <span class="story-category" style="font-size:0.58rem;">${esc(s.category||'Story')}</span>
+          <h4 class="story-mini-title">${esc(s.title)}</h4>
+          <p class="story-mini-exc">${esc((s.excerpt||'').substring(0,90))}…</p>
+          <div class="story-mini-meta">${s.read_time||8} min · ${fmtDate(s.created_at)}</div>
+          <a class="read-btn" style="font-size:0.65rem;" onclick="openReader('${s.id}','stories')">Read →</a>
+        </div></div>`;
+      if(i===data.length-1) h+='</div>';
+    }
+  });
+  grid.innerHTML=h;
+  document.querySelectorAll('#j-stories .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── BLOGS ────────────────────────────────────────────────────
+async function loadBlogs(){
+  if(!sb) return;
+  const {data,error}=await sb.from('blogs').select('*').order('created_at',{ascending:false});
+  if(error||!data||!data.length) return;
+  const grid=document.querySelector('#j-blog .blog-grid'); if(!grid) return;
+  grid.innerHTML=data.map(b=>`
+    <div class="blog-card reveal" data-id="${b.id}">
+      <div class="blog-date">${fmtDate(b.created_at)}</div>
+      <h3 class="blog-title">${esc(b.title)}</h3>
+      <p class="blog-excerpt">${esc(b.excerpt||'')}</p>
+      <div class="blog-tags">${(b.tags||[]).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
+      <a class="read-btn" style="margin-top:0.6rem;" onclick="openReader('${b.id}','blogs')">Read post →</a>
+    </div>`).join('');
+  document.querySelectorAll('#j-blog .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── ARTICLES ─────────────────────────────────────────────────
+async function loadArticles(){
+  if(!sb) return;
+  const {data,error}=await sb.from('articles').select('*').order('created_at',{ascending:false});
+  if(error||!data||!data.length) return;
+  const grid=document.getElementById('articlesGrid'); if(!grid) return;
+  grid.innerHTML=data.map(a=>`
+    <div class="article-card reveal" data-cat="${a.category||'life'}" data-id="${a.id}">
+      <span class="article-cat-tag">${ART_CAT[a.category]||esc(a.category)}</span>
+      <h3 class="article-title">${esc(a.title)}</h3>
+      <p class="article-excerpt">${esc(a.excerpt||'')}</p>
+      <div class="article-meta">
+        <span>Lutimo Pazza</span><span>·</span>
+        <span class="article-min">${a.read_time||10} min read</span><span>·</span><span>${fmtDate(a.created_at)}</span>
+      </div>
+      <a class="read-btn" style="margin-top:0.6rem;" onclick="openReader('${a.id}','articles')">Read article →</a>
+    </div>`).join('');
+  document.querySelectorAll('#j-articles .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── LIBRARY ──────────────────────────────────────────────────
+async function loadLibrary(){
+  if(!sb) return;
+  const [{data:books},{data:quotes}]=await Promise.all([
+    sb.from('books').select('*').order('created_at',{ascending:false}),
+    sb.from('quotes').select('*').order('created_at',{ascending:false})
+  ]);
+  const layout=document.querySelector('#j-library .library-layout'); if(!layout) return;
+  const booksHtml=books&&books.length
+    ? `<div><div class="lib-heading">Recommended reading</div><div class="books-grid">
+        ${books.map(b=>`<div class="book-card reveal" data-id="${b.id}">
+          <div class="book-cover" style="${gradStyle(b.color_from,b.color_to)};">${esc(b.emoji||'📖')}</div>
+          <div class="book-info">
+            <div class="book-title">${esc(b.title)}</div>
+            <div class="book-author">${esc(b.author||'')}</div>
+            <div class="book-summary">${esc(b.summary||'')}</div>
+            <span class="book-badge">${esc(b.category||'')}</span>
+          </div></div>`).join('')}
+      </div></div>`
+    : layout.children[0].outerHTML;
+
+  const quotesHtml=quotes&&quotes.length
+    ? `<div><div class="lib-heading">Quotes I carry</div><div class="quotes-wall">
+        ${quotes.map(q=>`<div class="quote-card reveal" data-id="${q.id}">
+          <div class="quote-text">${esc(q.text)}</div>
+          <div class="quote-attr">${esc(q.attribution||'')}</div>
+        </div>`).join('')}</div></div>`
+    : layout.children[1].outerHTML;
+
+  layout.innerHTML=booksHtml+quotesHtml;
+  document.querySelectorAll('#j-library .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── CONTENT READER MODAL ─────────────────────────────────────
+async function openReader(id, table) {
+  if(!sb){ showToast('Connect Supabase to read full content','info'); return; }
+  const {data}=await sb.from(table).select('*').eq('id',id).single();
+  if(!data) return;
+
+  let catLabel='', metaStr='';
+  if(table==='stories'){
+    catLabel=`<span style="display:block;font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber-j);margin-bottom:1rem;">${esc(data.category||'')}</span>`;
+    metaStr=`${data.read_time||8} min read · ${fmtDate(data.created_at)}`;
+  } else if(table==='blogs'){
+    catLabel='';
+    metaStr=`${fmtDate(data.created_at)} · ${(data.tags||[]).join(', ')}`;
+  } else if(table==='articles'){
+    catLabel=`<span style="display:block;font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber-j);margin-bottom:1rem;">${ART_CAT[data.category]||esc(data.category)}</span>`;
+    metaStr=`${data.read_time||10} min read · ${fmtDate(data.created_at)}`;
+  }
+
+  const paras=(data.content||'Content coming soon.').split(/\n\n+/)
+    .map(p=>`<p style="margin-bottom:1.4rem;line-height:1.88;color:rgba(226,232,240,0.82);font-size:1rem;text-align:justify;">${esc(p)}</p>`)
+    .join('');
+
+  const modal=document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;z-index:9000;background:rgba(8,14,28,0.98);overflow-y:auto;padding:4rem 2rem;';
+  modal.innerHTML=`
+    <div style="max-width:720px;margin:0 auto;">
+      <button onclick="this.closest('div[style]').remove()"
+        style="background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(226,232,240,0.6);padding:0.45rem 1.1rem;border-radius:100px;cursor:pointer;font-family:var(--sans);font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2.5rem;display:block;">
+        ← Back to Journal
+      </button>
+      ${catLabel}
+      <h1 style="font-family:var(--serif);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:#fff;line-height:1.15;margin-bottom:1.2rem;">${esc(data.title)}</h1>
+      <div style="font-size:0.72rem;color:rgba(226,232,240,0.4);letter-spacing:0.04em;margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.07);">${metaStr}</div>
+      ${paras}
+    </div>`;
+  document.body.appendChild(modal);
+  modal.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════════
+let aAuthed=false, tClicks=0, tTimer=null;
+
+function adminTriggerClick(){
+  tClicks++;
+  clearTimeout(tTimer);
+  tTimer=setTimeout(()=>tClicks=0, 1500);
+  if(tClicks>=5){ tClicks=0; openAdmin(); }
+}
+
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(aAuthed){
+    document.getElementById('adminLoginScreen').style.display='none';
+    document.getElementById('adminDash').style.display='flex';
+    loadAdmAll();
+  } else {
+    document.getElementById('adminLoginScreen').style.display='flex';
+    document.getElementById('adminDash').style.display='none';
+    setTimeout(()=>{ const i=document.getElementById('adminPwdInput'); if(i) i.focus(); }, 80);
+  }
+}
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function adminLogout(){
+  aAuthed=false;
+  document.getElementById('adminPwdInput').value='';
+  document.getElementById('adminLoginErr').style.display='none';
+  document.getElementById('adminLoginScreen').style.display='flex';
+  document.getElementById('adminDash').style.display='none';
+  document.body.classList.remove('admin-active');
+}
+function checkAdminPwd(){
+  if(document.getElementById('adminPwdInput').value===CFG.pwd){
+    aAuthed=true;
+    document.getElementById('adminLoginErr').style.display='none';
+    document.getElementById('adminLoginScreen').style.display='none';
+    document.getElementById('adminDash').style.display='flex';
+    document.body.classList.add('admin-active');
+    loadAdmAll();
+  } else {
+    document.getElementById('adminLoginErr').style.display='block';
+    document.getElementById('adminPwdInput').value='';
+  }
+}
+
+function showAdmTab(tab){
+  document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active'));
+  if(event&&event.currentTarget) event.currentTarget.classList.add('active');
+  const p=document.getElementById('admPanel-'+tab); if(p) p.classList.add('active');
+}
+
+// ── ADMIN LIST MANAGEMENT ─────────────────────────────────────
+async function loadAdmAll(){
+  buildSwatches('gColorRow'); buildSwatches('stColorRow'); buildSwatches('bkColorRow');
+  updSBStatus(!!sb);
+  const schema=document.getElementById('sqlSchema'); if(schema) schema.value=SQL_SCHEMA;
+  const tables=['gallery','stories','blogs','articles','books','quotes'];
+  const listIds=['admGalleryList','admStoriesList','admBlogList','admArticlesList','admBooksList','admQuotesList'];
+  const renderers=[rGallery,rStory,rBlog,rArticle,rBook,rQuote];
+  await Promise.all(tables.map((t,i)=>loadAdmList(t,listIds[i],renderers[i])));
+}
+
+function buildSwatches(rowId){
+  const row=document.getElementById(rowId); if(!row||row.children.length) return;
+  GRAD_COLORS.forEach((c,i)=>{
+    const sw=document.createElement('div');
+    sw.className='adm-color-swatch'+(i===0?' selected':'');
+    sw.style.cssText=`background:linear-gradient(135deg,${c.f},${c.t});`;
+    sw.dataset.f=c.f; sw.dataset.t=c.t;
+    sw.onclick=()=>{ row.querySelectorAll('.adm-color-swatch').forEach(s=>s.classList.remove('selected')); sw.classList.add('selected'); };
+    row.appendChild(sw);
+  });
+}
+function getColor(rowId){
+  const s=document.getElementById(rowId).querySelector('.selected');
+  return s ? {f:s.dataset.f,t:s.dataset.t} : {f:'#1a4a6b',t:'#3a8fb0'};
+}
+
+async function loadAdmList(table,listId,renderFn){
+  const el=document.getElementById(listId); if(!el) return;
+  if(!sb){ el.innerHTML='<div class="adm-empty">Connect Supabase in Setup tab to manage content.</div>'; return; }
+  el.innerHTML='<div class="adm-loading">Loading…</div>';
+  const {data,error}=await sb.from(table).select('*').order('created_at',{ascending:false});
+  if(error){ el.innerHTML=`<div class="adm-empty">Error: ${error.message}</div>`; return; }
+  el.innerHTML=data&&data.length ? data.map(d=>renderFn(d)).join('') : '<div class="adm-empty">No items yet. Add one above!</div>';
+}
+
+// Render functions
+function rGallery(d){ return `<div class="adm-item">
+  <div class="adm-item-thumb" style="${gradStyle(d.color_from,d.color_to)};${d.image_url?'background:none;':''}">${d.image_url?`<img src="${esc(d.image_url)}" style="width:100%;height:100%;object-fit:cover;">`:''}</div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title||d.caption||'Untitled')}</div><div class="adm-item-meta">${esc(d.category||'')} · ${esc(d.location||'')}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('gallery','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+function rStory(d){ return `<div class="adm-item">
+  <div class="adm-item-thumb" style="${gradStyle(d.color_from,d.color_to)};"></div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.category||'')} · ${d.read_time||8} min · ${fmtDate(d.created_at)}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('stories','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+function rBlog(d){ return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${fmtDate(d.created_at)} · ${(d.tags||[]).join(', ')}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('blogs','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+function rArticle(d){ return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${ART_CAT[d.category]||d.category} · ${d.read_time||10} min · ${fmtDate(d.created_at)}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('articles','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+function rBook(d){ return `<div class="adm-item">
+  <div class="adm-item-thumb" style="${gradStyle(d.color_from,d.color_to)};display:flex;align-items:center;justify-content:center;font-size:1.3rem;">${esc(d.emoji||'📖')}</div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.author||'')} · ${esc(d.category||'')}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('books','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+function rQuote(d){ return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title" style="white-space:normal;">"${esc((d.text||'').substring(0,80))}${d.text&&d.text.length>80?'…':''}"</div><div class="adm-item-meta">— ${esc(d.attribution||'')}</div></div>
+  <div class="adm-item-actions"><button class="adm-btn danger" onclick="delItem('quotes','${d.id}',null,true)">Delete</button></div>
+</div>`; }
+
+// ── DELETE ────────────────────────────────────────────────────
+async function delItem(table,id,domEl,reloadAdm=false){
+  if(!confirm('Delete this item? This cannot be undone.')) return;
+  if(sb){
+    const {error}=await sb.from(table).delete().eq('id',id);
+    if(error){ showToast('Delete failed: '+error.message,'error'); return; }
+  }
+  if(domEl) domEl.remove();
+  showToast('Deleted successfully!','success');
+  if(reloadAdm){
+    const tables=['gallery','stories','blogs','articles','books','quotes'];
+    const listIds=['admGalleryList','admStoriesList','admBlogList','admArticlesList','admBooksList','admQuotesList'];
+    const renderers=[rGallery,rStory,rBlog,rArticle,rBook,rQuote];
+    const i=tables.indexOf(table);
+    if(i>=0) await loadAdmList(table,listIds[i],renderers[i]);
+  }
+  jLoaded=false;
+}
+
+// ── MEDIA UPLOAD ──────────────────────────────────────────────
+function previewGalleryFile(input){
+  const file=input.files[0]; if(!file) return;
+  const prev=document.getElementById('gPreview');
+  prev.style.display='block'; prev.src=URL.createObjectURL(file);
+  document.getElementById('gColorWrap').style.display='none';
+}
+
+async function uploadMedia(file, folder='gallery'){
+  if(!sb) return null;
+  const ext=file.name.split('.').pop();
+  const path=`${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const {error}=await sb.storage.from('journal-media').upload(path,file,{cacheControl:'3600',upsert:false});
+  if(error){ showToast('Upload failed: '+error.message,'error'); return null; }
+  return sb.storage.from('journal-media').getPublicUrl(path).data.publicUrl;
+}
+
+// ── SUBMIT: GALLERY ───────────────────────────────────────────
+async function submitGallery(){
+  const btn=document.getElementById('gSubmitBtn');
+  btn.disabled=true; btn.textContent='Uploading…';
+  try{
+    const file=document.getElementById('gFile').files[0];
+    const col=getColor('gColorRow');
+    let image_url=null;
+    if(file && sb) image_url=await uploadMedia(file,'gallery');
+    const item={
+      title:document.getElementById('gTitle').value.trim(),
+      category:document.getElementById('gCat').value,
+      location:document.getElementById('gLocation').value.trim(),
+      caption:document.getElementById('gCaption').value.trim(),
+      image_url, color_from:col.f, color_to:col.t
+    };
+    if(sb){
+      const {error}=await sb.from('gallery').insert([item]);
+      if(error){ showToast('Error: '+error.message,'error'); return; }
+    }
+    showToast('Photo added to gallery!','success');
+    ['gTitle','gLocation','gCaption'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+    const gf=document.getElementById('gFile'); if(gf) gf.value='';
+    document.getElementById('gPreview').style.display='none';
+    document.getElementById('gColorWrap').style.display='';
+    await loadAdmList('gallery','admGalleryList',rGallery);
+    jLoaded=false;
+  } finally { btn.disabled=false; btn.textContent='Add to Gallery'; }
+}
+
+// ── SUBMIT: STORY ─────────────────────────────────────────────
+async function submitStory(){
+  const col=getColor('stColorRow');
+  const item={
+    title:document.getElementById('stTitle').value.trim(),
+    category:document.getElementById('stCat').value.trim(),
+    read_time:parseInt(document.getElementById('stTime').value)||8,
+    excerpt:document.getElementById('stExcerpt').value.trim(),
+    content:document.getElementById('stContent').value.trim(),
+    color_from:col.f, color_to:col.t
+  };
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(sb){ const {error}=await sb.from('stories').insert([item]); if(error){ showToast('Error: '+error.message,'error'); return; } }
+  showToast('Story published!','success');
+  ['stTitle','stCat','stExcerpt','stContent'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('stories','admStoriesList',rStory); jLoaded=false;
+}
+
+// ── SUBMIT: BLOG ──────────────────────────────────────────────
+async function submitBlog(){
+  const tags=document.getElementById('blTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const item={
+    title:document.getElementById('blTitle').value.trim(),
+    excerpt:document.getElementById('blExcerpt').value.trim(),
+    content:document.getElementById('blContent').value.trim(),
+    tags
+  };
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(sb){ const {error}=await sb.from('blogs').insert([item]); if(error){ showToast('Error: '+error.message,'error'); return; } }
+  showToast('Blog post published!','success');
+  ['blTitle','blExcerpt','blContent','blTags'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('blogs','admBlogList',rBlog); jLoaded=false;
+}
+
+// ── SUBMIT: ARTICLE ───────────────────────────────────────────
+async function submitArticle(){
+  const item={
+    title:document.getElementById('arTitle').value.trim(),
+    category:document.getElementById('arCat').value,
+    read_time:parseInt(document.getElementById('arTime').value)||10,
+    excerpt:document.getElementById('arExcerpt').value.trim(),
+    content:document.getElementById('arContent').value.trim()
+  };
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(sb){ const {error}=await sb.from('articles').insert([item]); if(error){ showToast('Error: '+error.message,'error'); return; } }
+  showToast('Article published!','success');
+  ['arTitle','arExcerpt','arContent'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('articles','admArticlesList',rArticle); jLoaded=false;
+}
+
+// ── SUBMIT: BOOK ──────────────────────────────────────────────
+async function submitBook(){
+  const col=getColor('bkColorRow');
+  const item={
+    title:document.getElementById('bkTitle').value.trim(),
+    author:document.getElementById('bkAuthor').value.trim(),
+    category:document.getElementById('bkCat').value.trim(),
+    emoji:document.getElementById('bkEmoji').value.trim()||'📖',
+    summary:document.getElementById('bkSummary').value.trim(),
+    color_from:col.f, color_to:col.t
+  };
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(sb){ const {error}=await sb.from('books').insert([item]); if(error){ showToast('Error: '+error.message,'error'); return; } }
+  showToast('Book added to shelf!','success');
+  ['bkTitle','bkAuthor','bkCat','bkSummary'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('books','admBooksList',rBook); jLoaded=false;
+}
+
+// ── SUBMIT: QUOTE ─────────────────────────────────────────────
+async function submitQuote(){
+  const item={
+    text:document.getElementById('qtText').value.trim(),
+    attribution:document.getElementById('qtAttr').value.trim()
+  };
+  if(!item.text){ showToast('Quote text is required','error'); return; }
+  if(sb){ const {error}=await sb.from('quotes').insert([item]); if(error){ showToast('Error: '+error.message,'error'); return; } }
+  showToast('Quote added!','success');
+  document.getElementById('qtText').value='';
+  document.getElementById('qtAttr').value='';
+  await loadAdmList('quotes','admQuotesList',rQuote); jLoaded=false;
+}
+
+// ── SQL SCHEMA ────────────────────────────────────────────────
+const SQL_SCHEMA=`-- Pazza Journal — Supabase Schema
+-- Run once in: Supabase Dashboard → SQL Editor → New query
+
+create table if not exists gallery (
+  id uuid default gen_random_uuid() primary key,
+  title text, caption text, location text,
+  category text, image_url text,
+  color_from text default '#1a4a6b',
+  color_to   text default '#3a8fb0',
+  created_at timestamptz default now()
+);
+create table if not exists stories (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text,
+  category text, read_time int default 8,
+  color_from text default '#1a4a2a',
+  color_to   text default '#4a9a6a',
+  created_at timestamptz default now()
+);
+create table if not exists blogs (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text,
+  tags text[] default '{}',
+  created_at timestamptz default now()
+);
+create table if not exists articles (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text,
+  category text, read_time int default 10,
+  created_at timestamptz default now()
+);
+create table if not exists books (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, author text, summary text,
+  category text, emoji text default '📖',
+  color_from text default '#1a4a6b',
+  color_to   text default '#3a7fa8',
+  created_at timestamptz default now()
+);
+create table if not exists quotes (
+  id uuid default gen_random_uuid() primary key,
+  text text not null, attribution text,
+  created_at timestamptz default now()
+);
+
+-- Enable Row Level Security on all tables
+alter table gallery  enable row level security;
+alter table stories  enable row level security;
+alter table blogs    enable row level security;
+alter table articles enable row level security;
+alter table books    enable row level security;
+alter table quotes   enable row level security;
+
+-- Public read + write policies (admin auth is handled client-side)
+create policy "public_select"  on gallery  for select using (true);
+create policy "public_insert"  on gallery  for insert with check (true);
+create policy "public_delete"  on gallery  for delete using (true);
+create policy "public_select"  on stories  for select using (true);
+create policy "public_insert"  on stories  for insert with check (true);
+create policy "public_delete"  on stories  for delete using (true);
+create policy "public_select"  on blogs    for select using (true);
+create policy "public_insert"  on blogs    for insert with check (true);
+create policy "public_delete"  on blogs    for delete using (true);
+create policy "public_select"  on articles for select using (true);
+create policy "public_insert"  on articles for insert with check (true);
+create policy "public_delete"  on articles for delete using (true);
+create policy "public_select"  on books    for select using (true);
+create policy "public_insert"  on books    for insert with check (true);
+create policy "public_delete"  on books    for delete using (true);
+create policy "public_select"  on quotes   for select using (true);
+create policy "public_insert"  on quotes   for insert with check (true);
+create policy "public_delete"  on quotes   for delete using (true);
+
+-- STORAGE: In Supabase Dashboard → Storage, create a bucket named:
+--   journal-media   (set to Public)
+`;
 </script>
+
+<div id="toastContainer"></div>
+<div id="adminOverlay">
+  <div id="adminLoginScreen">
+    <div class="adm-bar">
+      <span class="adm-logo">Pazza Journal — Admin</span>
+      <button class="adm-close" onclick="closeAdmin()">✕ Close</button>
+    </div>
+    <div id="adminLogin">
+      <div class="adm-login-box">
+        <div class="adm-login-title">Welcome back</div>
+        <div class="adm-login-sub">Enter your admin password to manage content</div>
+        <div class="adm-form-group" style="text-align:left;">
+          <label class="adm-label">Password</label>
+          <input class="adm-input" type="password" id="adminPwdInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkAdminPwd()" style="text-align:center;letter-spacing:0.15em;">
+        </div>
+        <div id="adminLoginErr" class="adm-login-err">Incorrect password. Try again.</div>
+        <button class="adm-btn" onclick="checkAdminPwd()" style="width:100%;justify-content:center;margin-top:1.2rem;">Enter CMS</button>
+      </div>
+    </div>
+  </div>
+  <div id="adminDash" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+    <div class="adm-bar">
+      <span class="adm-logo">Pazza Journal — Content Manager</span>
+      <div style="display:flex;gap:0.75rem;align-items:center;">
+        <span id="admSupabaseStatus" style="font-size:0.72rem;color:rgba(226,232,240,0.35);letter-spacing:0.04em;"></span>
+        <button class="adm-close" onclick="adminLogout()">Log Out</button>
+        <button class="adm-close" onclick="closeAdmin()">✕ Close</button>
+      </div>
+    </div>
+    <div class="adm-body">
+      <nav class="adm-sidebar">
+        <button class="adm-tab active" onclick="showAdmTab('gallery')"><span class="adm-tab-ico">🖼️</span> Gallery</button>
+        <button class="adm-tab" onclick="showAdmTab('stories')"><span class="adm-tab-ico">📖</span> Stories</button>
+        <button class="adm-tab" onclick="showAdmTab('blog')"><span class="adm-tab-ico">✍️</span> Blog</button>
+        <button class="adm-tab" onclick="showAdmTab('articles')"><span class="adm-tab-ico">📄</span> Articles</button>
+        <div class="adm-sidebar-divider"></div>
+        <button class="adm-tab" onclick="showAdmTab('books')"><span class="adm-tab-ico">📚</span> Books</button>
+        <button class="adm-tab" onclick="showAdmTab('quotes')"><span class="adm-tab-ico">💬</span> Quotes</button>
+        <div class="adm-sidebar-divider"></div>
+        <button class="adm-tab" onclick="showAdmTab('setup')"><span class="adm-tab-ico">⚙️</span> Setup</button>
+      </nav>
+      <div class="adm-main">
+
+        <div class="adm-panel active" id="admPanel-gallery">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Add Photo or Video</div>
+            <div class="adm-form-grid">
+              <div class="adm-form-group"><label class="adm-label">Title</label><input class="adm-input" id="gTitle" placeholder="e.g. Stone Town at golden hour"></div>
+              <div class="adm-form-group"><label class="adm-label">Category</label><select class="adm-select" id="gCat"><option value="travel">Travel</option><option value="nature">Nature</option><option value="culture">Culture</option><option value="people">People</option><option value="family">Family</option></select></div>
+              <div class="adm-form-group"><label class="adm-label">Location & Year</label><input class="adm-input" id="gLocation" placeholder="e.g. Zanzibar · Tanzania · 2024"></div>
+              <div class="adm-form-group"><label class="adm-label">Caption</label><input class="adm-input" id="gCaption" placeholder="Short evocative description"></div>
+              <div class="adm-form-group full"><label class="adm-label">Upload Image</label><div class="adm-file-wrap"><input type="file" accept="image/*,video/*" id="gFile" onchange="previewGalleryFile(this)"><label class="adm-file-label"><span>Click to choose</span> or drag image/video here</label><img class="adm-preview-img" id="gPreview"></div></div>
+              <div class="adm-form-group full" id="gColorWrap"><label class="adm-label">Or pick a gradient (if no image)</label><div class="adm-color-row" id="gColorRow"></div></div>
+            </div>
+            <button class="adm-btn" onclick="submitGallery()" id="gSubmitBtn">Add to Gallery</button>
+          </div>
+          <div class="adm-list-title">Existing Gallery Items</div>
+          <div class="adm-items" id="admGalleryList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-stories">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Write a Story</div>
+            <div class="adm-form-grid">
+              <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="stTitle" placeholder="Story headline"></div>
+              <div class="adm-form-group"><label class="adm-label">Category</label><input class="adm-input" id="stCat" placeholder="e.g. Field Experience, Travel, Faith"></div>
+              <div class="adm-form-group"><label class="adm-label">Read Time (min)</label><input class="adm-input" type="number" id="stTime" value="8" min="1" max="60"></div>
+              <div class="adm-form-group full"><label class="adm-label">Excerpt (shown in card)</label><textarea class="adm-textarea" id="stExcerpt" placeholder="2–3 sentence teaser…"></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Full Story Content</label><textarea class="adm-textarea tall" id="stContent" placeholder="Write your full story. Blank lines = new paragraph."></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Cover Color</label><div class="adm-color-row" id="stColorRow"></div></div>
+            </div>
+            <button class="adm-btn" onclick="submitStory()">Publish Story</button>
+          </div>
+          <div class="adm-list-title">Published Stories</div>
+          <div class="adm-items" id="admStoriesList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-blog">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Write a Blog Post</div>
+            <div class="adm-form-grid">
+              <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="blTitle" placeholder="Post headline"></div>
+              <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="blExcerpt" placeholder="2–3 sentence teaser…"></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Full Content</label><textarea class="adm-textarea tall" id="blContent" placeholder="Write your post. Blank lines = new paragraph."></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Tags (comma separated)</label><input class="adm-input" id="blTags" placeholder="e.g. Faith, Digital Skills, Life"></div>
+            </div>
+            <button class="adm-btn" onclick="submitBlog()">Publish Post</button>
+          </div>
+          <div class="adm-list-title">Published Posts</div>
+          <div class="adm-items" id="admBlogList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-articles">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Write an Article</div>
+            <div class="adm-form-grid">
+              <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="arTitle" placeholder="Article headline"></div>
+              <div class="adm-form-group"><label class="adm-label">Category</label><select class="adm-select" id="arCat"><option value="faith">Faith & Religion</option><option value="business">Business</option><option value="digital">Digital Skills</option><option value="life">Life</option></select></div>
+              <div class="adm-form-group"><label class="adm-label">Read Time (min)</label><input class="adm-input" type="number" id="arTime" value="10" min="1"></div>
+              <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="arExcerpt" placeholder="Opening paragraph or summary…"></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Full Content</label><textarea class="adm-textarea tall" id="arContent" placeholder="Full article. Blank lines = new paragraph."></textarea></div>
+            </div>
+            <button class="adm-btn" onclick="submitArticle()">Publish Article</button>
+          </div>
+          <div class="adm-list-title">Published Articles</div>
+          <div class="adm-items" id="admArticlesList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-books">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Add a Book Recommendation</div>
+            <div class="adm-form-grid">
+              <div class="adm-form-group"><label class="adm-label">Book Title</label><input class="adm-input" id="bkTitle" placeholder="Book title"></div>
+              <div class="adm-form-group"><label class="adm-label">Author</label><input class="adm-input" id="bkAuthor" placeholder="Author name"></div>
+              <div class="adm-form-group"><label class="adm-label">Category / Tag</label><input class="adm-input" id="bkCat" placeholder="e.g. Data & M&E, Faith, Life"></div>
+              <div class="adm-form-group"><label class="adm-label">Cover Emoji</label><input class="adm-input" id="bkEmoji" placeholder="📖" maxlength="4" style="font-size:1.4rem;text-align:center;"></div>
+              <div class="adm-form-group full"><label class="adm-label">Your Summary</label><textarea class="adm-textarea" id="bkSummary" placeholder="Why you recommend this book…"></textarea></div>
+              <div class="adm-form-group full"><label class="adm-label">Cover Color</label><div class="adm-color-row" id="bkColorRow"></div></div>
+            </div>
+            <button class="adm-btn" onclick="submitBook()">Add Book</button>
+          </div>
+          <div class="adm-list-title">Current Shelf</div>
+          <div class="adm-items" id="admBooksList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-quotes">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Add a Quote</div>
+            <div class="adm-form-grid single">
+              <div class="adm-form-group"><label class="adm-label">Quote Text</label><textarea class="adm-textarea" id="qtText" placeholder="The words you want to remember…"></textarea></div>
+              <div class="adm-form-group"><label class="adm-label">Attribution</label><input class="adm-input" id="qtAttr" placeholder="e.g. Jeremiah 29:11, or Lutimo Pazza"></div>
+            </div>
+            <button class="adm-btn" onclick="submitQuote()">Add Quote</button>
+          </div>
+          <div class="adm-list-title">Quotes Wall</div>
+          <div class="adm-items" id="admQuotesList"><div class="adm-loading">Loading…</div></div>
+        </div>
+
+        <div class="adm-panel" id="admPanel-setup">
+          <div class="adm-form-card">
+            <div class="adm-form-title">Supabase Configuration</div>
+            <div class="adm-setup" style="display:block;margin-bottom:1.5rem;">
+              <div class="adm-setup-title">How to connect your database</div>
+              1. Go to <a href="https://supabase.com" target="_blank" style="color:var(--amber-j);">supabase.com</a> → create a free project.<br>
+              2. In <strong>SQL Editor</strong>, run the schema from the box below.<br>
+              3. Go to <strong>Project Settings → API</strong>, copy your URL and anon key.<br>
+              4. Paste them here and click Save — your content persists across all devices.<br>
+              5. In <strong>Storage</strong>, create a public bucket named <code>journal-media</code>.
+            </div>
+            <div class="adm-form-grid single">
+              <div class="adm-form-group"><label class="adm-label">Supabase Project URL</label><input class="adm-input" id="cfgUrl" placeholder="https://xxxx.supabase.co" style="font-family:monospace;"></div>
+              <div class="adm-form-group"><label class="adm-label">Anon / Public Key</label><input class="adm-input" id="cfgKey" placeholder="eyJhbGci..." style="font-family:monospace;"></div>
+              <div class="adm-form-group"><label class="adm-label">Change Admin Password (leave blank to keep current)</label><input class="adm-input" type="password" id="cfgPwd" placeholder="New password"></div>
+            </div>
+            <button class="adm-btn" onclick="saveConfig()">Save & Connect</button>
+          </div>
+          <div class="adm-form-card">
+            <div class="adm-form-title">SQL Schema (copy and run in Supabase)</div>
+            <textarea class="adm-textarea tall" readonly id="sqlSchema" onclick="this.select();" style="font-family:monospace;font-size:0.72rem;color:rgba(226,232,240,0.6);"></textarea>
+            <button class="adm-btn secondary" onclick="document.getElementById('sqlSchema').select();document.execCommand('copy');showToast('Schema copied!','success')">Copy SQL</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
