@@ -105,28 +105,24 @@ h1,h2,h3,h4,.eyebrow,.s-label,.hero-role,.nav-center a,.btn-gold,.btn-ghost,
 /* ══════════════════ NAVBAR ══════════════════ */
 nav{
   position:fixed; top:0; left:0; right:0; z-index:1000;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0; height:70px;
-  background: transparent;
-  transition: background 0.4s, box-shadow 0.4s, border-color 0.4s;
-  border-bottom: 1px solid transparent;
-  gap:1rem;
-}
-nav::before{
-  content:''; position:absolute; inset:0;
-  background: rgba(8,14,28,0.0);
-  backdrop-filter: blur(0px);
-  transition: all 0.4s;
-  z-index:-1;
-}
-nav.scrolled::before{
-  background: rgba(8,14,28,0.88);
+  display:flex; flex-direction:column; align-items:stretch;
+  padding:0; height:auto;
+  /* Always dark — constant at all scroll positions */
+  background: rgba(8,14,28,0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-}
-nav.scrolled{
-  border-color: var(--border-light);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+}
+.nav-main-row{
+  display:flex; align-items:center; justify-content:space-between;
+  height:64px; gap:1rem; width:100%;
+}
+.nav-toggle-row{
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.03);
+  padding:0; height:32px;
+  border-top: 1px solid rgba(255,255,255,0.07);
 }
 
 .nav-logo {
@@ -145,13 +141,10 @@ nav.scrolled{
 
 }
 
-/* When navbar is black (after scroll) */
-.nav.scrolled .nav-logo{
-  background: none;
-  color: #ffffff;
-  -webkit-text-fill-color: #ffffff;
-
-
+/* Nav is always dark — logo always white */
+.nav-logo{
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 .nav-logo:hover{ opacity:0.85; }
 .nav-logo sup{
@@ -170,7 +163,7 @@ nav.scrolled{
 }
 .nav-center a{
   font-size:0.78rem; font-weight:600; letter-spacing:0.08em;
-  text-transform:uppercase; color: orange;
+  text-transform:uppercase; color: rgba(226,232,240,0.65);
   text-decoration:none; transition:color 0.2s ease;
   padding:0.4rem 0; white-space:nowrap; position:relative;
 }
@@ -215,13 +208,14 @@ nav.scrolled{
 .hero{
   min-height:100vh;
   display:grid; grid-template-columns:1fr 460px;
-  padding-top:70px;
+  padding-top:96px;
   background: var(--white);
+  margin-top:0;
 }
 
 /* Hero LEFT */
 .hero-left{
-  padding: 4rem 4rem 4rem 4rem;
+  padding: 2rem 4rem 4rem 4rem;
   display:flex; flex-direction:column; justify-content:space-between;
   position:relative; background:var(--white);
 }
@@ -911,22 +905,29 @@ footer::before{
    SECTION SWITCHER
    ═══════════════════════════════════════════════════════════ */
 .section-toggle{
-  display:flex; background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:100px; padding:3px; gap:2px;
+  display:flex; background:transparent;
+  border:none; border-radius:0; padding:0; gap:0;
 }
 .section-btn{
-  font-family:var(--sans); font-size:0.72rem; font-weight:700;
-  letter-spacing:0.08em; text-transform:uppercase;
-  padding:0.38rem 1.1rem; border:none; cursor:pointer;
-  border-radius:100px; background:transparent;
-  color:rgba(226,232,240,0.55); transition:all 0.25s;
+  font-family:var(--sans); font-size:0.7rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase;
+  padding:0 1.6rem; height:32px; border:none; cursor:pointer;
+  border-radius:0; background:transparent;
+  color:rgba(226,232,240,0.5); transition:all 0.25s;
+  border-right:1px solid rgba(255,255,255,0.08);
+  position:relative;
+}
+.section-btn::after{
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background:var(--gold); transform:scaleX(0); transform-origin:center;
+  transition:transform 0.25s;
 }
 .section-btn.active{
-  background:var(--gold); color:var(--night);
-  box-shadow:0 0 16px rgba(232,160,33,0.35);
+  background:rgba(232,160,33,0.12); color:var(--gold);
 }
-.section-btn:hover:not(.active){ color:#fff; }
+.section-btn.active::after{ transform:scaleX(1); }
+.section-btn:hover:not(.active){ color:#fff; background:rgba(255,255,255,0.05); }
+.section-btn:last-child{ border-right:none; }
 
 /* Journal nav links */
 .nav-journal-links{ display:none; }
@@ -981,7 +982,7 @@ footer::before{
 .j-hero{
   min-height:50vh; display:flex; align-items:center;
   background:var(--night); position:relative; overflow:hidden;
-  padding:7rem 3rem 5rem;
+  padding:3rem 3rem 5rem;
 }
 .j-hero::before{
   content:''; position:absolute; inset:0;
@@ -1385,15 +1386,15 @@ footer::before{
 #adminOverlay.open{display:flex;}
 .adm-bar{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2rem;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
 .adm-logo{font-family:var(--serif);font-size:1.1rem;font-weight:700;background:var(--grad-journal);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.adm-close{background:none;border:1px solid rgba(255,255,255,0.12);color:rgba(226,232,240,0.6);font-size:1rem;border-radius:8px;cursor:pointer;padding:0.3rem 0.8rem;transition:all 0.2s;font-family:var(--sans);}
+.adm-close{background:none;border:1px solid rgba(255,255,255,0.12);color:rgba(226,232,240,0.6);font-size:0.78rem;border-radius:8px;cursor:pointer;padding:0.35rem 0.9rem;transition:all 0.2s;font-family:var(--sans);letter-spacing:0.04em;font-weight:600;}
 .adm-close:hover{border-color:var(--amber-j);color:var(--amber-j);}
-.adm-body{display:flex;flex:1;overflow:hidden;}
-.adm-sidebar{width:220px;flex-shrink:0;background:rgba(255,255,255,0.025);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;padding:1.5rem 0;overflow-y:auto;}
-.adm-tab{display:flex;align-items:center;gap:0.75rem;padding:0.8rem 1.5rem;cursor:pointer;font-size:0.82rem;font-weight:600;color:rgba(226,232,240,0.45);transition:all 0.2s;border:none;background:none;text-align:left;width:100%;font-family:var(--sans);border-left:3px solid transparent;letter-spacing:0.02em;}
+/* ── Horizontal tab nav (replaces old sidebar) ── */
+.adm-body{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+.adm-topnav{display:flex;align-items:center;flex-wrap:nowrap;gap:0;background:rgba(255,255,255,0.025);border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;overflow-x:auto;padding:0 1rem;}
+.adm-tab{display:inline-flex;align-items:center;gap:0.5rem;padding:0 1.1rem;height:44px;cursor:pointer;font-size:0.72rem;font-weight:700;color:rgba(226,232,240,0.4);transition:all 0.2s;border:none;background:none;font-family:var(--sans);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;}
 .adm-tab:hover{color:rgba(226,232,240,0.8);background:rgba(255,255,255,0.03);}
-.adm-tab.active{color:var(--amber-j);background:rgba(217,119,6,0.08);border-left-color:var(--amber-j);}
-.adm-tab-ico{font-size:1rem;width:20px;text-align:center;}
-.adm-sidebar-divider{height:1px;background:rgba(255,255,255,0.06);margin:1rem 1.5rem;}
+.adm-tab.active{color:var(--amber-j);border-bottom-color:var(--amber-j);background:rgba(217,119,6,0.06);}
+.adm-tab-ico{font-size:0.9rem;}
 .adm-main{flex:1;overflow-y:auto;padding:2rem;display:flex;flex-direction:column;gap:2rem;}
 .adm-panel{display:none;}
 .adm-panel.active{display:block;}
@@ -1510,7 +1511,175 @@ body.admin-active .photo-card .adm-del-btn{display:flex;}
 .adm-btn.edit-save{ background:var(--teal); color:#fff; }
 .adm-btn.edit-save:hover{ background:var(--teal2); }
 
-/* ─── SHARE BUTTON ────────────────────────────────────────── */
+/* ─── ENGAGEMENT BAR ──────────────────────────────────────── */
+.engage-bar{
+  display:flex; align-items:center; gap:0.5rem;
+  flex-wrap:wrap; margin-top:1rem; padding-top:0.8rem;
+  border-top:1px solid rgba(255,255,255,0.07);
+}
+.engage-btn{
+  display:inline-flex; align-items:center; gap:0.35rem;
+  font-size:0.68rem; font-weight:700; letter-spacing:0.07em;
+  text-transform:uppercase; padding:0.38rem 0.85rem;
+  border:1px solid rgba(255,255,255,0.12); color:rgba(226,232,240,0.55);
+  border-radius:100px; cursor:pointer; background:none;
+  font-family:var(--sans); transition:all 0.2s;
+}
+.engage-btn:hover{ border-color:var(--amber-j); color:var(--amber-j); }
+.engage-btn.liked{ border-color:#e8405a; color:#e8405a; background:rgba(232,64,90,0.08); }
+.engage-btn.liked .like-ico{ filter:none; }
+.engage-btn .count{ font-weight:400; font-size:0.64rem; opacity:0.75; }
+
+/* On light backgrounds (stories, articles pages) */
+.engage-bar.light .engage-btn{
+  border-color:rgba(15,23,42,0.15); color:rgba(15,23,42,0.45);
+}
+.engage-bar.light .engage-btn:hover{ border-color:var(--amber-j); color:var(--amber-j); }
+.engage-bar.light .engage-btn.liked{ border-color:#e8405a; color:#e8405a; }
+
+/* ─── SHARE MODAL ─────────────────────────────────────────── */
+#shareModal{
+  position:fixed; inset:0; z-index:20001;
+  background:rgba(8,14,28,0.75); backdrop-filter:blur(8px);
+  display:none; align-items:center; justify-content:center;
+}
+#shareModal.open{ display:flex; }
+.share-modal-box{
+  background:#0e1628; border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px; padding:2rem; width:min(92vw,440px);
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
+}
+.share-modal-title{
+  font-family:var(--serif); font-size:1.2rem; color:#fff;
+  font-weight:700; margin-bottom:0.3rem;
+}
+.share-modal-sub{
+  font-size:0.75rem; color:rgba(226,232,240,0.4);
+  margin-bottom:1.5rem; line-height:1.5;
+}
+.share-platforms{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem;
+  margin-bottom:1.5rem;
+}
+.share-platform-btn{
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  padding:0.9rem 0.5rem; border-radius:12px;
+  border:1px solid rgba(255,255,255,0.09);
+  background:rgba(255,255,255,0.03); cursor:pointer;
+  transition:all 0.2s; color:rgba(226,232,240,0.7);
+  font-size:0.62rem; font-weight:700; letter-spacing:0.06em;
+  text-transform:uppercase; font-family:var(--sans);
+  text-decoration:none;
+}
+.share-platform-btn:hover{ background:rgba(255,255,255,0.07); border-color:rgba(255,255,255,0.2); color:#fff; transform:translateY(-2px); }
+.share-platform-btn .sp-ico{ font-size:1.5rem; }
+.share-copy-row{
+  display:flex; gap:0.5rem; align-items:center;
+}
+.share-copy-input{
+  flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px; padding:0.55rem 0.8rem;
+  color:rgba(226,232,240,0.6); font-size:0.72rem; font-family:monospace;
+  outline:none;
+}
+.share-copy-btn{
+  padding:0.55rem 1.1rem; background:var(--amber-j); color:var(--night);
+  border:none; border-radius:8px; font-size:0.72rem; font-weight:700;
+  cursor:pointer; font-family:var(--sans); transition:all 0.2s; white-space:nowrap;
+}
+.share-copy-btn:hover{ background:var(--amber-j2); }
+.share-modal-close{
+  float:right; background:none; border:none; color:rgba(226,232,240,0.4);
+  font-size:1.3rem; cursor:pointer; line-height:1; margin-top:-0.2rem;
+  transition:color 0.2s;
+}
+.share-modal-close:hover{ color:#fff; }
+
+/* ─── COMMENT PANEL ────────────────────────────────────────── */
+#commentPanel{
+  position:fixed; inset:0; z-index:20001;
+  background:rgba(8,14,28,0.75); backdrop-filter:blur(8px);
+  display:none; align-items:flex-end; justify-content:center;
+}
+#commentPanel.open{ display:flex; }
+.comment-box{
+  background:#0e1628; border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px 20px 0 0; padding:1.8rem 1.8rem 2rem;
+  width:min(100vw,640px); max-height:80vh;
+  display:flex; flex-direction:column;
+  box-shadow:0 -16px 48px rgba(0,0,0,0.5);
+}
+.comment-box-header{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:1.2rem; flex-shrink:0;
+}
+.comment-box-title{
+  font-family:var(--serif); font-size:1.1rem; color:#fff; font-weight:700;
+}
+.comment-box-close{
+  background:none; border:none; color:rgba(226,232,240,0.4);
+  font-size:1.3rem; cursor:pointer; transition:color 0.2s;
+}
+.comment-box-close:hover{ color:#fff; }
+.comment-list{
+  flex:1; overflow-y:auto; display:flex; flex-direction:column;
+  gap:0.9rem; margin-bottom:1.2rem; padding-right:0.3rem;
+}
+.comment-list::-webkit-scrollbar{ width:4px; }
+.comment-list::-webkit-scrollbar-track{ background:transparent; }
+.comment-list::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.1); border-radius:2px; }
+.comment-item{
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px; padding:0.9rem 1rem;
+}
+.comment-author{
+  font-size:0.7rem; font-weight:700; color:var(--amber-j);
+  letter-spacing:0.05em; margin-bottom:0.3rem;
+}
+.comment-date{
+  font-size:0.6rem; color:rgba(226,232,240,0.3); margin-left:0.5rem; font-weight:400;
+}
+.comment-text{
+  font-size:0.85rem; color:rgba(226,232,240,0.78); line-height:1.65;
+}
+.comment-empty{
+  font-size:0.82rem; color:rgba(226,232,240,0.3); text-align:center;
+  padding:1.5rem 0; font-style:italic;
+}
+.comment-form{ flex-shrink:0; display:flex; flex-direction:column; gap:0.6rem; }
+.comment-name-row{ display:flex; gap:0.6rem; }
+.comment-input{
+  width:100%; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1); border-radius:10px;
+  padding:0.65rem 0.9rem; color:rgba(226,232,240,0.85);
+  font-size:0.82rem; font-family:var(--sans); outline:none;
+  transition:border-color 0.2s;
+}
+.comment-input:focus{ border-color:rgba(217,119,6,0.5); }
+.comment-input::placeholder{ color:rgba(226,232,240,0.25); }
+.comment-textarea{
+  width:100%; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1); border-radius:10px;
+  padding:0.65rem 0.9rem; color:rgba(226,232,240,0.85);
+  font-size:0.82rem; font-family:var(--sans); outline:none;
+  transition:border-color 0.2s; resize:vertical; min-height:80px;
+}
+.comment-textarea:focus{ border-color:rgba(217,119,6,0.5); }
+.comment-textarea::placeholder{ color:rgba(226,232,240,0.25); }
+.comment-submit{
+  align-self:flex-end; padding:0.6rem 1.5rem;
+  background:var(--amber-j); color:var(--night);
+  border:none; border-radius:100px; font-size:0.75rem;
+  font-weight:700; cursor:pointer; font-family:var(--sans);
+  transition:all 0.2s; letter-spacing:0.05em;
+}
+.comment-submit:hover{ background:var(--amber-j2); }
+.comment-loading{
+  font-size:0.75rem; color:rgba(226,232,240,0.35);
+  text-align:center; padding:0.5rem 0;
+}
+
+/* ─── SHARE BUTTON (legacy compat) ───────────────────────── */
 .share-btn{
   display:inline-flex; align-items:center; gap:0.4rem;
   font-size:0.68rem; font-weight:700; letter-spacing:0.08em;
@@ -1582,28 +1751,22 @@ body.admin-active .photo-card .adm-del-btn{display:flex;}
   display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center;
 }
 
-/* ─── SECTION TOGGLE – MOBILE FIX ────────────────────────── */
+/* ─── SECTION TOGGLE – COMPACT ROW ────────────────────────── */
 .section-toggle{
-  position:absolute; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:0; height:32px;
 }
-nav{ position:relative; flex-wrap:nowrap; }
+/* nav position:fixed is set in main nav block above — do NOT override here */
 @media(max-width:680px){
   .section-toggle{
-    position:static; transform:none;
-    order:3; width:100%;
-    justify-content:center;
-    margin:0; padding:0 0 0.5rem;
+    justify-content:center; width:100%;
   }
-  nav{
-    flex-wrap:wrap; padding-bottom:0;
-    gap:0;
-  }
+  .nav-main-row{ height:56px; }
   .nav-logo{ padding-left:1rem!important; }
   .nav-actions{ padding-right:1rem!important; }
-  .section-btn{ font-size:0.68rem; padding:0.3rem 0.85rem; }
+  .section-btn{ font-size:0.65rem; padding:0.25rem 0.8rem; }
 }
 @media(min-width:681px) and (max-width:960px){
-  .section-toggle{ position:static; transform:none; }
+  .section-toggle{ justify-content:center; }
 }
 
 /* ─── CONTENT CARD: EXCERPT CLAMP ────────────────────────── */
@@ -1621,7 +1784,35 @@ nav{ position:relative; flex-wrap:nowrap; }
 .book-body-text p{ margin-bottom:0.6rem; }
 
 /* ─── JOURNAL STANDALONE ROUTING ─────────────────────────── */
-.j-section-page{ display:block; }
+/* Use visibility+opacity instead of display:none to prevent flash on toggle */
+.j-section-page{
+  display:none;
+}
+.j-section-page.active{
+  display:block;
+}
+
+/* Journal back nav breadcrumb strip */
+.j-page-bar{
+  display:flex; align-items:center; gap:0.8rem;
+  padding:0.7rem 3rem;
+  background:rgba(8,14,28,0.97);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  font-size:0.68rem; letter-spacing:0.06em; text-transform:uppercase;
+  color:rgba(226,232,240,0.4);
+  /* Not sticky — scrolls with page, never obstructs content */
+  position:static;
+}
+.j-page-bar-back{
+  display:flex; align-items:center; gap:0.45rem;
+  color:var(--amber-j); cursor:pointer; font-weight:700;
+  transition:opacity 0.2s; background:none; border:none;
+  font-size:0.68rem; font-family:var(--sans); letter-spacing:0.06em; text-transform:uppercase;
+  padding:0;
+}
+.j-page-bar-back:hover{ opacity:0.75; }
+.j-page-bar-sep{ color:rgba(255,255,255,0.15); }
+.j-page-bar-current{ color:rgba(226,232,240,0.65); font-weight:600; }
 
 /* ─── ADMIN ITEM ACTIONS ──────────────────────────────────── */
 .adm-item-actions{ display:flex; gap:0.4rem; flex-wrap:wrap; }
@@ -1644,32 +1835,37 @@ nav{ position:relative; flex-wrap:nowrap; }
 
 <div class="cursor" id="cursor"></div>
 
-<!-- NAVIGATION with hamburger placed after Hire Me (inside nav-actions) -->
+<!-- NAVIGATION — 2-row: main nav + section toggle strip -->
 <nav id="nav">
-  <a href="#" class="nav-logo" onclick="switchSection('works');return false;">Lutimo Pazza<sup>&#9679;</sup></a>
-  <div class="section-toggle">
-  <button class="section-btn active" id="worksBtn" onclick="switchSection('works')">Works</button>
-  <button class="section-btn" id="journalBtn" onclick="switchSection('journal')">Journal</button>
-
+  <!-- ROW 1: Logo · Nav Links · Actions -->
+  <div class="nav-main-row">
+    <a href="#" class="nav-logo" onclick="switchSection('works');return false;">Lutimo Pazza<sup>&#9679;</sup></a>
+    <ul class="nav-center nav-works-links" id="navMenu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Credentials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <ul class="nav-center nav-journal-links" id="navMenuJournal">
+      <li><a href="javascript:void(0)" onclick="showJSection('j-gallery')">Gallery</a></li>
+      <li><a href="javascript:void(0)" onclick="showJSection('j-stories')">Stories</a></li>
+      <li><a href="javascript:void(0)" onclick="showJSection('j-blog')">Blog</a></li>
+      <li><a href="javascript:void(0)" onclick="showJSection('j-articles')">Articles</a></li>
+      <li><a href="javascript:void(0)" onclick="showJSection('j-library')">Library</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/cdn-cgi/l/email-protection#cea2bbbaa7a3a1beafb4b4af8ea9a3afa7a2e0ada1a3" class="nav-hire">Hire Me</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+    </div>
   </div>
-  <ul class="nav-center nav-works-links" id="navMenu">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Credentials</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <ul class="nav-center nav-journal-links" id="navMenuJournal">
-    <li><a href="javascript:void(0)" onclick="jScrollTo('j-gallery')">Gallery</a></li>
-    <li><a href="javascript:void(0)" onclick="jScrollTo('j-stories')">Stories</a></li>
-    <li><a href="javascript:void(0)" onclick="jScrollTo('j-blog')">Blog</a></li>
-    <li><a href="javascript:void(0)" onclick="jScrollTo('j-articles')">Articles</a></li>
-    <li><a href="javascript:void(0)" onclick="jScrollTo('j-library')">Library</a></li>
-  </ul>
-  <div class="nav-actions">
-    <a href="/cdn-cgi/l/email-protection#0c78227c6d76766d4c7c7e63786362616d6560226f64" class="nav-hire">Hire Me</a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">☰</button>
+  <!-- ROW 2: Works / Journal Toggle Strip (always visible) -->
+  <div class="nav-toggle-row">
+    <div class="section-toggle">
+      <button class="section-btn active" id="worksBtn" onclick="switchSection('works')">⬡ Works</button>
+      <button class="section-btn" id="journalBtn" onclick="switchSection('journal')">✦ Journal</button>
+    </div>
   </div>
 </nav>
 <div id="section-works">
@@ -1701,8 +1897,8 @@ nav{ position:relative; flex-wrap:nowrap; }
     </div>
     <div class="hero-contact-strip">
       <div class="hero-contact-item"><span>📧</span>
-	    <a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a><span class="dot-sep"></span>
-  <a href="mailto:lutimosteven@gmail.com">lutimosteven@gmail.com</a><span class="dot-sep"></span>
+	    <a href="/cdn-cgi/l/email-protection#bdc993cddcc7c7dcfdcdcfd2c9d2d3d0dcd4d193ded5"><span class="__cf_email__" data-cfemail="ed99c39d8c97978cad9d9f82998283808c8481c38e85">[email&#160;protected]</span></a><span class="dot-sep"></span>
+  <a href="/cdn-cgi/l/email-protection#48243d3c2125273b3c2d3e2d26082f25292124662b2725"><span class="__cf_email__" data-cfemail="18746d6c7175776b6c7d6e7d76587f75797174367b7775">[email&#160;protected]</span></a><span class="dot-sep"></span>
 </div>
       <div class="hero-contact-item"><span>📞</span><span>+255 763 779 991</span><span class="dot-sep"></span><span>Morogoro, Tanzania</span></div>
       <div class="hero-contact-item"><span>🌐</span><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div>
@@ -1731,7 +1927,7 @@ At the same time, I create responsive websites, write professional reports, and 
 dashboards, toolkits and campaigns.</p></div>
 <div class="info-block reveal"><div class="info-row"><span class="info-k">Full Name</span><span class="info-v">Lutimo Steven Pazza</span></div>
 <div class="info-row"><span class="info-k">Location</span><span class="info-v">Morogoro, Tanzania</span></div>
-<div class="info-row"><span class="info-k">Primary Email</span><span class="info-v"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></span></div><div class="info-row">
+<div class="info-row"><span class="info-k">Primary Email</span><span class="info-v"><a href="/cdn-cgi/l/email-protection#afdb81dfced5d5ceefdfddc0dbc0c1c2cec6c381ccc7"><span class="__cf_email__" data-cfemail="9befb5ebfae1e1fadbebe9f4eff4f5f6faf2f7b5f8f3">[email&#160;protected]</span></a></span></div><div class="info-row">
 <span class="info-k">Phone / WhatsApp</span><span class="info-v">+255 763 779 991</span></div><div class="info-row">
 <span class="info-k">Website</span><span class="info-v"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></span></div>
 <div class="info-row"><span class="info-k">Languages</span><span class="info-v"><div class="badge-row"><span class="badge">English</span><span class="badge">Kiswahili</span><span class="badge">Portuguese</span></div></span></div>
@@ -1913,19 +2109,21 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
 
 <section class="contact-section" id="contact"><div class="contact-inner"><div class="contact-left">
 <p class="s-label reveal">Get In Touch</p><h2 class="contact-heading reveal">Let's build<br>something <em>meaningful.</em></h2>
-<p class="contact-blurb reveal">Available for full time roles, consultancy contracts and short term assignments in Data Management, M&E, Research, Community Development, Web Design and ICT Solutions in Tanzania and internationally.</p></div><div class="contact-items reveal"><div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Primary Email</div><div class="c-val"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></div></div></div>
-<div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Alternative Email</div><div class="c-val"><a href="mailto:t.pazza@protonmail.ch">t.pazza@protonmail.ch</a></div></div></div>
+<p class="contact-blurb reveal">Available for full time roles, consultancy contracts and short term assignments in Data Management, M&E, Research, Community Development, Web Design and ICT Solutions in Tanzania and internationally.</p></div><div class="contact-items reveal"><div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Primary Email</div><div class="c-val"><a href="/cdn-cgi/l/email-protection#7d09530d1c07071c3d0d0f12091213101c1411531e15"><span class="__cf_email__" data-cfemail="deaaf0aebfa4a4bf9eaeacb1aab1b0b3bfb7b2f0bdb6">[email&#160;protected]</span></a></div></div></div>
+<div class="c-item"><div class="c-ico">✉️</div><div><div class="c-label">Alternative Email</div><div class="c-val"><a href="/cdn-cgi/l/email-protection#4a3e643a2b30302b0a3a38253e2524272b2326642922"><span class="__cf_email__" data-cfemail="03772d73627979624373716c776c6d6e626a6f2d606b">[email&#160;protected]</span></a></div></div></div>
 <div class="c-item"><div class="c-ico">📞</div><div><div class="c-label">Phone / WhatsApp</div><div class="c-val">+255 763 779 991</div></div>
 </div><div class="c-item"><div class="c-ico">📍</div><div><div class="c-label">Location</div><div class="c-val">Morogoro, Tanzania</div></div></div>
 <div class="c-item"><div class="c-ico">🌐</div><div><div class="c-label">Portfolio Website</div>
 <div class="c-val"><a href="https://pazzatimo.site" target="_blank">pazzatimo.site</a></div></div></div>
-<div class="social-row"><a href="https://x.com/timopazza" target="_blank" class="social-btn">Twitter</a><a href="https://youtube.com/@timopazza" target="_blank" class="social-btn">Youtube</a><a href="https://instagram.com/pazzatimo" target="_blank" class="social-btn">Instagram</a><a href="https://tiktok.com/pazzatimo" target="_blank" class="social-btn">TikTok</a><a href="mailto:t.pazza@protonmail.ch" class="btn-gold" style="font-size:0.65rem;padding:0.5rem 1.2rem">Send Email</a></div></div></div></section>
+<div class="social-row"><a href="https://x.com/timopazza" target="_blank" class="social-btn">Twitter</a><a href="https://youtube.com/@timopazza" target="_blank" class="social-btn">Youtube</a><a href="https://instagram.com/pazzatimo" target="_blank" class="social-btn">Instagram</a><a href="https://tiktok.com/pazzatimo" target="_blank" class="social-btn">TikTok</a><a href="/cdn-cgi/l/email-protection#1d69336d7c67677c5d6d6f72697273707c7471337e75" class="btn-gold" style="font-size:0.65rem;padding:0.5rem 1.2rem">Send Email</a></div></div></div></section>
 
 <footer><p class="ft-copy">© Copyright 2026. All Rights Reserved.</p><div class="ft-links"><a href="#mission">Mission</a><a href="#services">Services</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div></footer>
 </div>
 
 <div id="section-journal" style="display:none">
 
+<!-- JOURNAL HOME (hero + section cards) -->
+<div class="j-section-page active" id="jpage-home">
 <!-- JOURNAL HERO -->
 <section class="j-hero">
   <div class="j-hero-inner">
@@ -1939,16 +2137,23 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
       Explore freely.
     </p>
     <div class="j-hero-nav">
-      <a class="j-hero-link active" onclick="jScrollTo('j-gallery')">Gallery</a>
-      <a class="j-hero-link" onclick="jScrollTo('j-stories')">Stories</a>
-      <a class="j-hero-link" onclick="jScrollTo('j-blog')">Blog</a>
-      <a class="j-hero-link" onclick="jScrollTo('j-articles')">Articles</a>
-      <a class="j-hero-link" onclick="jScrollTo('j-library')">Library</a>
+      <a class="j-hero-link active" onclick="showJSection('j-gallery')">Gallery</a>
+      <a class="j-hero-link" onclick="showJSection('j-stories')">Stories</a>
+      <a class="j-hero-link" onclick="showJSection('j-blog')">Blog</a>
+      <a class="j-hero-link" onclick="showJSection('j-articles')">Articles</a>
+      <a class="j-hero-link" onclick="showJSection('j-library')">Library</a>
     </div>
   </div>
 </section>
+</div><!-- /jpage-home -->
 
-<!-- GALLERY -->
+<!-- GALLERY PAGE -->
+<div class="j-section-page" id="jpage-gallery">
+  <div class="j-page-bar">
+    <button class="j-page-bar-back" onclick="showJSection(null)">← Journal</button>
+    <span class="j-page-bar-sep">/</span>
+    <span class="j-page-bar-current">Gallery</span>
+  </div>
 <section class="j-section" id="j-gallery">
   <div class="j-inner">
     <p class="j-label">Photos & Videos</p>
@@ -2049,8 +2254,15 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     </div>
   </div>
 </section>
+</div><!-- /jpage-gallery -->
 
-<!-- STORIES -->
+<!-- STORIES PAGE -->
+<div class="j-section-page" id="jpage-stories">
+  <div class="j-page-bar">
+    <button class="j-page-bar-back" onclick="showJSection(null)">← Journal</button>
+    <span class="j-page-bar-sep">/</span>
+    <span class="j-page-bar-current">Stories</span>
+  </div>
 <section class="j-section j-section-warm" id="j-stories">
   <div class="j-inner">
     <p class="j-label">Long-form Narratives</p>
@@ -2112,8 +2324,15 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     </div>
   </div>
 </section>
+</div><!-- /jpage-stories -->
 
-<!-- BLOG -->
+<!-- BLOG PAGE -->
+<div class="j-section-page" id="jpage-blog">
+  <div class="j-page-bar">
+    <button class="j-page-bar-back" onclick="showJSection(null)">← Journal</button>
+    <span class="j-page-bar-sep">/</span>
+    <span class="j-page-bar-current">Blog</span>
+  </div>
 <section class="j-section-dark" id="j-blog">
   <div class="j-inner">
     <p class="j-label" style="color:var(--amber-j);">From the desk</p>
@@ -2185,8 +2404,15 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     </div>
   </div>
 </section>
+</div><!-- /jpage-blog -->
 
-<!-- ARTICLES -->
+<!-- ARTICLES PAGE -->
+<div class="j-section-page" id="jpage-articles">
+  <div class="j-page-bar">
+    <button class="j-page-bar-back" onclick="showJSection(null)">← Journal</button>
+    <span class="j-page-bar-sep">/</span>
+    <span class="j-page-bar-current">Articles</span>
+  </div>
 <section class="j-section" id="j-articles">
   <div class="j-inner">
     <p class="j-label">Long-form Writing</p>
@@ -2284,8 +2510,15 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     </div>
   </div>
 </section>
+</div><!-- /jpage-articles -->
 
-<!-- LIBRARY -->
+<!-- LIBRARY PAGE -->
+<div class="j-section-page" id="jpage-library">
+  <div class="j-page-bar">
+    <button class="j-page-bar-back" onclick="showJSection(null)">← Journal</button>
+    <span class="j-page-bar-sep">/</span>
+    <span class="j-page-bar-current">Library</span>
+  </div>
 <section class="j-section-dark" id="j-library">
   <div class="j-inner" style="position:relative;z-index:1;">
     <p class="j-label">Reading & Reflection</p>
@@ -2393,897 +2626,93 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     </div>
   </div>
 </section>
+</div><!-- /jpage-library -->
 
 <!-- JOURNAL FOOTER -->
 <footer class="j-footer">
   <p class="j-ft-copy">© Pazza 2026 | <span id="adminTrigger" onclick="adminTriggerClick()" title="">God First</span></p>
   <div class="j-ft-links">
-    <a onclick="jScrollTo('j-gallery')">Gallery</a>
-    <a onclick="jScrollTo('j-stories')">Stories</a>
-    <a onclick="jScrollTo('j-blog')">Blog</a>
-    <a onclick="jScrollTo('j-articles')">Articles</a>
-    <a onclick="jScrollTo('j-library')">Library</a>
+    <a onclick="showJSection('j-gallery')">Gallery</a>
+    <a onclick="showJSection('j-stories')">Stories</a>
+    <a onclick="showJSection('j-blog')">Blog</a>
+    <a onclick="showJSection('j-articles')">Articles</a>
+    <a onclick="showJSection('j-library')">Library</a>
     <a onclick="switchSection('works')">Back to Works</a>
   </div>
 </footer>
 
 </div>
 
-<script>
-/* ═══════════════════════════════════════════════════════════════
-   PAZZA COMPLETE — WORKS + JOURNAL CMS  v2
-   Admin access: click "God First" 5× fast  |  pwd: PazzaJournal2026!
-═══════════════════════════════════════════════════════════════ */
 
-// ── CONFIG ────────────────────────────────────────────────────
-let CFG = { url:'', key:'', pwd:'PazzaJournal2026!' };
-function loadCfg(){
-  try{ const s=localStorage.getItem('pzj_cfg'); if(s) CFG={...CFG,...JSON.parse(s)}; }catch(e){}
-  ['cfgUrl','cfgKey'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=CFG[id==='cfgUrl'?'url':'key']; });
-}
-function saveConfig(){
-  const u=document.getElementById('cfgUrl').value.trim();
-  const k=document.getElementById('cfgKey').value.trim();
-  const p=document.getElementById('cfgPwd').value.trim();
-  if(u) CFG.url=u; if(k) CFG.key=k; if(p) CFG.pwd=p;
-  localStorage.setItem('pzj_cfg',JSON.stringify(CFG));
-  initSB(); showToast('Saved & connected!','success');
-}
-loadCfg();
 
-// ── SUPABASE ──────────────────────────────────────────────────
-let sb=null;
-function initSB(){
-  if(!CFG.url||!CFG.url.includes('supabase')){ sb=null; updStatus(false); return; }
-  try{ sb=supabase.createClient(CFG.url,CFG.key); updStatus(true); }
-  catch(e){ sb=null; updStatus(false); }
-}
-function updStatus(ok){
-  const el=document.getElementById('admSupabaseStatus');
-  if(el) el.textContent=ok?'● Connected':'○ No database';
-}
-initSB();
-
-// ── TOAST ─────────────────────────────────────────────────────
-function showToast(msg,type='info'){
-  const c=document.getElementById('toastContainer');
-  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg;
-  c.appendChild(t); setTimeout(()=>t.remove(),3400);
-}
-
-// ── CURSOR ────────────────────────────────────────────────────
-const cursor=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
-document.addEventListener('mouseleave',()=>cursor.style.opacity='0');
-document.addEventListener('mouseenter',()=>cursor.style.opacity='1');
-
-// ── NAV SCROLL ────────────────────────────────────────────────
-const navEl=document.getElementById('nav');
-window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>60));
-
-// ── REVEAL ───────────────────────────────────────────────────
-const revObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }});
-},{ threshold:0.08 });
-document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
-
-// ── SMOOTH SCROLL ────────────────────────────────────────────
-document.querySelectorAll('#navMenu a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
-  });
-});
-
-// ── HAMBURGER ────────────────────────────────────────────────
-const hBtn=document.getElementById('hamburgerBtn');
-const hMenu=document.getElementById('navMenu');
-hBtn.addEventListener('click',()=>{
-  const isW=document.getElementById('section-works').style.display!=='none';
-  const m=isW?hMenu:document.getElementById('navMenuJournal');
-  const open=m.classList.toggle('open');
-  hBtn.textContent=open?'✕':'☰'; document.body.style.overflow=open?'hidden':'';
-});
-document.querySelectorAll('#navMenu a,#navMenuJournal a').forEach(a=>{
-  a.addEventListener('click',()=>{
-    [hMenu,document.getElementById('navMenuJournal')].forEach(m=>m.classList.remove('open'));
-    hBtn.textContent='☰'; document.body.style.overflow='';
-  });
-});
-
-// ── SECTION SWITCHER ──────────────────────────────────────────
-let jLoaded=false;
-function switchSection(which){
-  const W=document.getElementById('section-works');
-  const J=document.getElementById('section-journal');
-  const wB=document.getElementById('worksBtn');
-  const jB=document.getElementById('journalBtn');
-  const wL=document.querySelector('.nav-works-links');
-  const jL=document.querySelector('.nav-journal-links');
-  const hire=document.querySelector('.nav-hire');
-  if(which==='journal'){
-    W.style.display='none'; J.style.display='block';
-    wB.classList.remove('active'); jB.classList.add('active');
-    wL.classList.add('hidden'); jL.classList.add('visible');
-    if(hire) hire.style.display='none';
-    window.scrollTo({top:0,behavior:'smooth'});
-    location.hash='journal';
-    if(!jLoaded){ loadAllJournal(); jLoaded=true; }
-    document.querySelectorAll('#section-journal .reveal').forEach(el=>revObs.observe(el));
-  } else {
-    J.style.display='none'; W.style.display='block';
-    jB.classList.remove('active'); wB.classList.add('active');
-    wL.classList.remove('hidden'); jL.classList.remove('visible');
-    if(hire) hire.style.display='';
-    location.hash='';
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-}
-
-// ── HASH ROUTING (journal standalone) ────────────────────────
-function checkHash(){
-  if(location.hash==='#journal'||location.hash.startsWith('#journal/')){
-    switchSection('journal');
-    const sec=location.hash.replace('#journal/','');
-    if(sec&&sec!=='journal') setTimeout(()=>jScrollTo('j-'+sec),400);
-  }
-}
-window.addEventListener('hashchange',checkHash);
-checkHash();
-
-function jScrollTo(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
-
-// ── GALLERY FILTER ────────────────────────────────────────────
-function filterGallery(cat,btn){
-  document.querySelectorAll('.gallery-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#galleryGrid .photo-card').forEach(card=>{
-    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
-  });
-}
-
-// ── ARTICLE FILTER ────────────────────────────────────────────
-function filterArticles(cat,btn){
-  document.querySelectorAll('.article-cat').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#articlesGrid .article-card').forEach(card=>{
-    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
-  });
-}
-
-// ═══════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════
-const GRADS=[
-  {f:'#0f4c75',t:'#0d7680'},{f:'#1a5c2a',t:'#5ba35b'},
-  {f:'#7c4a1e',t:'#e8a561'},{f:'#1a4a6b',t:'#3a8fb0'},
-  {f:'#5c3a6b',t:'#b07ab0'},{f:'#8b1a1a',t:'#e86c5a'},
-  {f:'#8b5e1a',t:'#e8c880'},{f:'#2a5a3a',t:'#7ab07a'},
-  {f:'#1a3a6b',t:'#3a6fa8'},{f:'#6b3a1a',t:'#a86a3a'},
-  {f:'#3a1a6b',t:'#6a4aa8'},{f:'#1a1a6b',t:'#3a3aa8'}
-];
-const ACL={faith:'Faith & Religion',business:'Business',digital:'Digital Skills',life:'Life'};
-
-function gs(f,t){ return `background:linear-gradient(135deg,${f||'#1a4a6b'} 0%,${t||'#3a8fb0'} 100%)`; }
-function fd(d){ return d?new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):''; }
-function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
-function fmtParagraphs(text){
-  return (text||'').split(/\n\n+/)
-    .map(p=>`<p>${esc(p.trim())}</p>`)
-    .join('');
-}
-
-// ── SHARE ─────────────────────────────────────────────────────
-function shareContent(title, text, url){
-  const shareUrl = url || window.location.href;
-  if(navigator.share){
-    navigator.share({ title, text, url:shareUrl }).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(shareUrl).then(()=>showToast('Link copied to clipboard!','success'))
-      .catch(()=>{ showToast('Copy: '+shareUrl,'info'); });
-  }
-}
-
-// ═══════════════════════════════════════════════════════════
-// JOURNAL LOADING
-// ═══════════════════════════════════════════════════════════
-async function loadAllJournal(){
-  await Promise.all([loadGallery(),loadStories(),loadBlogs(),loadArticles(),loadLibrary()]);
-}
-
-// ── GALLERY ───────────────────────────────────────────────────
-async function loadGallery(){
-  if(!sb) return;
-  const {data,error}=await sb.from('gallery').select('id,title,caption,location,category,image_url,color_from,color_to,created_at').order('created_at',{ascending:false});
-  if(error){ console.warn('gallery:',error.message); return; }
-  if(!data||!data.length) return;
-  const grid=document.getElementById('galleryGrid'); grid.innerHTML='';
-  data.forEach((item,i)=>{
-    const cf=item.color_from||GRADS[i%GRADS.length].f;
-    const ct=item.color_to||GRADS[i%GRADS.length].t;
-    const imgHtml=item.image_url
-      ? `<img src="${esc(item.image_url)}" style="width:100%;height:100%;object-fit:cover;display:block;">`
-      : `<div style="${gs(cf,ct)};width:100%;height:100%;"></div>`;
-    const card=document.createElement('div');
-    card.className='photo-card'+(i===0?' wide tall':'');
-    card.dataset.cat=item.category||'travel';
-    card.style.position='relative';
-    card.innerHTML=`${imgHtml}
-      <div class="photo-overlay"></div>
-      <span class="photo-tag">${esc(item.category||'')}</span>
-      <div class="photo-info">
-        <div class="photo-loc">${esc(item.location||'')}</div>
-        <div class="photo-caption">${esc(item.caption||item.title||'')}</div>
-      </div>`;
-    grid.appendChild(card);
-  });
-  document.querySelectorAll('#galleryGrid .photo-card').forEach(el=>revObs.observe(el));
-}
-
-// ── STORIES ───────────────────────────────────────────────────
-async function loadStories(){
-  if(!sb) return;
-  const {data,error}=await sb.from('stories').select('id,title,excerpt,content,category,read_time,color_from,color_to,created_at').order('created_at',{ascending:false});
-  if(error){ console.warn('stories:',error.message); return; }
-  if(!data||!data.length) return;
-  const grid=document.querySelector('#j-stories .stories-grid'); if(!grid) return;
-  let h=''; let stackOpen=false;
-  data.forEach((s,i)=>{
-    const cf=s.color_from||GRADS[i%GRADS.length].f;
-    const ct=s.color_to||GRADS[i%GRADS.length].t;
-    if(i===0){
-      h+=`<div class="story-featured reveal" data-id="${s.id}">
-        <div class="story-img" style="${gs(cf,ct)};">
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,28,0.65) 0%,transparent 60%);"></div>
-          <div style="position:absolute;bottom:1.2rem;left:1.5rem;font-family:var(--serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.1;">${esc(s.title)}</div>
-        </div>
-        <div class="story-body">
-          <span class="story-category">${esc(s.category||'Story')}</span>
-          <h3 class="story-title">${esc(s.title)}</h3>
-          <p class="story-excerpt story-excerpt-short">${esc(s.excerpt||'')}</p>
-          <div class="story-meta"><span>Lutimo Pazza</span><span>·</span><span>${s.read_time||8} min read</span><span>·</span><span>${fd(s.created_at)}</span></div>
-          <div class="share-row">
-            <button class="read-more-btn" onclick="openReader('${s.id}','stories')">Read full story →</button>
-            <button class="share-btn" onclick="shareContent('${esc(s.title)}','${esc((s.excerpt||'').substring(0,80))}')">⤴ Share</button>
-          </div>
-        </div></div>`;
-    } else {
-      if(i===1){ h+='<div class="story-stack">'; stackOpen=true; }
-      h+=`<div class="story-mini reveal" data-id="${s.id}">
-        <div class="story-mini-img" style="${gs(cf,ct)};min-height:90px;"></div>
-        <div class="story-mini-body">
-          <span class="story-category" style="font-size:0.58rem;">${esc(s.category||'Story')}</span>
-          <h4 class="story-mini-title">${esc(s.title)}</h4>
-          <p class="story-mini-exc">${esc((s.excerpt||'').substring(0,90))}…</p>
-          <div class="story-mini-meta">${s.read_time||8} min · ${fd(s.created_at)}</div>
-          <div style="display:flex;gap:0.4rem;margin-top:0.4rem;">
-            <button class="read-more-btn dark" style="font-size:0.62rem;padding:0.3rem 0.7rem;" onclick="openReader('${s.id}','stories')">Read →</button>
-            <button class="share-btn" style="font-size:0.6rem;padding:0.3rem 0.6rem;" onclick="shareContent('${esc(s.title)}','')">⤴</button>
-          </div>
-        </div></div>`;
-    }
-  });
-  if(stackOpen) h+='</div>';
-  grid.innerHTML=h;
-  document.querySelectorAll('#j-stories .reveal').forEach(el=>revObs.observe(el));
-}
-
-// ── BLOGS ─────────────────────────────────────────────────────
-async function loadBlogs(){
-  if(!sb) return;
-  const {data,error}=await sb.from('blogs').select('id,title,excerpt,content,tags,created_at').order('created_at',{ascending:false});
-  if(error){ console.warn('blogs:',error.message); return; }
-  if(!data||!data.length) return;
-  const grid=document.querySelector('#j-blog .blog-grid'); if(!grid) return;
-  grid.innerHTML=data.map(b=>`
-    <div class="blog-card reveal" data-id="${b.id}">
-      <div class="blog-date">${fd(b.created_at)}</div>
-      <h3 class="blog-title">${esc(b.title)}</h3>
-      <p class="blog-excerpt blog-excerpt-short">${esc(b.excerpt||'')}</p>
-      <div class="blog-tags">${(b.tags||[]).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
-      <div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">
-        <button class="read-more-btn dark" onclick="openReader('${b.id}','blogs')">Read post →</button>
-        <button class="share-btn" onclick="shareContent('${esc(b.title)}','${esc((b.excerpt||'').substring(0,80))}')">⤴ Share</button>
+<!-- SHARE MODAL -->
+<div id="shareModal" onclick="if(event.target===this)closeShareModal()">
+  <div class="share-modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.8rem;">
+      <div>
+        <div class="share-modal-title">Share this</div>
+        <div class="share-modal-sub" id="shareModalSub">Choose a platform below</div>
       </div>
-    </div>`).join('');
-  document.querySelectorAll('#j-blog .reveal').forEach(el=>revObs.observe(el));
-}
+      <button class="share-modal-close" onclick="closeShareModal()">✕</button>
+    </div>
+    <div class="share-platforms" id="sharePlatforms">
+      <a class="share-platform-btn" id="spWhatsApp" href="#" target="_blank" rel="noopener">
+        <span class="sp-ico">💬</span>WhatsApp
+      </a>
+      <a class="share-platform-btn" id="spTwitter" href="#" target="_blank" rel="noopener">
+        <span class="sp-ico">𝕏</span>Twitter/X
+      </a>
+      <a class="share-platform-btn" id="spTelegram" href="#" target="_blank" rel="noopener">
+        <span class="sp-ico">✈️</span>Telegram
+      </a>
+      <a class="share-platform-btn" id="spEmail" href="#" target="_blank" rel="noopener">
+        <span class="sp-ico">✉️</span>Email
+      </a>
+      <a class="share-platform-btn" id="spFacebook" href="#" target="_blank" rel="noopener">
+        <span class="sp-ico">👥</span>Facebook
+      </a>
+      <button class="share-platform-btn" id="spNative" onclick="triggerNativeShare()" style="display:none;">
+        <span class="sp-ico">⤴</span>More
+      </button>
+    </div>
+    <div class="share-copy-row">
+      <input class="share-copy-input" id="shareLinkInput" readonly>
+      <button class="share-copy-btn" onclick="copyShareLink()">Copy link</button>
+    </div>
+    <div style="margin-top:0.9rem;font-size:0.65rem;color:rgba(226,232,240,0.25);text-align:center;letter-spacing:0.04em;">
+      Instagram & TikTok: copy link and paste in your post
+    </div>
+  </div>
+</div>
 
-// ── ARTICLES ──────────────────────────────────────────────────
-async function loadArticles(){
-  if(!sb) return;
-  const {data,error}=await sb.from('articles').select('id,title,excerpt,content,category,read_time,created_at').order('created_at',{ascending:false});
-  if(error){ console.warn('articles:',error.message); return; }
-  if(!data||!data.length) return;
-  const grid=document.getElementById('articlesGrid'); if(!grid) return;
-  grid.innerHTML=data.map(a=>`
-    <div class="article-card reveal" data-cat="${a.category||'life'}" data-id="${a.id}">
-      <span class="article-cat-tag">${ACL[a.category]||esc(a.category)}</span>
-      <h3 class="article-title">${esc(a.title)}</h3>
-      <p class="article-excerpt article-excerpt-short">${esc(a.excerpt||'')}</p>
-      <div class="article-meta">
-        <span>Lutimo Pazza</span><span>·</span>
-        <span class="article-min">${a.read_time||10} min read</span><span>·</span><span>${fd(a.created_at)}</span>
+<!-- COMMENT PANEL -->
+<div id="commentPanel" onclick="if(event.target===this)closeCommentPanel()">
+  <div class="comment-box">
+    <div class="comment-box-header">
+      <div class="comment-box-title" id="commentPanelTitle">Comments</div>
+      <button class="comment-box-close" onclick="closeCommentPanel()">✕</button>
+    </div>
+    <div class="comment-list" id="commentList">
+      <div class="comment-loading">Loading comments…</div>
+    </div>
+    <div class="comment-form">
+      <div class="comment-name-row">
+        <input class="comment-input" id="commentName" placeholder="Your name" style="flex:1;">
       </div>
-      <div style="display:flex;gap:0.5rem;margin-top:0.8rem;flex-wrap:wrap;">
-        <button class="read-more-btn" onclick="openReader('${a.id}','articles')">Read article →</button>
-        <button class="share-btn" onclick="shareContent('${esc(a.title)}','${esc((a.excerpt||'').substring(0,80))}')">⤴ Share</button>
-      </div>
-    </div>`).join('');
-  document.querySelectorAll('#j-articles .reveal').forEach(el=>revObs.observe(el));
-}
+      <textarea class="comment-textarea" id="commentText" placeholder="Write a comment…"></textarea>
+      <button class="comment-submit" onclick="submitComment()">Post comment</button>
+    </div>
+  </div>
+</div>
 
-// ── LIBRARY ───────────────────────────────────────────────────
-async function loadLibrary(){
-  if(!sb) return;
-  const [{data:books,error:be},{data:quotes,error:qe}]=await Promise.all([
-    sb.from('books').select('id,title,author,summary,category,emoji,color_from,color_to,created_at').order('created_at',{ascending:false}),
-    sb.from('quotes').select('id,text,attribution,created_at').order('created_at',{ascending:false})
-  ]);
-  if(be) console.warn('books:',be.message);
-  if(qe) console.warn('quotes:',qe.message);
-  const layout=document.querySelector('#j-library .library-layout'); if(!layout) return;
-
-  const booksHtml=books&&books.length
-    ? `<div><div class="lib-heading">Recommended reading</div>
-        <div class="books-grid">${books.map((b,i)=>{
-          const cf=b.color_from||GRADS[i%GRADS.length].f;
-          const ct=b.color_to||GRADS[i%GRADS.length].t;
-          return `<div class="book-card reveal" data-id="${b.id}">
-            <div class="book-cover" style="${gs(cf,ct)};">${esc(b.emoji||'📖')}</div>
-            <div class="book-info">
-              <div class="book-title">${esc(b.title)}</div>
-              <div class="book-author">${esc(b.author||'')}</div>
-              <div class="book-body-text">${fmtParagraphs(b.summary)}</div>
-              <span class="book-badge">${esc(b.category||'')}</span>
-              <div style="margin-top:0.6rem;">
-                <button class="share-btn" style="font-size:0.6rem;" onclick="shareContent('${esc(b.title)}','${esc((b.summary||'').substring(0,80))}')">⤴ Share</button>
-              </div>
-            </div></div>`;
-        }).join('')}</div></div>`
-    : layout.children[0]?.outerHTML||'';
-
-  const quotesHtml=quotes&&quotes.length
-    ? `<div><div class="lib-heading">Quotes I carry</div>
-        <div class="quotes-wall">${quotes.map(q=>`
-          <div class="quote-card reveal" data-id="${q.id}">
-            <div class="quote-text">${esc(q.text)}</div>
-            <div class="quote-attr">${esc(q.attribution||'')}</div>
-            <button class="share-btn" style="font-size:0.6rem;margin-top:0.6rem;" onclick="shareContent('Quote','${esc(q.text.substring(0,80))}')">⤴ Share</button>
-          </div>`).join('')}
-        </div></div>`
-    : layout.children[1]?.outerHTML||'';
-
-  layout.innerHTML=booksHtml+quotesHtml;
-  document.querySelectorAll('#j-library .reveal').forEach(el=>revObs.observe(el));
-}
-
-// ═══════════════════════════════════════════════════════════
-// READER MODAL
-// ═══════════════════════════════════════════════════════════
-let currentReaderId=null, currentReaderTable=null;
-
-function closeReader(){
-  document.getElementById('readerModal').classList.remove('open');
-  document.body.style.overflow='';
-  currentReaderId=null; currentReaderTable=null;
-}
-
-async function openReader(id,table){
-  if(!sb){ showToast('Connect Supabase to read full content','info'); return; }
-  const {data,error}=await sb.from(table).select('*').eq('id',id).single();
-  if(error||!data){ showToast('Could not load content','error'); return; }
-  currentReaderId=id; currentReaderTable=table;
-
-  let catHtml='', metaHtml='', shareTitle=data.title||'';
-  if(table==='stories'){
-    catHtml=`<span class="reader-cat">${esc(data.category||'')}</span>`;
-    metaHtml=`<span>${data.read_time||8} min read</span><span>·</span><span>${fd(data.created_at)}</span>`;
-  } else if(table==='blogs'){
-    catHtml='';
-    metaHtml=`<span>${fd(data.created_at)}</span>${(data.tags||[]).length?'<span>·</span><span>'+(data.tags||[]).join(', ')+'</span>':''}`;
-  } else if(table==='articles'){
-    catHtml=`<span class="reader-cat">${ACL[data.category]||esc(data.category)}</span>`;
-    metaHtml=`<span>${data.read_time||10} min read</span><span>·</span><span>${fd(data.created_at)}</span>`;
-  }
-
-  const contentHtml=fmtParagraphs(data.content||'Content coming soon.');
-
-  document.getElementById('readerContent').innerHTML=`
-    ${catHtml}
-    <h1 class="reader-title">${esc(data.title)}</h1>
-    <div class="reader-meta">${metaHtml}</div>
-    <div class="reader-content">${contentHtml}</div>`;
-
-  document.getElementById('readerFooter').innerHTML=`
-    <button class="share-btn" onclick="shareContent('${esc(shareTitle)}','${esc((data.excerpt||'').substring(0,80))}')">⤴ Share this</button>`;
-
-  const modal=document.getElementById('readerModal');
-  modal.classList.add('open');
-  modal.scrollTo(0,0);
-  document.body.style.overflow='hidden';
-}
-
-// ═══════════════════════════════════════════════════════════
-// ADMIN PANEL
-// ═══════════════════════════════════════════════════════════
-let aAuthed=false, tClicks=0, tTimer=null;
-
-function adminTriggerClick(){
-  tClicks++;
-  clearTimeout(tTimer);
-  tTimer=setTimeout(()=>tClicks=0,1500);
-  if(tClicks>=5){ tClicks=0; openAdmin(); }
-}
-function openAdmin(){
-  document.getElementById('adminOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  if(aAuthed){
-    document.getElementById('adminLoginScreen').style.display='none';
-    document.getElementById('adminDash').style.display='flex';
-    loadAdmAll();
-  } else {
-    document.getElementById('adminLoginScreen').style.display='flex';
-    document.getElementById('adminDash').style.display='none';
-    setTimeout(()=>{ const i=document.getElementById('adminPwdInput'); if(i) i.focus(); },80);
-  }
-}
-function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); document.body.style.overflow=''; }
-function adminLogout(){
-  aAuthed=false;
-  document.getElementById('adminPwdInput').value='';
-  document.getElementById('adminLoginErr').style.display='none';
-  document.getElementById('adminLoginScreen').style.display='flex';
-  document.getElementById('adminDash').style.display='none';
-  document.body.classList.remove('admin-active');
-}
-function checkAdminPwd(){
-  if(document.getElementById('adminPwdInput').value===CFG.pwd){
-    aAuthed=true;
-    document.getElementById('adminLoginErr').style.display='none';
-    document.getElementById('adminLoginScreen').style.display='none';
-    document.getElementById('adminDash').style.display='flex';
-    document.body.classList.add('admin-active');
-    loadAdmAll();
-  } else {
-    document.getElementById('adminLoginErr').style.display='block';
-    document.getElementById('adminPwdInput').value='';
-  }
-}
-
-function showAdmTab(tab){
-  document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active'));
-  const btn=document.getElementById('admTab-'+tab); if(btn) btn.classList.add('active');
-  const panel=document.getElementById('admPanel-'+tab); if(panel) panel.classList.add('active');
-}
-
-// ── ADMIN LIST LOADING ────────────────────────────────────────
-const TABLE_META={
-  gallery:  {list:'admGalleryList',  render:rGallery},
-  stories:  {list:'admStoriesList',  render:rStory},
-  blogs:    {list:'admBlogList',     render:rBlog},
-  articles: {list:'admArticlesList', render:rArticle},
-  books:    {list:'admBooksList',    render:rBook},
-  quotes:   {list:'admQuotesList',   render:rQuote}
-};
-
-async function loadAdmAll(){
-  buildSwatches('gColorRow'); buildSwatches('stColorRow'); buildSwatches('bkColorRow');
-  updStatus(!!sb);
-  const schema=document.getElementById('sqlSchema'); if(schema) schema.value=SQL_SCHEMA;
-  await Promise.all(Object.keys(TABLE_META).map(t=>loadAdmList(t)));
-}
-
-function buildSwatches(rowId){
-  const row=document.getElementById(rowId); if(!row||row.children.length) return;
-  GRADS.forEach((c,i)=>{
-    const sw=document.createElement('div');
-    sw.className='adm-color-swatch'+(i===0?' selected':'');
-    sw.style.cssText=`background:linear-gradient(135deg,${c.f},${c.t});`;
-    sw.dataset.f=c.f; sw.dataset.t=c.t;
-    sw.onclick=()=>{ row.querySelectorAll('.adm-color-swatch').forEach(s=>s.classList.remove('selected')); sw.classList.add('selected'); };
-    row.appendChild(sw);
-  });
-}
-function getColor(rowId){
-  const s=document.getElementById(rowId).querySelector('.selected');
-  return s?{f:s.dataset.f,t:s.dataset.t}:{f:'#1a4a6b',t:'#3a8fb0'};
-}
-
-async function loadAdmList(table){
-  const meta=TABLE_META[table]; if(!meta) return;
-  const el=document.getElementById(meta.list); if(!el) return;
-  if(!sb){ el.innerHTML='<div class="adm-empty">Connect Supabase in Setup tab.</div>'; return; }
-  el.innerHTML='<div class="adm-loading">Loading…</div>';
-  const {data,error}=await sb.from(table).select('*').order('created_at',{ascending:false});
-  if(error){ el.innerHTML=`<div class="adm-empty">Error loading: ${esc(error.message)}</div>`; return; }
-  el.innerHTML=data&&data.length?data.map(d=>meta.render(d)).join(''):'<div class="adm-empty">Nothing published yet.</div>';
-}
-
-// ── RENDER FUNCTIONS ──────────────────────────────────────────
-function rGallery(d){
-  const cf=d.color_from||'#1a4a6b', ct=d.color_to||'#3a8fb0';
-  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};${d.image_url?'background:none;':''}">${d.image_url?`<img src="${esc(d.image_url)}" style="width:100%;height:100%;object-fit:cover;">`:''}</div>
-  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title||d.caption||'Untitled')}</div><div class="adm-item-meta">${esc(d.category||'')} · ${esc(d.location||'')}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('gallery','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('gallery','${d.id}')">Delete</button>
-  </div></div>`;
-}
-function rStory(d){
-  const cf=d.color_from||'#1a4a2a', ct=d.color_to||'#4a9a6a';
-  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};"></div>
-  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.category||'')} · ${d.read_time||8} min · ${fd(d.created_at)}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('stories','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('stories','${d.id}')">Delete</button>
-  </div></div>`;
-}
-function rBlog(d){
-  return `<div class="adm-item">
-  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${fd(d.created_at)} · ${(d.tags||[]).join(', ')}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('blogs','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('blogs','${d.id}')">Delete</button>
-  </div></div>`;
-}
-function rArticle(d){
-  return `<div class="adm-item">
-  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${ACL[d.category]||d.category} · ${d.read_time||10} min · ${fd(d.created_at)}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('articles','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('articles','${d.id}')">Delete</button>
-  </div></div>`;
-}
-function rBook(d){
-  const cf=d.color_from||'#1a4a6b', ct=d.color_to||'#3a7fa8';
-  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};display:flex;align-items:center;justify-content:center;font-size:1.3rem;">${esc(d.emoji||'📖')}</div>
-  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.author||'')} · ${esc(d.category||'')}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('books','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('books','${d.id}')">Delete</button>
-  </div></div>`;
-}
-function rQuote(d){
-  return `<div class="adm-item">
-  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title" style="white-space:normal;">"${esc((d.text||'').substring(0,80))}${d.text&&d.text.length>80?'…':''}"</div><div class="adm-item-meta">— ${esc(d.attribution||'')}</div></div>
-  <div class="adm-item-actions">
-    <button class="adm-btn edit" onclick="openEdit('quotes','${d.id}')">Edit</button>
-    <button class="adm-btn danger" onclick="delItem('quotes','${d.id}')">Delete</button>
-  </div></div>`;
-}
-
-// ── DELETE ────────────────────────────────────────────────────
-async function delItem(table,id){
-  if(!confirm('Delete this item permanently?')) return;
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from(table).delete().eq('id',id);
-  if(error){ showToast('Delete failed: '+error.message,'error'); return; }
-  showToast('Deleted!','success');
-  await loadAdmList(table);
-  jLoaded=false;
-}
-
-// ── EDIT MODAL ────────────────────────────────────────────────
-let editState={table:null,id:null,data:null};
-
-function closeEdit(){
-  document.getElementById('editModal').classList.remove('open');
-  document.body.style.overflow='hidden'; // keep admin open
-}
-
-async function openEdit(table,id){
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {data,error}=await sb.from(table).select('*').eq('id',id).single();
-  if(error||!data){ showToast('Could not load item','error'); return; }
-  editState={table,id,data};
-
-  const titles={gallery:'Edit Gallery Item',stories:'Edit Story',blogs:'Edit Blog Post',articles:'Edit Article',books:'Edit Book',quotes:'Edit Quote'};
-  document.getElementById('editModalTitle').textContent=titles[table]||'Edit';
-
-  let body='';
-  if(table==='gallery'){
-    body=`
-      <div class="adm-form-grid">
-        <div class="adm-form-group"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Category</label>
-          <select class="adm-select" id="ed_category">
-            ${['travel','nature','culture','people','family'].map(v=>`<option value="${v}"${data.category===v?' selected':''}>${v}</option>`).join('')}
-          </select></div>
-        <div class="adm-form-group"><label class="adm-label">Location</label><input class="adm-input" id="ed_location" value="${esc(data.location||'')}"></div>
-        <div class="adm-form-group full"><label class="adm-label">Caption</label><input class="adm-input" id="ed_caption" value="${esc(data.caption||'')}"></div>
-      </div>`;
-  } else if(table==='stories'){
-    body=`
-      <div class="adm-form-grid">
-        <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Category</label><input class="adm-input" id="ed_category" value="${esc(data.category||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Read Time (min)</label><input class="adm-input" type="number" id="ed_read_time" value="${data.read_time||8}"></div>
-        <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
-        <div class="adm-form-group full"><label class="adm-label">Full Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div>
-      </div>`;
-  } else if(table==='blogs'){
-    body=`
-      <div class="adm-form-grid">
-        <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
-        <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
-        <div class="adm-form-group full"><label class="adm-label">Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div>
-        <div class="adm-form-group full"><label class="adm-label">Tags (comma separated)</label><input class="adm-input" id="ed_tags" value="${esc((data.tags||[]).join(', '))}"></div>
-      </div>`;
-  } else if(table==='articles'){
-    body=`
-      <div class="adm-form-grid">
-        <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Category</label>
-          <select class="adm-select" id="ed_category">
-            ${Object.keys(ACL).map(v=>`<option value="${v}"${data.category===v?' selected':''}>${ACL[v]}</option>`).join('')}
-          </select></div>
-        <div class="adm-form-group"><label class="adm-label">Read Time (min)</label><input class="adm-input" type="number" id="ed_read_time" value="${data.read_time||10}"></div>
-        <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
-        <div class="adm-form-group full"><label class="adm-label">Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div>
-      </div>`;
-  } else if(table==='books'){
-    body=`
-      <div class="adm-form-grid">
-        <div class="adm-form-group"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Author</label><input class="adm-input" id="ed_author" value="${esc(data.author||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Category</label><input class="adm-input" id="ed_category" value="${esc(data.category||'')}"></div>
-        <div class="adm-form-group"><label class="adm-label">Emoji</label><input class="adm-input" id="ed_emoji" value="${esc(data.emoji||'📖')}" style="font-size:1.4rem;text-align:center;" maxlength="4"></div>
-        <div class="adm-form-group full"><label class="adm-label">Summary</label><textarea class="adm-textarea tall" id="ed_summary">${esc(data.summary||'')}</textarea></div>
-      </div>`;
-  } else if(table==='quotes'){
-    body=`
-      <div class="adm-form-grid single">
-        <div class="adm-form-group"><label class="adm-label">Quote Text</label><textarea class="adm-textarea" id="ed_text">${esc(data.text||'')}</textarea></div>
-        <div class="adm-form-group"><label class="adm-label">Attribution</label><input class="adm-input" id="ed_attribution" value="${esc(data.attribution||'')}"></div>
-      </div>`;
-  }
-
-  document.getElementById('editModalBody').innerHTML=body;
-  document.getElementById('editModal').classList.add('open');
-}
-
-async function saveEdit(){
-  const {table,id}=editState;
-  if(!table||!id||!sb){ showToast('Nothing to save','error'); return; }
-  const btn=document.getElementById('editSaveBtn');
-  btn.disabled=true; btn.textContent='Saving…';
-
-  let updates={};
-  const g=id=>{ const el=document.getElementById('ed_'+id); return el?el.value.trim():null; };
-  try{
-    if(table==='gallery'){
-      updates={title:g('title'),category:g('category'),location:g('location'),caption:g('caption')};
-    } else if(table==='stories'){
-      updates={title:g('title'),category:g('category'),read_time:parseInt(g('read_time'))||8,excerpt:g('excerpt'),content:g('content')};
-    } else if(table==='blogs'){
-      const tags=g('tags').split(',').map(s=>s.trim()).filter(Boolean);
-      updates={title:g('title'),excerpt:g('excerpt'),content:g('content'),tags};
-    } else if(table==='articles'){
-      updates={title:g('title'),category:g('category'),read_time:parseInt(g('read_time'))||10,excerpt:g('excerpt'),content:g('content')};
-    } else if(table==='books'){
-      updates={title:g('title'),author:g('author'),category:g('category'),emoji:g('emoji')||'📖',summary:g('summary')};
-    } else if(table==='quotes'){
-      updates={text:g('text'),attribution:g('attribution')};
-    }
-    const {error}=await sb.from(table).update(updates).eq('id',id);
-    if(error){ showToast('Save failed: '+error.message,'error'); return; }
-    showToast('Saved successfully!','success');
-    closeEdit();
-    await loadAdmList(table);
-    jLoaded=false;
-  } finally { btn.disabled=false; btn.textContent='Save Changes'; }
-}
-
-// ── MEDIA UPLOAD ──────────────────────────────────────────────
-function previewGalleryFile(input){
-  const file=input.files[0]; if(!file) return;
-  const prev=document.getElementById('gPreview');
-  prev.style.display='block'; prev.src=URL.createObjectURL(file);
-  document.getElementById('gColorWrap').style.display='none';
-}
-
-async function uploadMedia(file,folder='gallery'){
-  if(!sb) return null;
-  const ext=file.name.split('.').pop();
-  const path=`${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const {error}=await sb.storage.from('journal-media').upload(path,file,{cacheControl:'3600',upsert:false});
-  if(error){ showToast('Upload failed: '+error.message,'error'); return null; }
-  return sb.storage.from('journal-media').getPublicUrl(path).data.publicUrl;
-}
-
-// ── SUBMIT FUNCTIONS ──────────────────────────────────────────
-async function submitGallery(){
-  const btn=document.getElementById('gSubmitBtn');
-  btn.disabled=true; btn.textContent='Uploading…';
-  try{
-    const file=document.getElementById('gFile').files[0];
-    const col=getColor('gColorRow');
-    let image_url=null;
-    if(file&&sb) image_url=await uploadMedia(file,'gallery');
-    const item={
-      title:document.getElementById('gTitle').value.trim(),
-      category:document.getElementById('gCat').value,
-      location:document.getElementById('gLocation').value.trim(),
-      caption:document.getElementById('gCaption').value.trim(),
-      image_url,
-      color_from:col.f, color_to:col.t
-    };
-    if(!sb){ showToast('No database connected','error'); return; }
-    const {error}=await sb.from('gallery').insert([item]);
-    if(error){ showToast('Error: '+error.message,'error'); return; }
-    showToast('Photo added!','success');
-    ['gTitle','gLocation','gCaption'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-    const gf=document.getElementById('gFile'); if(gf) gf.value='';
-    document.getElementById('gPreview').style.display='none';
-    document.getElementById('gColorWrap').style.display='';
-    await loadAdmList('gallery');
-    jLoaded=false;
-  } finally { btn.disabled=false; btn.textContent='Add to Gallery'; }
-}
-
-async function submitStory(){
-  const col=getColor('stColorRow');
-  const item={
-    title:document.getElementById('stTitle').value.trim(),
-    category:document.getElementById('stCat').value.trim(),
-    read_time:parseInt(document.getElementById('stTime').value)||8,
-    excerpt:document.getElementById('stExcerpt').value.trim(),
-    content:document.getElementById('stContent').value.trim(),
-    color_from:col.f, color_to:col.t
-  };
-  if(!item.title){ showToast('Title is required','error'); return; }
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from('stories').insert([item]);
-  if(error){ showToast('Error: '+error.message,'error'); return; }
-  showToast('Story published!','success');
-  ['stTitle','stCat','stExcerpt','stContent'].forEach(id=>document.getElementById(id).value='');
-  await loadAdmList('stories'); jLoaded=false;
-}
-
-async function submitBlog(){
-  const tags=document.getElementById('blTags').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const item={
-    title:document.getElementById('blTitle').value.trim(),
-    excerpt:document.getElementById('blExcerpt').value.trim(),
-    content:document.getElementById('blContent').value.trim(),
-    tags
-  };
-  if(!item.title){ showToast('Title is required','error'); return; }
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from('blogs').insert([item]);
-  if(error){ showToast('Error: '+error.message,'error'); return; }
-  showToast('Blog post published!','success');
-  ['blTitle','blExcerpt','blContent','blTags'].forEach(id=>document.getElementById(id).value='');
-  await loadAdmList('blogs'); jLoaded=false;
-}
-
-async function submitArticle(){
-  const item={
-    title:document.getElementById('arTitle').value.trim(),
-    category:document.getElementById('arCat').value,
-    read_time:parseInt(document.getElementById('arTime').value)||10,
-    excerpt:document.getElementById('arExcerpt').value.trim(),
-    content:document.getElementById('arContent').value.trim()
-  };
-  if(!item.title){ showToast('Title is required','error'); return; }
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from('articles').insert([item]);
-  if(error){ showToast('Error: '+error.message,'error'); return; }
-  showToast('Article published!','success');
-  ['arTitle','arExcerpt','arContent'].forEach(id=>document.getElementById(id).value='');
-  await loadAdmList('articles'); jLoaded=false;
-}
-
-async function submitBook(){
-  const col=getColor('bkColorRow');
-  const item={
-    title:document.getElementById('bkTitle').value.trim(),
-    author:document.getElementById('bkAuthor').value.trim(),
-    category:document.getElementById('bkCat').value.trim(),
-    emoji:document.getElementById('bkEmoji').value.trim()||'📖',
-    summary:document.getElementById('bkSummary').value.trim(),
-    color_from:col.f, color_to:col.t
-  };
-  if(!item.title){ showToast('Title is required','error'); return; }
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from('books').insert([item]);
-  if(error){ showToast('Error: '+error.message,'error'); return; }
-  showToast('Book added!','success');
-  ['bkTitle','bkAuthor','bkCat','bkSummary'].forEach(id=>document.getElementById(id).value='');
-  await loadAdmList('books'); jLoaded=false;
-}
-
-async function submitQuote(){
-  const item={
-    text:document.getElementById('qtText').value.trim(),
-    attribution:document.getElementById('qtAttr').value.trim()
-  };
-  if(!item.text){ showToast('Quote text required','error'); return; }
-  if(!sb){ showToast('No database connected','error'); return; }
-  const {error}=await sb.from('quotes').insert([item]);
-  if(error){ showToast('Error: '+error.message,'error'); return; }
-  showToast('Quote added!','success');
-  document.getElementById('qtText').value='';
-  document.getElementById('qtAttr').value='';
-  await loadAdmList('quotes'); jLoaded=false;
-}
-
-// ── SQL SCHEMA ────────────────────────────────────────────────
-const SQL_SCHEMA=`-- ═══════════════════════════════════════════════
--- Pazza Journal Schema v2 — Run in Supabase SQL Editor
--- If tables exist: run the ALTER statements to add missing columns
--- ═══════════════════════════════════════════════
-
--- OPTION A: Fresh install (no existing tables)
-create table if not exists gallery (
-  id uuid default gen_random_uuid() primary key,
-  title text, caption text, location text, category text, image_url text,
-  color_from text default '#1a4a6b', color_to text default '#3a8fb0',
-  created_at timestamptz default now()
-);
-create table if not exists stories (
-  id uuid default gen_random_uuid() primary key,
-  title text not null, excerpt text, content text, category text, read_time int default 8,
-  color_from text default '#1a4a2a', color_to text default '#4a9a6a',
-  created_at timestamptz default now()
-);
-create table if not exists blogs (
-  id uuid default gen_random_uuid() primary key,
-  title text not null, excerpt text, content text, tags text[] default '{}',
-  created_at timestamptz default now()
-);
-create table if not exists articles (
-  id uuid default gen_random_uuid() primary key,
-  title text not null, excerpt text, content text, category text, read_time int default 10,
-  created_at timestamptz default now()
-);
-create table if not exists books (
-  id uuid default gen_random_uuid() primary key,
-  title text not null, author text, summary text, category text, emoji text default '📖',
-  color_from text default '#1a4a6b', color_to text default '#3a7fa8',
-  created_at timestamptz default now()
-);
-create table if not exists quotes (
-  id uuid default gen_random_uuid() primary key,
-  text text not null, attribution text, created_at timestamptz default now()
-);
-
--- OPTION B: If tables already exist — add missing columns
-alter table gallery add column if not exists color_from text default '#1a4a6b';
-alter table gallery add column if not exists color_to text default '#3a8fb0';
-alter table stories add column if not exists color_from text default '#1a4a2a';
-alter table stories add column if not exists color_to text default '#4a9a6a';
-alter table books add column if not exists color_from text default '#1a4a6b';
-alter table books add column if not exists color_to text default '#3a7fa8';
-
--- ROW LEVEL SECURITY
-alter table gallery enable row level security;
-alter table stories enable row level security;
-alter table blogs enable row level security;
-alter table articles enable row level security;
-alter table books enable row level security;
-alter table quotes enable row level security;
-
--- Drop old policies if they conflict, then recreate
-do $$ declare t text; p text;
-begin
-  foreach t in array array['gallery','stories','blogs','articles','books','quotes'] loop
-    foreach p in array array['public_select','public_insert','public_delete'] loop
-      execute format('drop policy if exists %I on %I', p, t);
-    end loop;
-    execute format('create policy "public_select" on %I for select using (true)', t);
-    execute format('create policy "public_insert" on %I for insert with check (true)', t);
-    execute format('create policy "public_delete" on %I for delete using (true)', t);
-    execute format('create policy "public_update" on %I for update using (true)', t);
-  end loop;
-end $$;
-
--- STORAGE: Dashboard → Storage → New bucket → Name: journal-media → Public: ON
-`;
-</script>
-
+<!-- READER MODAL -->
+<div id="readerModal">
+  <div class="reader-inner">
+    <button class="reader-back" onclick="closeReader()">← Back</button>
+    <div id="readerContent"></div>
+    <div class="reader-footer" id="readerFooter"></div>
+  </div>
+</div>
 
 <div id="toastContainer"></div>
 <div id="adminOverlay">
@@ -3443,37 +2872,1097 @@ end $$;
             <div class="adm-form-title">SQL Schema (copy and run in Supabase)</div>
             <textarea class="adm-textarea tall" readonly id="sqlSchema" onclick="this.select();" style="font-family:monospace;font-size:0.72rem;color:rgba(226,232,240,0.6);"></textarea>
             <button class="adm-btn secondary" onclick="document.getElementById('sqlSchema').select();document.execCommand('copy');showToast('Schema copied!','success')">Copy SQL</button>
-          </div>
+              </div>
         </div>
 
-      </div>
+      </div><!-- /adm-main -->
+    </div><!-- /adm-body -->
+  </div><!-- /adminDash -->
+</div><!-- /adminOverlay -->
+
+<!-- EDIT MODAL -->
+<div id="editModal" class="adm-modal">
+  <div class="adm-modal-box">
+    <div class="adm-modal-header">
+      <span class="adm-modal-title" id="editModalTitle">Edit</span>
+      <button class="adm-close" onclick="closeEdit()">✕</button>
+    </div>
+    <div class="adm-modal-body" id="editModalBody"></div>
+    <div class="adm-modal-footer">
+      <button class="adm-btn" id="editSaveBtn" onclick="saveEdit()">Save Changes</button>
+      <button class="adm-btn secondary" onclick="closeEdit()">Cancel</button>
     </div>
   </div>
 </div>
 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PAZZA COMPLETE — WORKS + JOURNAL CMS  v3
+   Admin access: click "God First" 5× fast  |  pwd: PazzaJournal2026!
+═══════════════════════════════════════════════════════════════ */
 
-<!-- ═══ EDIT MODAL ═══ -->
-<div id="editModal">
-  <div class="edit-inner">
-    <div class="edit-header">
-      <div class="edit-title" id="editModalTitle">Edit Item</div>
-      <div style="display:flex;gap:0.6rem;">
-        <button class="adm-btn edit-save" onclick="saveEdit()" id="editSaveBtn">Save Changes</button>
-        <button class="adm-close" onclick="closeEdit()">✕</button>
+// ── CONFIG ────────────────────────────────────────────────────
+const CFG_KEY='pazza_cfg_v2';
+let CFG={url:'',key:'',pwd:'PazzaJournal2026!'};
+try{ const s=localStorage.getItem(CFG_KEY); if(s) CFG={...CFG,...JSON.parse(s)}; }catch(e){}
+
+// ── SUPABASE ──────────────────────────────────────────────────
+let sb=null;
+function initSB(){
+  if(CFG.url&&CFG.key){
+    try{ sb=supabase.createClient(CFG.url,CFG.key); }catch(e){ sb=null; }
+  }
+  const el=document.getElementById('admSupabaseStatus');
+  const ok=!!sb;
+  if(el) el.textContent=ok?'● Connected':'○ No database';
+}
+initSB();
+
+function saveConfig(){
+  const u=document.getElementById('cfgUrl').value.trim();
+  const k=document.getElementById('cfgKey').value.trim();
+  const p=document.getElementById('cfgPwd').value.trim();
+  if(u) CFG.url=u;
+  if(k) CFG.key=k;
+  if(p) CFG.pwd=p;
+  localStorage.setItem(CFG_KEY,JSON.stringify(CFG));
+  initSB();
+  showToast(sb?'Connected to Supabase!':'Config saved — check URL/key','success');
+  if(sb) loadAdmAll();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg,type='info'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg;
+  c.appendChild(t); setTimeout(()=>t.remove(),3400);
+}
+
+// ── CURSOR ────────────────────────────────────────────────────
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{ cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px'; });
+document.addEventListener('mouseleave',()=>cursor.style.opacity='0');
+document.addEventListener('mouseenter',()=>cursor.style.opacity='1');
+
+// ── NAV SCROLL ────────────────────────────────────────────────
+const navEl=document.getElementById('nav');
+// ── NAV: always dark, no scroll class needed ─────────────────
+
+// ── REVEAL ───────────────────────────────────────────────────
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }});
+},{ threshold:0.08 });
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+// ── SMOOTH SCROLL ────────────────────────────────────────────
+document.querySelectorAll('#navMenu a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+
+// ── HAMBURGER ────────────────────────────────────────────────
+const hBtn=document.getElementById('hamburgerBtn');
+const hMenu=document.getElementById('navMenu');
+hBtn.addEventListener('click',()=>{
+  const isW=document.getElementById('section-works').style.display!=='none';
+  const m=isW?hMenu:document.getElementById('navMenuJournal');
+  const open=m.classList.toggle('open');
+  hBtn.textContent=open?'✕':'☰'; document.body.style.overflow=open?'hidden':'';
+});
+document.querySelectorAll('#navMenu a,#navMenuJournal a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    [hMenu,document.getElementById('navMenuJournal')].forEach(m=>m.classList.remove('open'));
+    hBtn.textContent='☰'; document.body.style.overflow='';
+  });
+});
+
+// ── SECTION SWITCHER ──────────────────────────────────────────
+let jLoaded=false;
+function switchSection(which){
+  const W=document.getElementById('section-works');
+  const J=document.getElementById('section-journal');
+  const wB=document.getElementById('worksBtn');
+  const jB=document.getElementById('journalBtn');
+  const wL=document.querySelector('.nav-works-links');
+  const jL=document.querySelector('.nav-journal-links');
+  const hire=document.querySelector('.nav-hire');
+  // Always instant scroll — prevents flash
+  window.scrollTo(0,0);
+  if(which==='journal'){
+    W.style.display='none'; J.style.display='block';
+    wB.classList.remove('active'); jB.classList.add('active');
+    wL.classList.add('hidden'); jL.classList.add('visible');
+    if(hire) hire.style.display='none';
+    history.replaceState(null,'','#journal');
+    if(!jLoaded){ loadAllJournal(); jLoaded=true; }
+    document.querySelectorAll('#section-journal .reveal').forEach(el=>revObs.observe(el));
+    showJSection(null);
+  } else {
+    J.style.display='none'; W.style.display='block';
+    jB.classList.remove('active'); wB.classList.add('active');
+    wL.classList.remove('hidden'); jL.classList.remove('visible');
+    if(hire) hire.style.display='';
+    history.replaceState(null,'','./');
+  }
+}
+
+// ── JOURNAL STANDALONE PAGE ROUTING ──────────────────────────
+const J_SECTIONS=['gallery','stories','blog','articles','library'];
+const J_LABELS={gallery:'Gallery',stories:'Stories',blog:'Blog',articles:'Articles',library:'Library'};
+
+function showJSection(sectionId){
+  // Instantly jump to top FIRST — before any DOM changes — stops the flash
+  document.getElementById('section-journal').scrollTop=0;
+  window.scrollTo(0,0);
+
+  const pages=document.querySelectorAll('.j-section-page');
+
+  if(!sectionId){
+    // Show home, hide all section pages
+    pages.forEach(p=>p.classList.toggle('active', p.id==='jpage-home'));
+    document.querySelectorAll('.j-hero-link').forEach(l=>l.classList.remove('active'));
+    document.querySelectorAll('#navMenuJournal a').forEach(l=>l.classList.remove('active-jlink'));
+    history.replaceState(null,'','#journal');
+    return;
+  }
+
+  const short=sectionId.replace('j-','');
+  const pageId='jpage-'+short;
+
+  // Batch all class changes together
+  pages.forEach(p=>p.classList.toggle('active', p.id===pageId));
+
+  document.querySelectorAll('.j-hero-link').forEach(l=>{
+    l.classList.toggle('active', (l.getAttribute('onclick')||'').includes("'"+sectionId+"'"));
+  });
+  document.querySelectorAll('#navMenuJournal a').forEach(l=>{
+    l.classList.toggle('active-jlink', (l.getAttribute('onclick')||'').includes("'"+sectionId+"'"));
+  });
+
+  history.replaceState(null,'','#journal/'+short);
+
+  // Load journal content if not yet loaded
+  if(!jLoaded){ loadAllJournal(); jLoaded=true; }
+  document.querySelectorAll('#jpage-'+short+' .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── HASH ROUTING (initial load only) ────────────────────────
+function checkHash(){
+  const h=location.hash;
+  if(h==='#journal'||h.startsWith('#journal')){
+    switchSection('journal');
+    if(h.startsWith('#journal/')){
+      const sec=h.replace('#journal/','');
+      if(sec&&J_SECTIONS.includes(sec)){
+        // slight delay to let DOM settle before showing section
+        requestAnimationFrame(()=>showJSection('j-'+sec));
+      }
+    }
+  }
+}
+// Only check on initial load — we use history.replaceState for navigation
+// so hashchange is not needed and would cause extra renders
+checkHash();
+
+// Legacy jScrollTo kept for any remaining references
+function jScrollTo(id){ showJSection(id); }
+
+// ── GALLERY FILTER ────────────────────────────────────────────
+function filterGallery(cat,btn){
+  document.querySelectorAll('.gallery-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#galleryGrid .photo-card').forEach(card=>{
+    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+  });
+}
+
+// ── ARTICLE FILTER ────────────────────────────────────────────
+function filterArticles(cat,btn){
+  document.querySelectorAll('.article-cat').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#articlesGrid .article-card').forEach(card=>{
+    card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════
+const GRADS=[
+  {f:'#0f4c75',t:'#0d7680'},{f:'#1a5c2a',t:'#5ba35b'},
+  {f:'#7c4a1e',t:'#e8a561'},{f:'#1a4a6b',t:'#3a8fb0'},
+  {f:'#5c3a6b',t:'#b07ab0'},{f:'#8b1a1a',t:'#e86c5a'},
+  {f:'#8b5e1a',t:'#e8c880'},{f:'#2a5a3a',t:'#7ab07a'},
+  {f:'#1a3a6b',t:'#3a6fa8'},{f:'#6b3a1a',t:'#a86a3a'},
+  {f:'#3a1a6b',t:'#6a4aa8'},{f:'#1a1a6b',t:'#3a3aa8'}
+];
+const ACL={faith:'Faith & Religion',business:'Business',digital:'Digital Skills',life:'Life'};
+
+function gs(f,t){ return `background:linear-gradient(135deg,${f||'#1a4a6b'} 0%,${t||'#3a8fb0'} 100%)`; }
+function fd(d){ return d?new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):''; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+function fmtParagraphs(text){
+  return (text||'').split(/\n\n+/)
+    .map(p=>`<p>${esc(p.trim())}</p>`)
+    .join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// ENGAGEMENT ENGINE — Share · Like · Comment
+// ═══════════════════════════════════════════════════════════
+
+// ── LIKES (localStorage for session, Supabase for counts) ──
+function getLikedKey(type,id){ return `pazza_liked_${type}_${id}`; }
+function isLiked(type,id){ try{ return !!localStorage.getItem(getLikedKey(type,id)); }catch(e){ return false; } }
+function setLiked(type,id){ try{ localStorage.setItem(getLikedKey(type,id),'1'); }catch(e){} }
+function removeLiked(type,id){ try{ localStorage.removeItem(getLikedKey(type,id)); }catch(e){} }
+
+async function getLikeCount(type,id){
+  if(!sb) return 0;
+  const {count}=await sb.from('likes').select('*',{count:'exact',head:true}).eq('content_type',type).eq('content_id',id);
+  return count||0;
+}
+
+async function toggleLike(type,id,btnEl){
+  if(!sb){ showToast('Connect Supabase to use likes','info'); return; }
+  const alreadyLiked=isLiked(type,id);
+  btnEl.disabled=true;
+  if(alreadyLiked){
+    await sb.from('likes').delete().eq('content_type',type).eq('content_id',id).eq('session_id',getSessionId());
+    removeLiked(type,id);
+    btnEl.classList.remove('liked');
+  } else {
+    await sb.from('likes').insert([{content_type:type,content_id:id,session_id:getSessionId()}]);
+    setLiked(type,id);
+    btnEl.classList.add('liked');
+  }
+  const count=await getLikeCount(type,id);
+  const countEl=btnEl.querySelector('.count');
+  if(countEl) countEl.textContent=count>0?count:'';
+  btnEl.disabled=false;
+}
+
+function getSessionId(){
+  let sid;
+  try{ sid=localStorage.getItem('pazza_sid'); }catch(e){}
+  if(!sid){ sid=Math.random().toString(36).slice(2)+Date.now().toString(36); try{ localStorage.setItem('pazza_sid',sid); }catch(e){} }
+  return sid;
+}
+
+async function renderEngageBar(type,id,variant='dark'){
+  const liked=isLiked(type,id);
+  const count=sb?await getLikeCount(type,id):0;
+  const isLight=variant==='light';
+  return `<div class="engage-bar${isLight?' light':''}">
+    <button class="engage-btn${liked?' liked':''}" onclick="toggleLike('${type}','${id}',this)" title="Like">
+      ${liked?'♥':'♡'} Like<span class="count">${count>0?' '+count:''}</span>
+    </button>
+    <button class="engage-btn" onclick="openCommentPanel('${type}','${id}')" title="Comments">
+      💬 Comment
+    </button>
+    <button class="engage-btn" onclick="openShareModal('${type}','${id}','${type}')" title="Share">
+      ⤴ Share
+    </button>
+  </div>`;
+}
+
+// ── SHARE MODAL ───────────────────────────────────────────────
+let _shareUrl='', _shareTitle='', _shareText='';
+
+function openShareModal(type,id,label){
+  const base=window.location.href.split('#')[0];
+  _shareUrl=`${base}#journal/${type}/${id}`;
+  _shareTitle=document.title||'Pazza Journal';
+  _shareText=label||'Check this out on Pazza Journal';
+
+  const enc=encodeURIComponent;
+  document.getElementById('shareModalSub').textContent=_shareTitle.substring(0,60);
+  document.getElementById('shareLinkInput').value=_shareUrl;
+  document.getElementById('spWhatsApp').href=`https://wa.me/?text=${enc(_shareText+' '+_shareUrl)}`;
+  document.getElementById('spTwitter').href=`https://twitter.com/intent/tweet?text=${enc(_shareText)}&url=${enc(_shareUrl)}`;
+  document.getElementById('spTelegram').href=`https://t.me/share/url?url=${enc(_shareUrl)}&text=${enc(_shareText)}`;
+  document.getElementById('spEmail').href=`mailto:?subject=${enc(_shareTitle)}&body=${enc(_shareText+'\n\n'+_shareUrl)}`;
+  document.getElementById('spFacebook').href=`https://www.facebook.com/sharer/sharer.php?u=${enc(_shareUrl)}`;
+
+  const nativeBtn=document.getElementById('spNative');
+  if(navigator.share){ nativeBtn.style.display='flex'; } else { nativeBtn.style.display='none'; }
+
+  document.getElementById('shareModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeShareModal(){
+  document.getElementById('shareModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function copyShareLink(){
+  const input=document.getElementById('shareLinkInput');
+  navigator.clipboard.writeText(input.value)
+    .then(()=>showToast('Link copied!','success'))
+    .catch(()=>{ input.select(); document.execCommand('copy'); showToast('Link copied!','success'); });
+}
+function triggerNativeShare(){
+  if(navigator.share) navigator.share({title:_shareTitle,text:_shareText,url:_shareUrl}).catch(()=>{});
+}
+
+// ── COMMENT PANEL ─────────────────────────────────────────────
+let _commentType='', _commentId='';
+
+async function openCommentPanel(type,id){
+  _commentType=type; _commentId=id;
+  document.getElementById('commentPanelTitle').textContent='Comments';
+  document.getElementById('commentName').value='';
+  document.getElementById('commentText').value='';
+  document.getElementById('commentPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  await loadComments(type,id);
+}
+function closeCommentPanel(){
+  document.getElementById('commentPanel').classList.remove('open');
+  document.body.style.overflow='';
+}
+async function loadComments(type,id){
+  const list=document.getElementById('commentList');
+  list.innerHTML='<div class="comment-loading">Loading…</div>';
+  if(!sb){ list.innerHTML='<div class="comment-empty">Connect Supabase to see comments.</div>'; return; }
+  const {data,error}=await sb.from('comments')
+    .select('id,author_name,text,created_at')
+    .eq('content_type',type).eq('content_id',id)
+    .order('created_at',{ascending:true});
+  if(error){ list.innerHTML='<div class="comment-empty">Could not load comments.</div>'; return; }
+  if(!data||!data.length){ list.innerHTML='<div class="comment-empty">No comments yet — be the first!</div>'; return; }
+  list.innerHTML=data.map(c=>`
+    <div class="comment-item">
+      <div class="comment-author">${esc(c.author_name||'Anonymous')}<span class="comment-date">${fd(c.created_at)}</span></div>
+      <div class="comment-text">${esc(c.text||'')}</div>
+    </div>`).join('');
+  list.scrollTop=list.scrollHeight;
+}
+async function submitComment(){
+  const name=(document.getElementById('commentName').value||'').trim()||'Anonymous';
+  const text=(document.getElementById('commentText').value||'').trim();
+  if(!text){ showToast('Please write something','error'); return; }
+  if(!sb){ showToast('Connect Supabase to post comments','info'); return; }
+  const btn=document.querySelector('.comment-submit');
+  btn.disabled=true; btn.textContent='Posting…';
+  const {error}=await sb.from('comments').insert([{
+    content_type:_commentType, content_id:_commentId,
+    author_name:name, text, session_id:getSessionId()
+  }]);
+  btn.disabled=false; btn.textContent='Post comment';
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  document.getElementById('commentText').value='';
+  showToast('Comment posted!','success');
+  await loadComments(_commentType,_commentId);
+
+  // Refresh comment count badge on card
+  const badge=document.querySelector(`[data-id="${_commentId}"] .comment-count`);
+  if(badge) badge.textContent=parseInt(badge.textContent||'0')+1;
+}
+
+// ── SHARE (legacy wrapper) ────────────────────────────────────
+function shareContent(title,text,url){
+  _shareTitle=title; _shareText=text||title;
+  _shareUrl=url||window.location.href;
+  openShareModal('','','');
+  // Override URL display
+  document.getElementById('shareLinkInput').value=_shareUrl;
+  const enc=encodeURIComponent;
+  document.getElementById('spWhatsApp').href=`https://wa.me/?text=${enc(_shareText+' '+_shareUrl)}`;
+  document.getElementById('spTwitter').href=`https://twitter.com/intent/tweet?text=${enc(_shareText)}&url=${enc(_shareUrl)}`;
+  document.getElementById('spTelegram').href=`https://t.me/share/url?url=${enc(_shareUrl)}&text=${enc(_shareText)}`;
+  document.getElementById('spEmail').href=`mailto:?subject=${enc(_shareTitle)}&body=${enc(_shareText+'\n\n'+_shareUrl)}`;
+  document.getElementById('spFacebook').href=`https://www.facebook.com/sharer/sharer.php?u=${enc(_shareUrl)}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// JOURNAL LOADING
+// ═══════════════════════════════════════════════════════════
+async function loadAllJournal(){
+  await Promise.all([loadGallery(),loadStories(),loadBlogs(),loadArticles(),loadLibrary()]);
+}
+
+// ── GALLERY ───────────────────────────────────────────────────
+async function loadGallery(){
+  if(!sb) return;
+  const {data,error}=await sb.from('gallery').select('id,title,caption,location,category,image_url,color_from,color_to,created_at').order('created_at',{ascending:false});
+  if(error){ console.warn('gallery:',error.message); return; }
+  if(!data||!data.length) return;
+  const grid=document.getElementById('galleryGrid'); if(!grid) return;
+  grid.innerHTML='';
+  for(let i=0;i<data.length;i++){
+    const item=data[i];
+    const cf=item.color_from||GRADS[i%GRADS.length].f;
+    const ct=item.color_to||GRADS[i%GRADS.length].t;
+    const imgHtml=item.image_url
+      ? `<img src="${esc(item.image_url)}" style="width:100%;height:100%;object-fit:cover;display:block;">`
+      : `<div style="${gs(cf,ct)};width:100%;height:100%;"></div>`;
+    const card=document.createElement('div');
+    card.className='photo-card'+(i===0?' wide tall':'');
+    card.dataset.cat=item.category||'travel';
+    card.dataset.id=item.id;
+    card.style.position='relative';
+    const likedClass=isLiked('gallery',item.id)?' liked':'';
+    card.innerHTML=`${imgHtml}
+      <div class="photo-overlay"></div>
+      <span class="photo-tag">${esc(item.category||'')}</span>
+      <div class="photo-info">
+        <div class="photo-loc">${esc(item.location||'')}</div>
+        <div class="photo-caption">${esc(item.caption||item.title||'')}</div>
+        <div class="engage-bar" style="margin-top:0.6rem;border-top:1px solid rgba(255,255,255,0.15);padding-top:0.5rem;">
+          <button class="engage-btn${likedClass}" onclick="event.stopPropagation();toggleLike('gallery','${item.id}',this)" style="font-size:0.6rem;padding:0.25rem 0.6rem;">
+            ${isLiked('gallery',item.id)?'♥':'♡'} <span class="count"></span>
+          </button>
+          <button class="engage-btn" onclick="event.stopPropagation();openCommentPanel('gallery','${item.id}')" style="font-size:0.6rem;padding:0.25rem 0.6rem;">💬</button>
+          <button class="engage-btn" onclick="event.stopPropagation();openShareModal('gallery','${item.id}','${esc(item.title||item.caption||'')}')" style="font-size:0.6rem;padding:0.25rem 0.6rem;">⤴</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  }
+  document.querySelectorAll('#galleryGrid .photo-card').forEach(el=>revObs.observe(el));
+}
+
+// ── STORIES ───────────────────────────────────────────────────
+async function loadStories(){
+  if(!sb) return;
+  const {data,error}=await sb.from('stories').select('id,title,excerpt,content,category,read_time,color_from,color_to,created_at').order('created_at',{ascending:false});
+  if(error){ console.warn('stories:',error.message); return; }
+  if(!data||!data.length) return;
+  const grid=document.querySelector('#j-stories .stories-grid'); if(!grid) return;
+  let h=''; let stackOpen=false;
+  for(let i=0;i<data.length;i++){
+    const s=data[i];
+    const cf=s.color_from||GRADS[i%GRADS.length].f;
+    const ct=s.color_to||GRADS[i%GRADS.length].t;
+    const engBar=await renderEngageBar('stories',s.id,'light');
+    if(i===0){
+      h+=`<div class="story-featured reveal" data-id="${s.id}">
+        <div class="story-img" style="${gs(cf,ct)};">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,28,0.65) 0%,transparent 60%);"></div>
+          <div style="position:absolute;bottom:1.2rem;left:1.5rem;font-family:var(--serif);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.1;">${esc(s.title)}</div>
+        </div>
+        <div class="story-body">
+          <span class="story-category">${esc(s.category||'Story')}</span>
+          <h3 class="story-title">${esc(s.title)}</h3>
+          <p class="story-excerpt story-excerpt-short">${esc(s.excerpt||'')}</p>
+          <div class="story-meta"><span>Lutimo Pazza</span><span>·</span><span>${s.read_time||8} min read</span><span>·</span><span>${fd(s.created_at)}</span></div>
+          <div class="share-row" style="margin-top:0.6rem;">
+            <button class="read-more-btn" onclick="openReader('${s.id}','stories')">Read full story →</button>
+          </div>
+          ${engBar}
+        </div></div>`;
+    } else {
+      if(i===1){ h+='<div class="story-stack">'; stackOpen=true; }
+      h+=`<div class="story-mini reveal" data-id="${s.id}">
+        <div class="story-mini-img" style="${gs(cf,ct)};min-height:90px;"></div>
+        <div class="story-mini-body">
+          <span class="story-category" style="font-size:0.58rem;">${esc(s.category||'Story')}</span>
+          <h4 class="story-mini-title">${esc(s.title)}</h4>
+          <p class="story-mini-exc">${esc((s.excerpt||'').substring(0,90))}…</p>
+          <div class="story-mini-meta">${s.read_time||8} min · ${fd(s.created_at)}</div>
+          <div style="display:flex;gap:0.4rem;margin-top:0.4rem;">
+            <button class="read-more-btn dark" style="font-size:0.62rem;padding:0.3rem 0.7rem;" onclick="openReader('${s.id}','stories')">Read →</button>
+          </div>
+          ${engBar}
+        </div></div>`;
+    }
+  }
+  if(stackOpen) h+='</div>';
+  grid.innerHTML=h;
+  document.querySelectorAll('#j-stories .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── BLOGS ─────────────────────────────────────────────────────
+async function loadBlogs(){
+  if(!sb){ return; }
+  const {data,error}=await sb.from('blogs').select('id,title,excerpt,content,tags,created_at').order('created_at',{ascending:false});
+  if(error){ console.warn('blogs error:',error.message); showToast('Blog load error: '+error.message,'error'); return; }
+  const grid=document.querySelector('#j-blog .blog-grid');
+  if(!grid){ console.warn('blog-grid not found'); return; }
+  if(!data||!data.length){ return; }
+  const cards=await Promise.all(data.map(async b=>{
+    const engBar=await renderEngageBar('blogs',b.id,'dark');
+    return `<div class="blog-card reveal" data-id="${b.id}">
+      <div class="blog-date">${fd(b.created_at)}</div>
+      <h3 class="blog-title">${esc(b.title)}</h3>
+      <p class="blog-excerpt blog-excerpt-short">${esc(b.excerpt||'')}</p>
+      <div class="blog-tags">${(b.tags||[]).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
+      <div style="margin-top:0.8rem;">
+        <button class="read-more-btn dark" onclick="openReader('${b.id}','blogs')">Read post →</button>
       </div>
-    </div>
-    <div id="editModalBody"></div>
-  </div>
-</div>
+      ${engBar}
+    </div>`;
+  }));
+  grid.innerHTML=cards.join('');
+  document.querySelectorAll('#j-blog .reveal').forEach(el=>revObs.observe(el));
+}
 
-<!-- ═══ READER MODAL ═══ -->
-<div id="readerModal">
-  <div class="reader-inner">
-    <button class="reader-back" onclick="closeReader()">← Back to Journal</button>
-    <div id="readerContent"></div>
-    <div class="reader-footer" id="readerFooter"></div>
-  </div>
-</div>
+// ── ARTICLES ──────────────────────────────────────────────────
+async function loadArticles(){
+  if(!sb) return;
+  const {data,error}=await sb.from('articles').select('id,title,excerpt,content,category,read_time,created_at').order('created_at',{ascending:false});
+  if(error){ console.warn('articles:',error.message); return; }
+  if(!data||!data.length) return;
+  const grid=document.getElementById('articlesGrid'); if(!grid) return;
+  const cards=await Promise.all(data.map(async a=>{
+    const engBar=await renderEngageBar('articles',a.id,'light');
+    return `<div class="article-card reveal" data-cat="${a.category||'life'}" data-id="${a.id}">
+      <span class="article-cat-tag">${ACL[a.category]||esc(a.category)}</span>
+      <h3 class="article-title">${esc(a.title)}</h3>
+      <p class="article-excerpt article-excerpt-short">${esc(a.excerpt||'')}</p>
+      <div class="article-meta">
+        <span>Lutimo Pazza</span><span>·</span>
+        <span class="article-min">${a.read_time||10} min read</span><span>·</span><span>${fd(a.created_at)}</span>
+      </div>
+      <div style="margin-top:0.8rem;">
+        <button class="read-more-btn" onclick="openReader('${a.id}','articles')">Read article →</button>
+      </div>
+      ${engBar}
+    </div>`;
+  }));
+  grid.innerHTML=cards.join('');
+  document.querySelectorAll('#j-articles .reveal').forEach(el=>revObs.observe(el));
+}
 
+// ── LIBRARY ───────────────────────────────────────────────────
+async function loadLibrary(){
+  if(!sb) return;
+  const [{data:books,error:be},{data:quotes,error:qe}]=await Promise.all([
+    sb.from('books').select('id,title,author,summary,category,emoji,color_from,color_to,created_at').order('created_at',{ascending:false}),
+    sb.from('quotes').select('id,text,attribution,created_at').order('created_at',{ascending:false})
+  ]);
+  if(be) console.warn('books:',be.message);
+  if(qe) console.warn('quotes:',qe.message);
+  const layout=document.querySelector('#j-library .library-layout'); if(!layout) return;
+
+  let booksHtml='';
+  if(books&&books.length){
+    const bookCards=await Promise.all(books.map(async(b,i)=>{
+      const cf=b.color_from||GRADS[i%GRADS.length].f;
+      const ct=b.color_to||GRADS[i%GRADS.length].t;
+      const engBar=await renderEngageBar('books',b.id,'dark');
+      return `<div class="book-card reveal" data-id="${b.id}">
+        <div class="book-cover" style="${gs(cf,ct)};">${esc(b.emoji||'📖')}</div>
+        <div class="book-info">
+          <div class="book-title">${esc(b.title)}</div>
+          <div class="book-author">${esc(b.author||'')}</div>
+          <div class="book-body-text">${fmtParagraphs(b.summary)}</div>
+          <span class="book-badge">${esc(b.category||'')}</span>
+          ${engBar}
+        </div></div>`;
+    }));
+    booksHtml=`<div><div class="lib-heading">Recommended reading</div><div class="books-grid">${bookCards.join('')}</div></div>`;
+  } else {
+    booksHtml=layout.children[0]?.outerHTML||'';
+  }
+
+  let quotesHtml='';
+  if(quotes&&quotes.length){
+    const quoteCards=await Promise.all(quotes.map(async q=>{
+      const engBar=await renderEngageBar('quotes',q.id,'dark');
+      return `<div class="quote-card reveal" data-id="${q.id}">
+        <div class="quote-text">${esc(q.text||'')}</div>
+        <div class="quote-attr">— ${esc(q.attribution||'')}</div>
+        ${engBar}
+      </div>`;
+    }));
+    quotesHtml=`<div><div class="lib-heading">Quotes I carry</div><div class="quotes-wall">${quoteCards.join('')}</div></div>`;
+  } else {
+    quotesHtml=layout.children[1]?.outerHTML||'';
+  }
+
+  layout.innerHTML=booksHtml+quotesHtml;
+  document.querySelectorAll('#j-library .reveal').forEach(el=>revObs.observe(el));
+}
+
+// ── READER MODAL ──────────────────────────────────────────────
+let currentReaderId=null, currentReaderTable=null;
+async function openReader(id,table){
+  if(!sb){ showToast('Connect Supabase to read full content','info'); return; }
+  const {data,error}=await sb.from(table).select('*').eq('id',id).single();
+  if(error||!data){ showToast('Could not load content','error'); return; }
+  currentReaderId=id; currentReaderTable=table;
+
+  let catHtml='', metaHtml='';
+  const shareTitle=data.title||'';
+  if(table==='stories'){
+    catHtml=`<span class="reader-cat">${esc(data.category||'')}</span>`;
+    metaHtml=`<span>${data.read_time||8} min read</span><span>·</span><span>${fd(data.created_at)}</span>`;
+  } else if(table==='blogs'){
+    catHtml='';
+    metaHtml=`<span>${fd(data.created_at)}</span>${(data.tags||[]).length?'<span>·</span><span>'+(data.tags||[]).join(', ')+'</span>':''}`;
+  } else if(table==='articles'){
+    catHtml=`<span class="reader-cat">${ACL[data.category]||esc(data.category)}</span>`;
+    metaHtml=`<span>${data.read_time||10} min read</span><span>·</span><span>${fd(data.created_at)}</span>`;
+  }
+
+  const contentHtml=fmtParagraphs(data.content||'Content coming soon.');
+  const engBar=await renderEngageBar(table,id,'dark');
+
+  document.getElementById('readerContent').innerHTML=`
+    ${catHtml}
+    <h1 class="reader-title">${esc(data.title)}</h1>
+    <div class="reader-meta">${metaHtml}</div>
+    <div class="reader-content">${contentHtml}</div>`;
+
+  document.getElementById('readerFooter').innerHTML=`${engBar}`;
+
+  const modal=document.getElementById('readerModal');
+  modal.classList.add('open');
+  modal.scrollTo(0,0);
+  document.body.style.overflow='hidden';
+}
+function closeReader(){
+  document.getElementById('readerModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ═══════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════════
+let aAuthed=false, tClicks=0, tTimer=null;
+
+function adminTriggerClick(){
+  tClicks++;
+  clearTimeout(tTimer);
+  tTimer=setTimeout(()=>tClicks=0,1500);
+  if(tClicks>=5){ tClicks=0; openAdmin(); }
+}
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(aAuthed){
+    document.getElementById('adminLoginScreen').style.display='none';
+    document.getElementById('adminDash').style.display='flex';
+    loadAdmAll();
+  } else {
+    document.getElementById('adminLoginScreen').style.display='flex';
+    document.getElementById('adminDash').style.display='none';
+    setTimeout(()=>{ const i=document.getElementById('adminPwdInput'); if(i) i.focus(); },80);
+  }
+}
+function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); document.body.style.overflow=''; }
+function adminLogout(){
+  aAuthed=false;
+  document.getElementById('adminPwdInput').value='';
+  document.getElementById('adminLoginErr').style.display='none';
+  document.getElementById('adminLoginScreen').style.display='flex';
+  document.getElementById('adminDash').style.display='none';
+  document.body.classList.remove('admin-active');
+}
+function checkAdminPwd(){
+  if(document.getElementById('adminPwdInput').value===CFG.pwd){
+    aAuthed=true;
+    document.getElementById('adminLoginErr').style.display='none';
+    document.getElementById('adminLoginScreen').style.display='none';
+    document.getElementById('adminDash').style.display='flex';
+    document.body.classList.add('admin-active');
+    loadAdmAll();
+  } else {
+    document.getElementById('adminLoginErr').style.display='block';
+    document.getElementById('adminPwdInput').value='';
+  }
+}
+
+function showAdmTab(tab){
+  document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.adm-panel').forEach(p=>p.classList.remove('active'));
+  const btn=document.getElementById('admTab-'+tab); if(btn) btn.classList.add('active');
+  const panel=document.getElementById('admPanel-'+tab); if(panel) panel.classList.add('active');
+}
+
+// ── ADMIN LIST LOADING ────────────────────────────────────────
+const TABLE_META={
+  gallery:  {list:'admGalleryList',  render:rGallery},
+  stories:  {list:'admStoriesList',  render:rStory},
+  blogs:    {list:'admBlogList',     render:rBlog},
+  articles: {list:'admArticlesList', render:rArticle},
+  books:    {list:'admBooksList',    render:rBook},
+  quotes:   {list:'admQuotesList',   render:rQuote}
+};
+
+async function loadAdmAll(){
+  buildSwatches('gColorRow'); buildSwatches('stColorRow'); buildSwatches('bkColorRow');
+  updStatus(!!sb);
+  const schema=document.getElementById('sqlSchema'); if(schema) schema.value=SQL_SCHEMA;
+  await Promise.all(Object.keys(TABLE_META).map(t=>loadAdmList(t)));
+}
+
+function updStatus(ok){
+  const el=document.getElementById('admSupabaseStatus');
+  if(el) el.textContent=ok?'● Connected':'○ No database';
+}
+
+function buildSwatches(rowId){
+  const row=document.getElementById(rowId); if(!row||row.children.length) return;
+  GRADS.forEach((c,i)=>{
+    const sw=document.createElement('div');
+    sw.className='adm-color-swatch'+(i===0?' selected':'');
+    sw.style.cssText=`background:linear-gradient(135deg,${c.f},${c.t});`;
+    sw.dataset.f=c.f; sw.dataset.t=c.t;
+    sw.onclick=()=>{ row.querySelectorAll('.adm-color-swatch').forEach(s=>s.classList.remove('selected')); sw.classList.add('selected'); };
+    row.appendChild(sw);
+  });
+}
+function getColor(rowId){
+  const s=document.getElementById(rowId).querySelector('.selected');
+  return s?{f:s.dataset.f,t:s.dataset.t}:{f:'#1a4a6b',t:'#3a8fb0'};
+}
+
+async function loadAdmList(table){
+  const meta=TABLE_META[table]; if(!meta) return;
+  const el=document.getElementById(meta.list); if(!el) return;
+  if(!sb){ el.innerHTML='<div class="adm-empty">Connect Supabase in Setup tab.</div>'; return; }
+  el.innerHTML='<div class="adm-loading">Loading…</div>';
+  const {data,error}=await sb.from(table).select('*').order('created_at',{ascending:false});
+  if(error){ el.innerHTML=`<div class="adm-empty" style="color:#f87171;">Error: ${esc(error.message)}<br><small>Run the SQL schema in Supabase → SQL Editor to fix RLS policies.</small></div>`; return; }
+  el.innerHTML=data&&data.length?data.map(d=>meta.render(d)).join(''):'<div class="adm-empty">Nothing published yet.</div>';
+}
+
+// ── RENDER FUNCTIONS ──────────────────────────────────────────
+function rGallery(d){
+  const cf=d.color_from||'#1a4a6b', ct=d.color_to||'#3a8fb0';
+  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};${d.image_url?'background:none;':''}">${d.image_url?`<img src="${esc(d.image_url)}" style="width:100%;height:100%;object-fit:cover;">`:''}</div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title||d.caption||'Untitled')}</div><div class="adm-item-meta">${esc(d.category||'')} · ${esc(d.location||'')}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('gallery','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('gallery','${d.id}')">Delete</button>
+  </div></div>`;
+}
+function rStory(d){
+  const cf=d.color_from||'#1a4a2a', ct=d.color_to||'#4a9a6a';
+  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};"></div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.category||'')} · ${d.read_time||8} min · ${fd(d.created_at)}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('stories','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('stories','${d.id}')">Delete</button>
+  </div></div>`;
+}
+function rBlog(d){
+  return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${fd(d.created_at)} · Tags: ${(d.tags||[]).join(', ')||'none'}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('blogs','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('blogs','${d.id}')">Delete</button>
+  </div></div>`;
+}
+function rArticle(d){
+  return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${ACL[d.category]||d.category} · ${d.read_time||10} min · ${fd(d.created_at)}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('articles','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('articles','${d.id}')">Delete</button>
+  </div></div>`;
+}
+function rBook(d){
+  const cf=d.color_from||'#1a4a6b', ct=d.color_to||'#3a7fa8';
+  return `<div class="adm-item"><div class="adm-item-thumb" style="${gs(cf,ct)};display:flex;align-items:center;justify-content:center;font-size:1.3rem;">${esc(d.emoji||'📖')}</div>
+  <div class="adm-item-info"><div class="adm-item-title">${esc(d.title)}</div><div class="adm-item-meta">${esc(d.author||'')} · ${esc(d.category||'')}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('books','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('books','${d.id}')">Delete</button>
+  </div></div>`;
+}
+function rQuote(d){
+  return `<div class="adm-item">
+  <div class="adm-item-info" style="margin-left:0;"><div class="adm-item-title" style="white-space:normal;">"${esc((d.text||'').substring(0,80))}${d.text&&d.text.length>80?'…':''}"</div><div class="adm-item-meta">— ${esc(d.attribution||'')}</div></div>
+  <div class="adm-item-actions">
+    <button class="adm-btn edit" onclick="openEdit('quotes','${d.id}')">Edit</button>
+    <button class="adm-btn danger" onclick="delItem('quotes','${d.id}')">Delete</button>
+  </div></div>`;
+}
+
+// ── DELETE ────────────────────────────────────────────────────
+async function delItem(table,id){
+  if(!confirm('Delete this item permanently?')) return;
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from(table).delete().eq('id',id);
+  if(error){ showToast('Delete failed: '+error.message,'error'); return; }
+  showToast('Deleted!','success');
+  await loadAdmList(table);
+  jLoaded=false;
+}
+
+// ── EDIT MODAL ────────────────────────────────────────────────
+let editState={table:null,id:null,data:null};
+function closeEdit(){
+  document.getElementById('editModal').classList.remove('open');
+  document.body.style.overflow='hidden';
+}
+async function openEdit(table,id){
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {data,error}=await sb.from(table).select('*').eq('id',id).single();
+  if(error||!data){ showToast('Could not load item','error'); return; }
+  editState={table,id,data};
+  const titles={gallery:'Edit Gallery Item',stories:'Edit Story',blogs:'Edit Blog Post',articles:'Edit Article',books:'Edit Book',quotes:'Edit Quote'};
+  document.getElementById('editModalTitle').textContent=titles[table]||'Edit';
+  let body='';
+  if(table==='gallery'){
+    body=`<div class="adm-form-grid">
+      <div class="adm-form-group"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Category</label><select class="adm-select" id="ed_category">${['travel','nature','culture','people','family'].map(v=>`<option value="${v}"${data.category===v?' selected':''}>${v}</option>`).join('')}</select></div>
+      <div class="adm-form-group"><label class="adm-label">Location</label><input class="adm-input" id="ed_location" value="${esc(data.location||'')}"></div>
+      <div class="adm-form-group full"><label class="adm-label">Caption</label><input class="adm-input" id="ed_caption" value="${esc(data.caption||'')}"></div></div>`;
+  } else if(table==='stories'){
+    body=`<div class="adm-form-grid">
+      <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Category</label><input class="adm-input" id="ed_category" value="${esc(data.category||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Read Time</label><input class="adm-input" type="number" id="ed_read_time" value="${data.read_time||8}"></div>
+      <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
+      <div class="adm-form-group full"><label class="adm-label">Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div></div>`;
+  } else if(table==='blogs'){
+    body=`<div class="adm-form-grid">
+      <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
+      <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
+      <div class="adm-form-group full"><label class="adm-label">Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div>
+      <div class="adm-form-group full"><label class="adm-label">Tags (comma separated)</label><input class="adm-input" id="ed_tags" value="${esc((data.tags||[]).join(', '))}"></div></div>`;
+  } else if(table==='articles'){
+    body=`<div class="adm-form-grid">
+      <div class="adm-form-group full"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Category</label><select class="adm-select" id="ed_category">${Object.keys(ACL).map(v=>`<option value="${v}"${data.category===v?' selected':''}>${ACL[v]}</option>`).join('')}</select></div>
+      <div class="adm-form-group"><label class="adm-label">Read Time</label><input class="adm-input" type="number" id="ed_read_time" value="${data.read_time||10}"></div>
+      <div class="adm-form-group full"><label class="adm-label">Excerpt</label><textarea class="adm-textarea" id="ed_excerpt">${esc(data.excerpt||'')}</textarea></div>
+      <div class="adm-form-group full"><label class="adm-label">Content</label><textarea class="adm-textarea tall" id="ed_content">${esc(data.content||'')}</textarea></div></div>`;
+  } else if(table==='books'){
+    body=`<div class="adm-form-grid">
+      <div class="adm-form-group"><label class="adm-label">Title</label><input class="adm-input" id="ed_title" value="${esc(data.title||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Author</label><input class="adm-input" id="ed_author" value="${esc(data.author||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Category</label><input class="adm-input" id="ed_category" value="${esc(data.category||'')}"></div>
+      <div class="adm-form-group"><label class="adm-label">Emoji</label><input class="adm-input" id="ed_emoji" value="${esc(data.emoji||'📖')}" style="font-size:1.4rem;text-align:center;" maxlength="4"></div>
+      <div class="adm-form-group full"><label class="adm-label">Summary</label><textarea class="adm-textarea tall" id="ed_summary">${esc(data.summary||'')}</textarea></div></div>`;
+  } else if(table==='quotes'){
+    body=`<div class="adm-form-grid single">
+      <div class="adm-form-group"><label class="adm-label">Quote Text</label><textarea class="adm-textarea" id="ed_text">${esc(data.text||'')}</textarea></div>
+      <div class="adm-form-group"><label class="adm-label">Attribution</label><input class="adm-input" id="ed_attribution" value="${esc(data.attribution||'')}"></div></div>`;
+  }
+  document.getElementById('editModalBody').innerHTML=body;
+  document.getElementById('editModal').classList.add('open');
+}
+
+async function saveEdit(){
+  const {table,id}=editState;
+  if(!table||!id||!sb){ showToast('Nothing to save','error'); return; }
+  const btn=document.getElementById('editSaveBtn');
+  btn.disabled=true; btn.textContent='Saving…';
+  let updates={};
+  const gv=id=>{ const el=document.getElementById('ed_'+id); return el?el.value.trim():null; };
+  try{
+    if(table==='gallery'){ updates={title:gv('title'),category:gv('category'),location:gv('location'),caption:gv('caption')}; }
+    else if(table==='stories'){ updates={title:gv('title'),category:gv('category'),read_time:parseInt(gv('read_time'))||8,excerpt:gv('excerpt'),content:gv('content')}; }
+    else if(table==='blogs'){ const tags=(gv('tags')||'').split(',').map(s=>s.trim()).filter(Boolean); updates={title:gv('title'),excerpt:gv('excerpt'),content:gv('content'),tags}; }
+    else if(table==='articles'){ updates={title:gv('title'),category:gv('category'),read_time:parseInt(gv('read_time'))||10,excerpt:gv('excerpt'),content:gv('content')}; }
+    else if(table==='books'){ updates={title:gv('title'),author:gv('author'),category:gv('category'),emoji:gv('emoji')||'📖',summary:gv('summary')}; }
+    else if(table==='quotes'){ updates={text:gv('text'),attribution:gv('attribution')}; }
+    const {error}=await sb.from(table).update(updates).eq('id',id);
+    if(error){ showToast('Save failed: '+error.message,'error'); return; }
+    showToast('Saved!','success'); closeEdit(); await loadAdmList(table); jLoaded=false;
+  } finally { btn.disabled=false; btn.textContent='Save Changes'; }
+}
+
+// ── MEDIA UPLOAD ──────────────────────────────────────────────
+function previewGalleryFile(input){
+  const file=input.files[0]; if(!file) return;
+  const prev=document.getElementById('gPreview');
+  prev.style.display='block'; prev.src=URL.createObjectURL(file);
+  document.getElementById('gColorWrap').style.display='none';
+}
+
+async function uploadMedia(file,folder='gallery'){
+  if(!sb) return null;
+  const ext=file.name.split('.').pop().toLowerCase();
+  const path=`${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const {error}=await sb.storage.from('journal-media').upload(path,file,{cacheControl:'3600',upsert:false});
+  if(error){ showToast('Upload failed: '+error.message,'error'); return null; }
+  const {data}=sb.storage.from('journal-media').getPublicUrl(path);
+  return data.publicUrl;
+}
+
+// ── SUBMIT FUNCTIONS ──────────────────────────────────────────
+async function submitGallery(){
+  const btn=document.getElementById('gSubmitBtn');
+  btn.disabled=true; btn.textContent='Uploading…';
+  try{
+    const file=document.getElementById('gFile').files[0];
+    const col=getColor('gColorRow');
+    let image_url=null;
+    if(file&&sb){ image_url=await uploadMedia(file,'gallery'); }
+    if(file&&!image_url){ return; } // upload failed, error already shown
+    const item={
+      title:document.getElementById('gTitle').value.trim(),
+      category:document.getElementById('gCat').value,
+      location:document.getElementById('gLocation').value.trim(),
+      caption:document.getElementById('gCaption').value.trim(),
+      color_from:col.f, color_to:col.t
+    };
+    if(image_url) item.image_url=image_url;
+    if(!sb){ showToast('No database connected','error'); return; }
+    const {error}=await sb.from('gallery').insert([item]);
+    if(error){ showToast('Error: '+error.message,'error'); return; }
+    showToast('Photo added!','success');
+    ['gTitle','gLocation','gCaption'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+    const gf=document.getElementById('gFile'); if(gf) gf.value='';
+    document.getElementById('gPreview').style.display='none';
+    document.getElementById('gColorWrap').style.display='';
+    await loadAdmList('gallery'); jLoaded=false;
+  } finally { btn.disabled=false; btn.textContent='Add to Gallery'; }
+}
+
+async function submitStory(){
+  const col=getColor('stColorRow');
+  const item={title:document.getElementById('stTitle').value.trim(),category:document.getElementById('stCat').value.trim(),read_time:parseInt(document.getElementById('stTime').value)||8,excerpt:document.getElementById('stExcerpt').value.trim(),content:document.getElementById('stContent').value.trim(),color_from:col.f,color_to:col.t};
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from('stories').insert([item]);
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  showToast('Story published!','success');
+  ['stTitle','stCat','stExcerpt','stContent'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('stories'); jLoaded=false;
+}
+
+async function submitBlog(){
+  const tags=document.getElementById('blTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const item={title:document.getElementById('blTitle').value.trim(),excerpt:document.getElementById('blExcerpt').value.trim(),content:document.getElementById('blContent').value.trim(),tags};
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from('blogs').insert([item]);
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  showToast('Blog post published!','success');
+  ['blTitle','blExcerpt','blContent','blTags'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('blogs'); jLoaded=false;
+}
+
+async function submitArticle(){
+  const item={title:document.getElementById('arTitle').value.trim(),category:document.getElementById('arCat').value,read_time:parseInt(document.getElementById('arTime').value)||10,excerpt:document.getElementById('arExcerpt').value.trim(),content:document.getElementById('arContent').value.trim()};
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from('articles').insert([item]);
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  showToast('Article published!','success');
+  ['arTitle','arExcerpt','arContent'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('articles'); jLoaded=false;
+}
+
+async function submitBook(){
+  const col=getColor('bkColorRow');
+  const item={title:document.getElementById('bkTitle').value.trim(),author:document.getElementById('bkAuthor').value.trim(),category:document.getElementById('bkCat').value.trim(),emoji:document.getElementById('bkEmoji').value.trim()||'📖',summary:document.getElementById('bkSummary').value.trim(),color_from:col.f,color_to:col.t};
+  if(!item.title){ showToast('Title is required','error'); return; }
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from('books').insert([item]);
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  showToast('Book added!','success');
+  ['bkTitle','bkAuthor','bkCat','bkSummary'].forEach(id=>document.getElementById(id).value='');
+  await loadAdmList('books'); jLoaded=false;
+}
+
+async function submitQuote(){
+  const item={text:document.getElementById('qtText').value.trim(),attribution:document.getElementById('qtAttr').value.trim()};
+  if(!item.text){ showToast('Quote text required','error'); return; }
+  if(!sb){ showToast('No database connected','error'); return; }
+  const {error}=await sb.from('quotes').insert([item]);
+  if(error){ showToast('Error: '+error.message,'error'); return; }
+  showToast('Quote added!','success');
+  document.getElementById('qtText').value='';
+  document.getElementById('qtAttr').value='';
+  await loadAdmList('quotes'); jLoaded=false;
+}
+
+// ── SQL SCHEMA ────────────────────────────────────────────────
+const SQL_SCHEMA=`-- ══════════════════════════════════════════════
+-- Pazza Journal Schema v3 — Run in Supabase SQL Editor
+-- ══════════════════════════════════════════════
+
+-- TABLES (safe to re-run: creates if not exists)
+create table if not exists gallery (
+  id uuid default gen_random_uuid() primary key,
+  title text, caption text, location text, category text,
+  image_url text,
+  color_from text default '#1a4a6b', color_to text default '#3a8fb0',
+  created_at timestamptz default now()
+);
+create table if not exists stories (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text, category text, read_time int default 8,
+  color_from text default '#1a4a2a', color_to text default '#4a9a6a',
+  created_at timestamptz default now()
+);
+create table if not exists blogs (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text, tags text[] default '{}',
+  created_at timestamptz default now()
+);
+create table if not exists articles (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, excerpt text, content text, category text, read_time int default 10,
+  created_at timestamptz default now()
+);
+create table if not exists books (
+  id uuid default gen_random_uuid() primary key,
+  title text not null, author text, summary text, category text, emoji text default '📖',
+  color_from text default '#1a4a6b', color_to text default '#3a7fa8',
+  created_at timestamptz default now()
+);
+create table if not exists likes (
+  id uuid default gen_random_uuid() primary key,
+  content_type text not null,
+  content_id text not null,
+  session_id text,
+  created_at timestamptz default now(),
+  unique(content_type, content_id, session_id)
+);
+create table if not exists comments (
+  id uuid default gen_random_uuid() primary key,
+  content_type text not null,
+  content_id text not null,
+  author_name text default 'Anonymous',
+  text text not null,
+  session_id text,
+  created_at timestamptz default now()
+);
+
+-- ADD MISSING COLUMNS (safe if already exist)
+alter table gallery add column if not exists image_url text;
+alter table gallery add column if not exists color_from text default '#1a4a6b';
+alter table gallery add column if not exists color_to text default '#3a8fb0';
+alter table stories add column if not exists color_from text default '#1a4a2a';
+alter table stories add column if not exists color_to text default '#4a9a6a';
+alter table books add column if not exists color_from text default '#1a4a6b';
+alter table books add column if not exists color_to text default '#3a7fa8';
+
+-- ROW LEVEL SECURITY — enable on all tables
+alter table gallery enable row level security;
+alter table stories enable row level security;
+alter table blogs enable row level security;
+alter table articles enable row level security;
+alter table books enable row level security;
+alter table quotes enable row level security;
+alter table likes enable row level security;
+alter table comments enable row level security;
+
+-- POLICIES — drop old and recreate (fixes blog/gallery visibility)
+do $$ declare t text; p text;
+begin
+  foreach t in array array['gallery','stories','blogs','articles','books','quotes','likes','comments'] loop
+    foreach p in array array['public_select','public_insert','public_delete','public_update'] loop
+      execute format('drop policy if exists %I on %I', p, t);
+    end loop;
+    execute format('create policy "public_select" on %I for select using (true)', t);
+    execute format('create policy "public_insert" on %I for insert with check (true)', t);
+    execute format('create policy "public_delete" on %I for delete using (true)', t);
+    execute format('create policy "public_update" on %I for update using (true)', t);
+  end loop;
+end $$;
+
+-- STORAGE POLICIES (run after creating journal-media bucket)
+-- Go to: Storage → journal-media → Policies → Add policy
+-- Or run these:
+insert into storage.buckets (id, name, public) values ('journal-media', 'journal-media', true) on conflict do nothing;
+create policy "storage_public_select" on storage.objects for select using (bucket_id = 'journal-media');
+create policy "storage_public_insert" on storage.objects for insert with check (bucket_id = 'journal-media');
+create policy "storage_public_update" on storage.objects for update using (bucket_id = 'journal-media');
+create policy "storage_public_delete" on storage.objects for delete using (bucket_id = 'journal-media');
+`;
+</script>
 </body>
 </html>
