@@ -3116,6 +3116,7 @@ function showJSection(sectionId){
 
   // Load journal content if not yet loaded
   if(!jLoaded){ loadAllJournal(); jLoaded=true; }
+  if(short === 'blog') loadBlogs();
   document.querySelectorAll('#jpage-'+short+' .reveal').forEach(el=>revObs.observe(el));
 }
 
@@ -3446,31 +3447,58 @@ async function loadStories(){
 
 // ── BLOGS ─────────────────────────────────────────────────────
 async function loadBlogs(){
-  if(!sb){ return; }
-  const {data,error}=await sb.from('blogs').select('id,title,excerpt,content,tags,created_at').order('created_at',{ascending:false});
-  const grid=document.querySelector('#j-blog .blog-grid');
-  if(!grid){ console.warn('blog-grid not found'); return; }
-  if(error){ console.warn('blogs error:',error.message); return; }
-  // Always clear static placeholder cards — only show DB content
-  if(!data||!data.length){
-    grid.innerHTML='<p style="color:rgba(226,232,240,0.35);font-size:0.9rem;padding:2rem;text-align:center;grid-column:1/-1;">No posts published yet.</p>';
+  const grid = document.querySelector('#j-blog .blog-grid');
+  if(!grid){
+    console.warn('Blog grid not found, retrying');
+    setTimeout(loadBlogs, 200);
     return;
   }
-  const cards=await Promise.all(data.map(async b=>{
-    const engBar=await renderEngageBar('blogs',b.id,'dark');
-    return `<div class="blog-card reveal" data-id="${b.id}">
-      <div class="blog-date">${fd(b.created_at)}</div>
-      <h3 class="blog-title">${esc(b.title)}</h3>
-      <p class="blog-excerpt blog-excerpt-short">${esc(b.excerpt||'')}</p>
-      <div class="blog-tags">${(b.tags||[]).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
-      <div style="margin-top:0.8rem;">
-        <button class="read-more-btn dark" onclick="openReader('${b.id}','blogs')">Read post →</button>
-      </div>
-      ${engBar}
-    </div>`;
-  }));
-  grid.innerHTML=cards.join('');
-  document.querySelectorAll('#j-blog .reveal').forEach(el=>revObs.observe(el));
+
+  if(!sb){
+    grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">⚠️ Supabase not connected. Please configure in Admin → Setup.</div>';
+    return;
+  }
+
+  grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">Loading posts…</div>';
+
+  try {
+    const {data, error} = await sb.from('blogs')
+      .select('id,title,excerpt,content,tags,created_at')
+      .order('created_at', {ascending: false});
+
+    if(error){
+      console.error('Blog fetch error:', error);
+      grid.innerHTML = `<div style="color:#f87171;padding:2rem;text-align:center;grid-column:1/-1;">
+        ⚠️ Database error: ${esc(error.message)}<br>
+        <small>Check that the "blogs" table exists and has columns: id, title, excerpt, content, tags, created_at</small>
+      </div>`;
+      return;
+    }
+
+    if(!data || data.length === 0){
+      grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">No posts published yet. Be the first!</div>';
+      return;
+    }
+
+    const cards = await Promise.all(data.map(async (b) => {
+      const engBar = await renderEngageBar('blogs', b.id, 'dark');
+      return `<div class="blog-card reveal" data-id="${b.id}">
+        <div class="blog-date">${fd(b.created_at)}</div>
+        <h3 class="blog-title">${esc(b.title)}</h3>
+        <p class="blog-excerpt blog-excerpt-short">${esc(b.excerpt || '')}</p>
+        <div class="blog-tags">${(b.tags || []).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
+        <div style="margin-top:0.8rem;">
+          <button class="read-more-btn dark" onclick="openReader('${b.id}','blogs')">Read post →</button>
+        </div>
+        ${engBar}
+      </div>`;
+    }));
+    grid.innerHTML = cards.join('');
+    document.querySelectorAll('#j-blog .reveal').forEach(el=>revObs.observe(el));
+  } catch(err){
+    console.error('Unexpected error in loadBlogs:', err);
+    grid.innerHTML = `<div style="color:#f87171;padding:2rem;text-align:center;grid-column:1/-1;">⚠️ Unexpected error: ${esc(err.message)}</div>`;
+  }
 }
 
 // ── ARTICLES ──────────────────────────────────────────────────
@@ -3917,6 +3945,7 @@ async function submitBlog(){
   const {error}=await sb.from('blogs').insert([item]);
   if(error){ showToast('Error: '+error.message,'error'); return; }
   showToast('Blog post published!','success');
+  if(document.getElementById('jpage-blog').classList.contains('active')) loadBlogs();
   ['blTitle','blExcerpt','blContent','blTags'].forEach(id=>document.getElementById(id).value='');
   await loadAdmList('blogs'); jLoaded=false;
 }
