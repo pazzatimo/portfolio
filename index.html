@@ -3117,6 +3117,7 @@ function showJSection(sectionId){
   // Load journal content if not yet loaded
   if(!jLoaded){ loadAllJournal(); jLoaded=true; }
   if(short === 'blog') loadBlogs();
+  
   document.querySelectorAll('#jpage-'+short+' .reveal').forEach(el=>revObs.observe(el));
 }
 
@@ -3486,7 +3487,9 @@ async function loadBlogs(){
         <div class="blog-date">${fd(b.created_at)}</div>
         <h3 class="blog-title">${esc(b.title)}</h3>
         <p class="blog-excerpt blog-excerpt-short">${esc(b.excerpt || '')}</p>
-        <div class="blog-tags">${(b.tags || []).map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('')}</div>
+        let tagArray = (b.tags && Array.isArray(b.tags)) ? b.tags : (typeof b.tags === 'string' ? b.tags.split(',').map(s=>s.trim()).filter(Boolean) : []);
+const tagsHtml = tagArray.map(t=>`<span class="blog-tag">${esc(t)}</span>`).join('');
+<div class="blog-tags">${tagsHtml}</div>
         <div style="margin-top:0.8rem;">
           <button class="read-more-btn dark" onclick="openReader('${b.id}','blogs')">Read post →</button>
         </div>
