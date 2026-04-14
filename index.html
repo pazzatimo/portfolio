@@ -4032,19 +4032,86 @@ alter table quotes enable row level security;
 alter table likes enable row level security;
 alter table comments enable row level security;
 
--- POLICIES — drop old and recreate (fixes blog/gallery visibility)
-do $$ declare t text; p text;
-begin
-  foreach t in array array['gallery','stories','blogs','articles','books','quotes','likes','comments'] loop
-    foreach p in array array['public_select','public_insert','public_delete','public_update'] loop
-      execute format('drop policy if exists %I on %I', p, t);
-    end loop;
-    execute format('create policy "public_select" on %I for select using (true)', t);
-    execute format('create policy "public_insert" on %I for insert with check (true)', t);
-    execute format('create policy "public_delete" on %I fordelete" on %I for delete using (true)', t);
-    execute format('create policy "public_update" on %I for update using (true)', t);
-  end loop;
-end $$;
+-- POLICIES — explicit per-table (safe, no dynamic SQL)
+-- gallery
+drop policy if exists public_select on gallery;
+drop policy if exists public_insert on gallery;
+drop policy if exists public_update on gallery;
+drop policy if exists public_delete on gallery;
+create policy public_select on gallery for select using (true);
+create policy public_insert on gallery for insert with check (true);
+create policy public_update on gallery for update using (true);
+create policy public_delete on gallery for delete using (true);
+
+-- stories
+drop policy if exists public_select on stories;
+drop policy if exists public_insert on stories;
+drop policy if exists public_update on stories;
+drop policy if exists public_delete on stories;
+create policy public_select on stories for select using (true);
+create policy public_insert on stories for insert with check (true);
+create policy public_update on stories for update using (true);
+create policy public_delete on stories for delete using (true);
+
+-- blogs
+drop policy if exists public_select on blogs;
+drop policy if exists public_insert on blogs;
+drop policy if exists public_update on blogs;
+drop policy if exists public_delete on blogs;
+create policy public_select on blogs for select using (true);
+create policy public_insert on blogs for insert with check (true);
+create policy public_update on blogs for update using (true);
+create policy public_delete on blogs for delete using (true);
+
+-- articles
+drop policy if exists public_select on articles;
+drop policy if exists public_insert on articles;
+drop policy if exists public_update on articles;
+drop policy if exists public_delete on articles;
+create policy public_select on articles for select using (true);
+create policy public_insert on articles for insert with check (true);
+create policy public_update on articles for update using (true);
+create policy public_delete on articles for delete using (true);
+
+-- books
+drop policy if exists public_select on books;
+drop policy if exists public_insert on books;
+drop policy if exists public_update on books;
+drop policy if exists public_delete on books;
+create policy public_select on books for select using (true);
+create policy public_insert on books for insert with check (true);
+create policy public_update on books for update using (true);
+create policy public_delete on books for delete using (true);
+
+-- quotes
+drop policy if exists public_select on quotes;
+drop policy if exists public_insert on quotes;
+drop policy if exists public_update on quotes;
+drop policy if exists public_delete on quotes;
+create policy public_select on quotes for select using (true);
+create policy public_insert on quotes for insert with check (true);
+create policy public_update on quotes for update using (true);
+create policy public_delete on quotes for delete using (true);
+
+-- likes
+drop policy if exists public_select on likes;
+drop policy if exists public_insert on likes;
+drop policy if exists public_update on likes;
+drop policy if exists public_delete on likes;
+create policy public_select on likes for select using (true);
+create policy public_insert on likes for insert with check (true);
+create policy public_update on likes for update using (true);
+create policy public_delete on likes for delete using (true);
+
+-- comments
+drop policy if exists public_select on comments;
+drop policy if exists public_insert on comments;
+drop policy if exists public_update on comments;
+drop policy if exists public_delete on comments;
+create policy public_select on comments for select using (true);
+create policy public_insert on comments for insert with check (true);
+create policy public_update on comments for update using (true);
+create policy public_delete on comments for delete using (true);
 
 -- STORAGE POLICIES (run after creating journal-media bucket)
 insert into storage.buckets (id, name, public) values ('journal-media', 'journal-media', true) on conflict do nothing;
