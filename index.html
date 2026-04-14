@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Lutimo Pazza — Data, Technology & Inclusive Development</title>
 <meta name="description" content="Lutimo Pazza — Data, M&E and ICT Practitioner empowering communities across Tanzania through evidence-based programmes and technology.">
+<!-- Prevent mobile browser caching so published content always appears -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2405,68 +2409,9 @@ Contributed to Tanzania's national identity infrastructure.</p></div></div></div
     <h2 class="j-heading" style="color:var(--white);">Recent posts &<br><em style="color:var(--amber-j2);">quick thoughts.</em></h2>
     <p class="j-sub">Shorter, more frequent writing — observations, tools, moments worth sharing while they're still warm.</p>
 
-    <div class="blog-grid">
-
-      <div class="blog-card reveal">
-        <div class="blog-date">April 2 · 2026</div>
-        <h3 class="blog-title">Five things Kobo Collect taught me about listening</h3>
-        <p class="blog-excerpt">Data collection tools are not neutral. The form you design shapes what people can say — and what they cannot. Here's what a decade of field work taught me about the politics of the dropdown menu.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Digital Skills</span>
-          <span class="blog-tag">Data</span>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="blog-date">March 18 · 2026</div>
-        <h3 class="blog-title">God First is not a hashtag. It is an operating system.</h3>
-        <p class="blog-excerpt">People ask why I put it on my portfolio website. Partly because it is true. Partly because the work of development — real development, community level, people-facing — only makes sense if you believe that human beings matter beyond what they produce.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Faith</span>
-          <span class="blog-tag">Life</span>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="blog-date">February 28 · 2026</div>
-        <h3 class="blog-title">How I built a website for an NGO on a NGO budget</h3>
-        <p class="blog-excerpt">She came to me with a Word document and a dream. She left with a live website, a domain name, and an email newsletter. Here is what the process looked like — and what I charged, and why.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Business</span>
-          <span class="blog-tag">Web</span>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="blog-date">February 5 · 2026</div>
-        <h3 class="blog-title">The Morogoro hills are still green. That is the whole post.</h3>
-        <p class="blog-excerpt">Some days the most important thing you can report is that beauty persists. The Uluguru range this morning, after two nights of rain, in a light I cannot describe because I do not have to — you already know that light.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Nature</span>
-          <span class="blog-tag">Life</span>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="blog-date">January 14 · 2026</div>
-        <h3 class="blog-title">What the #nawajibika campaign taught me about social change</h3>
-        <p class="blog-excerpt">A hashtag is not a campaign. A campaign is not a movement. And a movement is nothing without people willing to show up on a Tuesday and keep showing up. Lessons from designing Tanzania's youth accountability drive.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Community</span>
-          <span class="blog-tag">Impact</span>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="blog-date">December 20 · 2025</div>
-        <h3 class="blog-title">A year in review: data, distance, and deciding what matters</h3>
-        <p class="blog-excerpt">2025 was the year I stopped confusing busyness with productivity, and started measuring impact the way I measure data — by what it actually changes, not by how much of it there is.</p>
-        <div class="blog-tags">
-          <span class="blog-tag">Reflection</span>
-          <span class="blog-tag">Life</span>
-        </div>
-      </div>
-
+    <div class="blog-grid" id="blogGrid">
+      <!-- Posts loaded from database -->
+      <div style="color:rgba(226,232,240,0.4);padding:2.5rem;text-align:center;grid-column:1/-1;font-size:0.85rem;">Loading posts…</div>
     </div>
   </div>
 </section>
@@ -3114,9 +3059,11 @@ function showJSection(sectionId){
 
   history.replaceState(null,'','#journal/'+short);
 
-  // Load journal content if not yet loaded
+  // Load journal content on first visit
   if(!jLoaded){ loadAllJournal(); jLoaded=true; }
-  
+  // Always reload blog content when navigating to blog — ensures published posts appear immediately
+  else if(short==='blog'){ loadBlogs(); }
+
   document.querySelectorAll('#jpage-'+short+' .reveal').forEach(el=>revObs.observe(el));
 }
 
@@ -3225,7 +3172,8 @@ function getSessionId(){
 
 async function renderEngageBar(type,id,variant='dark'){
   const liked=isLiked(type,id);
-  const count=sb?await getLikeCount(type,id):0;
+  let count=0;
+  try{ count=sb?await getLikeCount(type,id):0; }catch(e){ count=0; } // safe - likes table may not exist yet
   const isLight=variant==='light';
   return `<div class="engage-bar${isLight?' light':''}">
     <button class="engage-btn${liked?' liked':''}" onclick="toggleLike('${type}','${id}',this)" title="Like">
@@ -3447,19 +3395,16 @@ async function loadStories(){
 
 // ── BLOGS ─────────────────────────────────────────────────────
 async function loadBlogs(){
-  const grid = document.querySelector('#j-blog .blog-grid');
-  if(!grid){
-    console.warn('Blog grid not found, retrying');
-    setTimeout(loadBlogs, 200);
-    return;
-  }
+  // Target by ID for reliability — static cards removed, only DB content shown
+  const grid = document.getElementById('blogGrid') || document.querySelector('#j-blog .blog-grid');
+  if(!grid){ console.warn('Blog grid not found'); return; }
 
   if(!sb){
-    grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">⚠️ Supabase not connected. Please configure in Admin → Setup.</div>';
+    grid.innerHTML = '<div style="color:rgba(226,232,240,0.4);padding:2rem;text-align:center;grid-column:1/-1;">⚠ Connect Supabase in Admin → Setup to load posts.</div>';
     return;
   }
 
-  grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">Loading posts…</div>';
+  grid.innerHTML = '<div style="color:rgba(226,232,240,0.4);padding:2rem;text-align:center;grid-column:1/-1;">Loading posts…</div>';
 
   try {
     const {data, error} = await sb.from('blogs')
@@ -3469,14 +3414,14 @@ async function loadBlogs(){
     if(error){
       console.error('Blog fetch error:', error);
       grid.innerHTML = `<div style="color:#f87171;padding:2rem;text-align:center;grid-column:1/-1;">
-        ⚠️ Database error: ${esc(error.message)}<br>
-        <small>Check that the "blogs" table exists and has columns: id, title, excerpt, content, tags, created_at</small>
+        ⚠ ${esc(error.message)}<br>
+        <small style="opacity:0.7;">Go to Admin → Setup → Copy SQL and run it in Supabase SQL Editor.</small>
       </div>`;
       return;
     }
 
     if(!data || data.length === 0){
-      grid.innerHTML = '<div style="color:rgba(226,232,240,0.5);padding:2rem;text-align:center;grid-column:1/-1;">No posts published yet. Be the first!</div>';
+      grid.innerHTML = '<div style="color:rgba(226,232,240,0.4);padding:2rem;text-align:center;grid-column:1/-1;">No posts published yet.</div>';
       return;
     }
 
@@ -3945,9 +3890,11 @@ async function submitBlog(){
   const {error}=await sb.from('blogs').insert([item]);
   if(error){ showToast('Error: '+error.message,'error'); return; }
   showToast('Blog post published!','success');
-  if(document.getElementById('jpage-blog').classList.contains('active')) loadBlogs();
   ['blTitle','blExcerpt','blContent','blTags'].forEach(id=>document.getElementById(id).value='');
-  await loadAdmList('blogs'); jLoaded=false;
+  await loadAdmList('blogs');
+  // Always reload blog content on front-end immediately — regardless of jLoaded state
+  await loadBlogs();
+  jLoaded=true; // keep true so navigation doesn't reload other sections unnecessarily
 }
 
 async function submitArticle(){
